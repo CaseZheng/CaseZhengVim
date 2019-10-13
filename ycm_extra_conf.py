@@ -5,7 +5,7 @@ import subprocess
 import ycm_core
 import sys
 
-DIR_OF_THIS_SCRIPT = os.path.abspath("bundle/YouCompleteMe/third_party/ycmd")
+DIR_OF_THIS_SCRIPT = os.path.abspath("plugged/YouCompleteMe/third_party/ycmd")
 DIR_OF_THIRD_PARTY = os.path.join( DIR_OF_THIS_SCRIPT, 'third_party' )
 SOURCE_EXTENSIONS = [ '.cpp', '.cxx', '.cc', '.c', '.m', '.mm' ]
 
