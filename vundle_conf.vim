@@ -353,9 +353,9 @@ let g:ycm_min_num_of_chars_for_completion=2
 "设置要在标示符补全列表中显示的候选项的最小字符数，0表示没有限制，对语义补全无影响
 let g:ycm_min_num_identifier_candidate_chars = 0
 "设置语义补全的最大候选项数量，0表示没有限制
-let g:ycm_max_num_candidates = 10
+let g:ycm_max_num_candidates = 20
 "设置标识符补全的最大候选项数量，0表示没有限制
-let g:ycm_max_num_identifier_candidates = 10
+let g:ycm_max_num_identifier_candidates = 20
 " 0表示关闭ycm语义补全和标识符补全触发器，但仍可以用ctrl+space 打开语义补全，1表示打开
 let g:ycm_auto_trigger=1
 "选中补全选项后自动关闭预览窗口，当g:ycm_add_preview_to_completeopt设为1时或者vim的completeopt设为preview有效
