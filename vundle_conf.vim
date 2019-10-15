@@ -104,13 +104,15 @@ let NERDTreeIgnore = [
     \ '\.filters$',
     \ '\.vcxproj\.user$',
     \ '^.exe$',
-    \ '^.docx$',
-    \ '^.doc$',
-    \ '^.xlsx$',
-    \ '^.xls$',
+    \ '\.docx$',
+    \ '\.doc$',
+    \ '\.xlsx$',
+    \ '\.xls$',
+    \ '\.pptx$',
+    \ '\.ppt$',
     "\ '^.gitignore$',
     "\ '^.gitmodules$',
-    ]
+    \ ]
 
 " 设置宽度
 let NERDTreeWinSize=40
