@@ -160,7 +160,7 @@ if (g:iswindows == 1)
             echo 'ip或username或password或项目路径或远程逻辑不存在'
             return
         endif
-        let s:filemask   = "|*.git;*.svn;*.vscode;cscope.files;you.files;cscope.out;tags;*git/;*svn/;*vscode/;" 
+        let s:filemask   = "|*.git;*.svn;*.vscode;cscope.files;you.files;cscope.out;tags;*git/;*svn/;*vscode/;*.xlsx;*.xls;*.pptx;*.ppt;*.docx;*.doc;"
         if(a:ignore == "1" && type(dirmask) == 3)
             echo '忽略目录:'.string(dirmask)
             for diritem in dirmask
