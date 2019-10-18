@@ -356,7 +356,7 @@ set completeopt=longest,menu
 "离开插入模式后自动关闭预览窗口，当g:ycm_add_preview_to_completeopt设为1时或者vim的completeopt设为preview有效
 let g:ycm_autoclose_preview_window_after_insertion = 0
 "设置触发标识符补全的最小字符数，设置为99或更大的数字，则等效于关闭标识符补全功能，但保留语义补全功能
-let g:ycm_min_num_of_chars_for_completion=2
+let g:ycm_min_num_of_chars_for_completion=1
 "设置要在标示符补全列表中显示的候选项的最小字符数，0表示没有限制，对语义补全无影响
 let g:ycm_min_num_identifier_candidate_chars = 0
 "设置语义补全的最大候选项数量，0表示没有限制
@@ -400,8 +400,8 @@ let g:ycm_key_invoke_completion = "<C-x><C-h>"
 "设置YCM的文件名补全时，相对路径是按照vim的当前工作目录还是活动缓冲区中的文件所在目录来解释。0是按照文件所在目录
 let g:ycm_filepath_completion_use_working_dir = 0
 "打开/关闭编译错误列表
-nnoremap <leader>eo :lopen<CR>	"open locationlist
-nnoremap <leader>ec :lclose<CR> "close locationlist
+nnoremap <leader>eo :lopen<CR>
+nnoremap <leader>ec :lclose<CR>
 "跳转到申明或定义
 nnoremap <leader>ee :YcmCompleter GoToDefinitionElseDeclaration<CR>
 "跳转到定义
@@ -582,9 +582,9 @@ map <leader>lhs :LeaderfHistorySearch<CR>
 
 "-------------------------------------- ultisnips ----------------------------
 "快速插入代码片段
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:UltiSnipsExpandTrigger="<C-j>"
+let g:UltiSnipsJumpForwardTrigger="<C-j>"
+let g:UltiSnipsJumpBackwardTrigger="<C-k>"
 let g:UltiSnipsEditSplit="vertical"
 "--------------------------------------------------------------------------
 
