@@ -83,6 +83,8 @@ call plug#end()
 "---------------------------------------------------------------------------------
 
 "----------------------------------- nerdtree ------------------------------------
+"去除第一行的帮助提示
+let NERDTreeMinimalUI=1
 " 打开/关闭 NERDTree
 nmap <silent> <F2> :NERDTreeCWD<CR>
 " 打开 NERDTree 并选中当前文件
@@ -189,9 +191,13 @@ let g:cpp_concepts_highlight = 1
 "-------------------------------------- tagbar --------------------------- 
 " toggle tagbar display 打开 Tag 列表
 map <F4> :TagbarToggle<CR>
+"去除第一行的帮助信息
+let g:tagbar_compact = 1
 " tagbar自动打开
 "let g:tagbar_autofocus = 1
 let g:tagbar_width = 30
+"当编辑代码时，在Tagbar自动追踪变量
+let g:tagbar_autoshowtag = 1
 "在tagbar中添加Lua支持
 let g:tagbar_type_lua = {
     \ 'ctagstype' : 'MYLUA',
