@@ -94,7 +94,6 @@ function Do_CsTag()
         let s:command_msg = "!dir /s/b *.c,*.cpp,*.h,*.hpp,*.cc,*.inl "
         let s:command_msg = s:command_msg . " > you.files"
         silent! execute s:command_msg
-
     endif
     if(executable('ctags'))
         if(g:iswindows!=1)
@@ -279,7 +278,7 @@ function ProjectOpen(name)
 
     let g:projectName = a:name
     silent! execute(":cd ".s:projectpath)
-    silent! execute(":e [未命名]")
+    silent! execute(":e ~/.vim/dirs/tmp/未命名")
     silent! only "只剩余一个窗口
     call CloseAllBuffer()
     execute(":NERDTree")
