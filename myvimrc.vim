@@ -153,7 +153,8 @@ set undofile                      " persistent undos - undo after you re-open th
 set undodir=~/.vim/dirs/undos
 set viminfo+=n~/.vim/dirs/viminfo
 " 将~/.vim加入到runtimepath中，使用set rtp可查看runtimepath的值
-set rtp=~/.vim/
+set rtp+=$VIMRUNTIME
+set rtp+=~/.vim/
 
 " create needed directories if they don't exist
 if !isdirectory(&backupdir)
