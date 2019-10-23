@@ -16,11 +16,11 @@ function Do_CsTag()
     let s:csfilesdeleted=0
     let s:csoutdeleted=0
     echohl WarningMsg | echo dir | echohl None
-    if filereadable("tags")
+    if filereadable("cscope.tags")
         if(g:iswindows==1)
-            let s:tagsdeleted=delete(dir."\\"."tags")
+            let s:tagsdeleted=delete(dir."\\"."cscope.tags")
         else
-            let s:tagsdeleted=delete("./"."tags")
+            let s:tagsdeleted=delete("./"."cscope.tags")
         endif
         if(s:tagsdeleted!=0)
             echohl WarningMsg | echo "Fail to do tags! I cannot delete the tags" | echohl None
@@ -42,17 +42,6 @@ function Do_CsTag()
             return
         endif
     endif
-    if filereadable("you.files")
-        if(g:iswindows==1)
-            let s:csfilesdeleted=delete(dir."\\"."you.files")
-        else
-            let s:csfilesdeleted=delete("./"."you.files")
-        endif
-        if(s:csfilesdeleted!=0)
-            echohl WarningMsg | echo "Fail to do cscope! I cannot delete the you.files" | echohl None
-            return
-        endif
-    endif
     if filereadable("cscope.out")
         if(g:iswindows==1)
             let s:csoutdeleted=delete(dir."\\"."cscope.out")
@@ -66,16 +55,6 @@ function Do_CsTag()
     endif
 
     if(g:iswindows!=1)
-        let s:command_msg = "!find $(pwd)" . g:ctags_ignore_directory
-        let s:command_msg = s:command_msg . " -name '*.h'   -print -o"
-        let s:command_msg = s:command_msg . " -name '*.hpp' -print -o"
-        let s:command_msg = s:command_msg . " -name '*.c'   -print -o"
-        let s:command_msg = s:command_msg . " -name '*.cpp' -print -o"
-        let s:command_msg = s:command_msg . " -name '*.inl' -print -o"
-        let s:command_msg = s:command_msg . " -name '*.cc'  -print -o"
-        let s:command_msg = s:command_msg . " -name '*.py'  -print"
-        let s:command_msg = s:command_msg . " > cscope.files"
-        silent! execute s:command_msg
         let s:command_msg = "!find $(pwd)"
         let s:command_msg = s:command_msg . " -name '*.h'   -print -o"
         let s:command_msg = s:command_msg . " -name '*.hpp' -print -o"
@@ -84,22 +63,18 @@ function Do_CsTag()
         let s:command_msg = s:command_msg . " -name '*.inl' -print -o"
         let s:command_msg = s:command_msg . " -name '*.cc'  -print -o"
         let s:command_msg = s:command_msg . " -name '*.py'  -print"
-        let s:command_msg = s:command_msg . " > you.files"
+        let s:command_msg = s:command_msg . " > cscope.files"
         silent! execute s:command_msg
     else
         let s:command_msg = "!dir /s/b *.c,*.cpp,*.h,*.hpp,*.cc,*.inl "
-        let s:command_msg = s:command_msg . g:ctags_ignore_directory
         let s:command_msg = s:command_msg . " > cscope.files"
-        silent! execute s:command_msg
-        let s:command_msg = "!dir /s/b *.c,*.cpp,*.h,*.hpp,*.cc,*.inl "
-        let s:command_msg = s:command_msg . " > you.files"
         silent! execute s:command_msg
     endif
     if(executable('ctags'))
         if(g:iswindows!=1)
-            silent! execute "!ctags -L cscope.files --c++-kinds=+p --c-kinds=+p --fields=+nmKiaftl --extra=+fq --languages=C++,C,Python,Make,Sh,Lua,Vim  --langmap=c++:+.inl"
+            silent! execute "!ctags -f cscope.tags -L cscope.files --c++-kinds=+p --c-kinds=+p --fields=+nmKiaftl --extra=+fq --languages=C++,C,Python,Make,Sh,Lua,Vim  --langmap=c++:+.inl"
         else
-            silent! execute "!start ctags -L cscope.files --c++-kinds=+p --c-kinds=+p --fields=+nmKiaftl --extra=+fq --languages=C++,C,Python,Make,Sh,Lua,Vim  --langmap=c++:+.inl"
+            silent! execute "!start ctags  -f cscope.tags -L cscope.files --c++-kinds=+p --c-kinds=+p --fields=+nmKiaftl --extra=+fq --languages=C++,C,Python,Make,Sh,Lua,Vim  --langmap=c++:+.inl"
         endif
     else
         echohl WarningMsg | echo "Fail ctags" | echohl None
@@ -159,7 +134,7 @@ if (g:iswindows == 1)
             echo 'ip或username或password或项目路径或远程逻辑不存在'
             return
         endif
-        let s:filemask   = "|*.git;*.svn;*.vscode;cscope.files;you.files;cscope.out;tags;*git/;*svn/;*vscode/;*.xlsx;*.xls;*.pptx;*.ppt;*.docx;*.doc;"
+        let s:filemask   = "|*.git;*.svn;*.vscode;cscope.*;*git/;*svn/;*vscode/;*.xlsx;*.xls;*.pptx;*.ppt;*.docx;*.doc;"
         if(a:ignore == "1" && type(dirmask) == 3)
             echo '忽略目录:'.string(dirmask)
             for diritem in dirmask

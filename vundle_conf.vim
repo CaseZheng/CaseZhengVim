@@ -1,10 +1,12 @@
 call plug#begin('~/.vim/plugged')
+
+let nerdtree_cmds = ['NERDTreeFind', 'NERDTree', 'NERDTreeToggle']
 " vim 树形目录插件
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', { 'on': nerdtree_cmds }
 " nerdtree目录git支持
-Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': nerdtree_cmds }
 " c++高亮增强 C++11/14 STL
-Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'octol/vim-cpp-enhanced-highlight', { 'for': ['cpp', 'h', 'c', 'hpp', 'cc'] }
 " Airline 状态栏
 Plug 'vim-airline/vim-airline'
 " Airline主题
@@ -16,11 +18,11 @@ endif
 " 缩进标线
 Plug 'Yggdroot/indentLine'
 " Vim 标签侧边栏插件
-Plug 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 " markdown语法高亮
-Plug 'plasticboy/vim-markdown'
+Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 " 代码搜索
-Plug 'dyng/ctrlsf.vim'
+Plug 'dyng/ctrlsf.vim', { 'on': ['<Plug>CtrlSF', 'CtrlSFToggle'] }
 " 窗口管理器
 Plug 't9md/vim-choosewin'
 " 快速注释/解开注释
@@ -30,9 +32,9 @@ Plug 'vim-scripts/DoxygenToolkit.vim'
 " tab管理工具
 Plug 'kien/tabman.vim'
 "让cpp文件在.h和.cpp文件中切换
-Plug 'vim-scripts/a.vim'
+Plug 'vim-scripts/a.vim', { 'for': ['cpp', 'h', 'c', 'hpp', 'cc'] }
 " python插件
-Plug 'python-mode/python-mode'
+Plug 'python-mode/python-mode', { 'for': 'python'}
 " 代码块补全
 Plug 'SirVer/ultisnips'
 " 代码块集合
@@ -52,18 +54,20 @@ Plug 'gregsexton/gitv'
 "撤销重做功能
 Plug 'sjl/gundo.vim'
 " 代码对齐插件
-Plug 'godlygeek/tabular'
+Plug 'godlygeek/tabular', { 'on': 'Tabularize' }
 " 配色方案
 Plug 'morhetz/gruvbox'
 " 搜索 incsearch 增强vim中自带的 ? 和 ／ 搜索功能， 并且支持更加高级的正则表达式匹配, vim默认搜索是只能高亮一个当前匹配的字符，但是 incsearch 却可以同时高亮所有匹配的字符
-Plug 'haya14busa/incsearch.vim'
+Plug 'haya14busa/incsearch.vim', { 'on': ['<Plug>(incsearch-forward)', '<Plug>(incsearch-backward)', '<Plug>(incsearch-nohl-n)', '<Plug>(incsearch-nohl-N)']}
 " 快速跳转
-Plug 'easymotion/vim-easymotion'
+Plug 'easymotion/vim-easymotion', { 'on': ['<Plug>(easymotion-linebackward)', '<Plug>(easymotion-j)', '<Plug>(easymotion-k)', '<Plug>(easymotion-lineforward)', '<Plug>(easymotion-w)', '<Plug>(easymotion-b)'] }
+
 " 查找文件插件 
+let leaderf_cmds = ['LeaderfFile', 'LeaderfBuffer', 'LeaderfHistoryCmd', 'LeaderfHistorySearch']
 if(g:iswindows)
-    Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
+    Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat', 'on': leaderf_cmds }
 else
-    Plug 'Yggdroot/LeaderF', { 'do': './install.sh'}
+    Plug 'Yggdroot/LeaderF', { 'do': './install.sh', 'on': leaderf_cmds }
 endif
 
 call plug#end()
@@ -89,12 +93,7 @@ let NERDTreeIgnore = [
     \ '\.pyo$',
     \ '\.git$',
     \ '\.svn$',
-    \ '^you.files$',
-    \ '^cscope.files$',
-    \ '^cscope.po.out$',
-    \ '^cscope.in.out$',
-    \ '^cscope.out$',
-    \ '^tags$',
+    \ '^cscope.*$',
     \ '\.sln$',
     \ '\.vcxproj$',
     \ '\.filters$',
@@ -481,8 +480,6 @@ nmap <leader>gk <plug>(signify-prev-hunk)
 nmap <leader>gJ 9999<leader>gj
 " 最后一个变更
 nmap <leader>gK 9999<leader>gk
-" 显示当前打开的文件的修改情况
-map <leader>gl :SignifyList<CR>
 " nicer colors
 highlight DiffAdd           cterm=bold ctermbg=none ctermfg=119
 highlight DiffDelete        cterm=bold ctermbg=none ctermfg=167
@@ -518,9 +515,18 @@ let g:ctrlsf_default_view_mode='compact'
 let g:ctrlsf_default_root='cwd'     "设置在当前工作目录下搜索
 let g:ctrlsf_case_sensitive='no'    "大小写不敏感
 let g:ctrlsf_auto_close=0   "设置不自动关闭
-let g:ctrlsf_ignore_dir = ['cscope', 'tags', 'you.files', 'cscope.files', 'cscope.in.out', 'cscope.po.out', 'cscope.out', 'ncscope.out']
-
-map <leader>ffc :CtrlSF<Space> 
+let g:ctrlsf_ignore_dir = ['cscope.*']
+let g:ctrlsf_mapping = {
+    \ 'next': 'n',
+    \ 'prev': 'N',
+    \ }
+let g:ctrlsf_position = 'bottom'
+let g:ctrlsf_winsize = '50%'
+nmap <Leader>ft <Plug>CtrlSFPrompt
+vmap <Leader>ft <Plug>CtrlSFVwordPath
+nmap <leader>fw <Plug>CtrlSFCwordPath<CR>
+vmap <leader>fw <Plug>CtrlSFVwordExec
+nmap <leader>fl :CtrlSFToggle<CR>
 "--------------------------------------------------------------------------
 
 "-------------------------------------- tabman ----------------------------
@@ -543,12 +549,16 @@ map <F6> :A<CR>
 "---------------------------------------------------------------------------
 
 "-------------------------------------- vim-easymotion ----------------------------
+let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_smartcase = 1
+let g:EasyMotion_startofline = 0
+let g:EasyMotion_use_upper = 1
 map <Leader><Leader>h <Plug>(easymotion-linebackward)
 map <Leader><Leader>j <Plug>(easymotion-j)
 map <Leader><Leader>k <Plug>(easymotion-k)
 map <Leader><Leader>l <Plug>(easymotion-lineforward)
-map <Leader><Leader>. <Plug>(easymotion-repeat)
+map <Leader><Leader>w <Plug>(easymotion-w)
+map <Leader><Leader>b <Plug>(easymotion-b)
 "--------------------------------------------------------------------------
 
 
@@ -557,22 +567,14 @@ let g:Lf_UseCache=0
 let g:Lf_UseMemoryCache=0
 let g:Lf_ReverseOrder=1
 "搜索当前文件下的文件
-map <leader>lf  :LeaderfFile<CR>
-map <leader>lfp :LeaderfFilePattern<CR>
-map <leader>lfc :LeaderfFileCword<CR>
-
-map <leader>lb  :LeaderfBuffer<CR>
-
-map <leader>ll  :LeaderfLine<CR>
-map <leader>lla :LeaderfLineAll<CR>
-map <leader>llc :LeaderfLineCword<CR>
-
-map <leader>lch :LeaderfHistoryCmd<CR>
-map <leader>lhs :LeaderfHistorySearch<CR>
+map <leader>lf :LeaderfFile<CR>
+map <leader>lb :LeaderfBuffer<CR>
+map <leader>lc :LeaderfHistoryCmd<CR>
+map <leader>ls :LeaderfHistorySearch<CR>
 let g:Lf_WildIgnore = {
-            \ 'dir': ['.svn','.git','.hg','.vscode','.wine','.deepinwine','.oh-my-zsh'],
-            \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
-            \}
+        \ 'dir': ['.svn','.git','.hg','.vscode','.wine','.deepinwine','.oh-my-zsh'],
+        \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
+        \}
 "--------------------------------------------------------------------------
 
 "-------------------------------------- ultisnips ----------------------------
@@ -607,17 +609,12 @@ nmap <Leader>dd :Dox<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""incsearch"""""""""""""""""""""""""""""""""""
-"map /  <Plug>(incsearch-forward)
-"map ?  <Plug>(incsearch-backward)
-"map g/ <Plug>(incsearch-stay)
-"set hlsearch
-"let g:incsearch#auto_nohlsearch = 0
-"map n  <Plug>(incsearch-nohl-n)
-"map N  <Plug>(incsearch-nohl-N)
-"map *  <Plug>(incsearch-nohl-*)
-"map #  <Plug>(incsearch-nohl-#)
-"map g* <Plug>(incsearch-nohl-g*)
-"map g# <Plug>(incsearch-nohl-g#)
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map n  <Plug>(incsearch-nohl-n)
+map N  <Plug>(incsearch-nohl-N)
+
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -633,30 +630,9 @@ if has("cscope")
     set nocsverb
     let g:cscope_silent = 1
     set csverb
-    " 查看当前指向的行
-    nmap <Leader>qc :cc<CR>
-    " 查看下一个
-    nmap <Leader>qj :cn<CR>
-    " 查看上一个
-    nmap <Leader>qk :cp<CR>
-    " 查看所有
-    nmap <Leader>ql :cl<CR>
-    " 打开
-    nmap <Leader>qo :copen<CR>
-    " 关闭
-    nmap <Leader>qc :cclose<CR>
-
-    " QuickFix 自动打开
-    "autocmd QuickFixCmdPost [^l]* nested cwindow 15
-    "autocmd QuickFixCmdPost    l* nested lwindow 15
     nmap <leader>fs :cs find s <C-R>=expand("<cword>")<CR><CR>	
     nmap <leader>fg :cs find g <C-R>=expand("<cword>")<CR><CR>	
     nmap <leader>fc :cs find c <C-R>=expand("<cword>")<CR><CR>	
-    "nmap <leader>ft :cs find t <C-R>=expand("<cword>")<CR><CR>	
-    "nmap <leader>fe :cs find e <C-R>=expand("<cword>")<CR><CR>	
-    "nmap <leader>ff :cs find f <C-R>=expand("<cfile>")<CR><CR>	
-    "nmap <leader>fi :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-    nmap <leader>fd :cs find d <C-R>=expand("<cword>")<CR><CR>	
 endif
 
 

@@ -62,7 +62,7 @@ for v in selfFlags:
     pass
 
 # 项目文件
-path_file = os.getcwd() + "/you.files"
+path_file = os.getcwd() + "/cscope.files"
 if os.path.exists(path_file):
     fp = open(path_file, "r")
     path_set = set(os.path.dirname(p) for p in fp.readlines())
