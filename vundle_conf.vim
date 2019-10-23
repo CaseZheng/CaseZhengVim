@@ -67,19 +67,17 @@ Plug 'morhetz/gruvbox'
 "Plug 'lilydjwg/colorizer'
 " 快速跳转
 Plug 'easymotion/vim-easymotion'
-" 快速跳转
-Plug 'justinmk/vim-sneak'
 " 查找文件插件 
 Plug 'Yggdroot/LeaderF'
 
 call plug#end()
 
 "----------------------------------------gruvbox--------------------------------
-    "使用粗字体 1开启 0关闭 Enables bold text.  default: 1
-    let g:gruvbox_bold=0
-    "启用斜体注释 Enables italic for comments.  default: 1   
-    let g:gruvbox_italicize_comments=0
-    let g:gruvbox_contrast_dark="hard"
+"使用粗字体 1开启 0关闭 Enables bold text.  default: 1
+let g:gruvbox_bold=0
+"启用斜体注释 Enables italic for comments.  default: 1
+let g:gruvbox_italicize_comments=0
+let g:gruvbox_contrast_dark="hard"
 "---------------------------------------------------------------------------------
 
 "----------------------------------- nerdtree ------------------------------------
@@ -559,13 +557,11 @@ map <F6> :A<CR>
 
 "-------------------------------------- vim-easymotion ----------------------------
 let g:EasyMotion_smartcase = 1
-"let g:EasyMotion_startofline = 0 " keep cursor colum when JK motion
-map <Leader>h <Plug>(easymotion-linebackward)
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
-map <Leader>l <Plug>(easymotion-lineforward)
-" 重复上一次操作, 类似repeat插件, 很强大
-"map <Leader>. <Plug>(easymotion-repeat)"
+map <Leader><Leader>h <Plug>(easymotion-linebackward)
+map <Leader><Leader>j <Plug>(easymotion-j)
+map <Leader><Leader>k <Plug>(easymotion-k)
+map <Leader><Leader>l <Plug>(easymotion-lineforward)
+map <Leader><Leader>. <Plug>(easymotion-repeat)
 "--------------------------------------------------------------------------
 
 
