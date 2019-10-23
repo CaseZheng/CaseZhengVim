@@ -60,7 +60,11 @@ Plug 'haya14busa/incsearch.vim'
 " 快速跳转
 Plug 'easymotion/vim-easymotion'
 " 查找文件插件 
-Plug 'Yggdroot/LeaderF'
+if(g:iswindows)
+    Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
+else
+    Plug 'Yggdroot/LeaderF', { 'do': './install.sh'}
+endif
 
 call plug#end()
 
@@ -549,8 +553,10 @@ map <Leader><Leader>. <Plug>(easymotion-repeat)
 
 
 "-------------------------------------- LeaderF ----------------------------
-let g:Lf_UseCache = 0
-let g:Lf_UseMemoryCache = 0
+let g:Lf_UseCache=0
+let g:Lf_UseMemoryCache=0
+let g:Lf_ReverseOrder=1
+"搜索当前文件下的文件
 map <leader>lf  :LeaderfFile<CR>
 map <leader>lfp :LeaderfFilePattern<CR>
 map <leader>lfc :LeaderfFileCword<CR>
@@ -563,6 +569,10 @@ map <leader>llc :LeaderfLineCword<CR>
 
 map <leader>lch :LeaderfHistoryCmd<CR>
 map <leader>lhs :LeaderfHistorySearch<CR>
+let g:Lf_WildIgnore = {
+            \ 'dir': ['.svn','.git','.hg','.vscode','.wine','.deepinwine','.oh-my-zsh'],
+            \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
+            \}
 "--------------------------------------------------------------------------
 
 "-------------------------------------- ultisnips ----------------------------
