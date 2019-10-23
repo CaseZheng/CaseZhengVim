@@ -9,6 +9,10 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'vim-airline/vim-airline'
 " Airline主题
 Plug 'vim-airline/vim-airline-themes'
+if(g:iswindows)
+    " 字体
+    Plug 'eugeii/consolas-powerline-vim'
+endif
 " 缩进标线
 Plug 'Yggdroot/indentLine'
 " Vim 标签侧边栏插件
@@ -23,12 +27,6 @@ Plug 't9md/vim-choosewin'
 Plug 'scrooloose/nerdcommenter'
 " 注释快速生成
 Plug 'vim-scripts/DoxygenToolkit.vim'
-" 搜索 incsearch 增强vim中自带的 ? 和 ／ 搜索功能， 并且支持更加高级的正则表达式匹配, vim默认搜索是只能高亮一个当前匹配的字符，但是 incsearch 却可以同时高亮所有匹配的字符
-Plug 'haya14busa/incsearch.vim'
-if(g:iswindows)
-    " 字体
-    Plug 'eugeii/consolas-powerline-vim'
-endif
 " tab管理工具
 Plug 'kien/tabman.vim'
 "让cpp文件在.h和.cpp文件中切换
@@ -55,16 +53,10 @@ Plug 'gregsexton/gitv'
 Plug 'sjl/gundo.vim'
 " 代码对齐插件
 Plug 'godlygeek/tabular'
-" markdown生成 table of contents 目录
-"Plug 'mzlogin/vim-markdown-toc'
-" 代码垂直缩进对齐线插件
-"Plug 'nathanaelkane/vim-indent-guides'
 " 配色方案
 Plug 'morhetz/gruvbox'
-" 显示终端的各种颜色对应的编号
-"Plug 'guns/xterm-color-table.vim'
-" 显示色彩对应的颜色
-"Plug 'lilydjwg/colorizer'
+" 搜索 incsearch 增强vim中自带的 ? 和 ／ 搜索功能， 并且支持更加高级的正则表达式匹配, vim默认搜索是只能高亮一个当前匹配的字符，但是 incsearch 却可以同时高亮所有匹配的字符
+Plug 'haya14busa/incsearch.vim'
 " 快速跳转
 Plug 'easymotion/vim-easymotion'
 " 查找文件插件 
@@ -509,19 +501,10 @@ nmap <Leader>a  :Tabularize /
 vmap <Leader>a  :Tabularize /
 "--------------------------------------------------------------------------
 
-"-------------------------------------vim-indent-guides--------------------
-" 随 vim 自启动
-"let g:indent_guides_enable_on_vim_startup=1
-" 从第二层开始可视化显示缩进
-"let g:indent_guides_start_level=3
-" 色块宽度
-"let g:indent_guides_guide_size=1
-"--------------------------------------------------------------------------
-
 "------------------------------------------indentLine----------------------
 let g:indentLine_noConcealCursor = 1
 let g:indentLine_color_term = 0
-let g:indentLine_char = '|'
+let g:indentLine_char = '¦'
 let g:indentLine_concealcursor = ''
 "--------------------------------------------------------------------------
 
