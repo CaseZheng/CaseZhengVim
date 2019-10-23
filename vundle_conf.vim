@@ -122,14 +122,6 @@ let NERDTreeShowHidden=1                "默认显示隐藏文件
 "let NERDTreeShowLineNumbers=1           "默认显示行号
 "let NERDTreeWinPos='right'              "将 NERDTree 的窗口设置在 vim 窗口的右侧，默认在左
 let NERDChristmasTree=1                 "让树更好看
-
-"let NERDTreeDirArrowExpandable=">"
-"let NERDTreeDirArrowCollapsible="v"
-
-"if(g:iswindows)
-    "在 vim 启动的时候默认开启 NERDTree（autocmd 可以缩写为 au）
-    "autocmd VimEnter * NERDTree
-"endif
 "--------------------------------------------------------------------------------
 
 "---------------------------- nerdtree-git-plugin -------------------------------
@@ -515,7 +507,7 @@ let g:ctrlsf_default_view_mode='compact'
 let g:ctrlsf_default_root='cwd'     "设置在当前工作目录下搜索
 let g:ctrlsf_case_sensitive='no'    "大小写不敏感
 let g:ctrlsf_auto_close=0   "设置不自动关闭
-let g:ctrlsf_ignore_dir = ['cscope.*']
+let g:ctrlsf_ignore_dir = ['cscope.out', 'cscope.tags', 'cscope.files']
 let g:ctrlsf_mapping = {
     \ 'next': 'n',
     \ 'prev': 'N',
@@ -613,8 +605,6 @@ map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map n  <Plug>(incsearch-nohl-n)
 map N  <Plug>(incsearch-nohl-N)
-
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
