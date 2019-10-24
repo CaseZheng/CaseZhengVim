@@ -134,7 +134,7 @@ if (g:iswindows == 1)
             echo 'ip或username或password或项目路径或远程逻辑不存在'
             return
         endif
-        let s:filemask   = "|*.git;*.svn;*.vscode;cscope.*;*git/;*svn/;*vscode/;*.xlsx;*.xls;*.pptx;*.ppt;*.docx;*.doc;"
+        let s:filemask   = "|*.git;*.svn;*.vscode;*.vsdx,cscope.*;*git/;*svn/;*vscode/;*.xlsx;*.xls;*.pptx;*.ppt;*.docx;*.doc;"
         if(a:ignore == "1" && type(dirmask) == 3)
             echo '忽略目录:'.string(dirmask)
             for diritem in dirmask
@@ -214,7 +214,7 @@ function ProjectList()
     echo "项目列表:"
     for item in items(g:projectInfo)
         echo ' '
-        echohl WarningMsg | echo "项目名称：" . item[0] . " 项目地址：" . get(item[1], "projectpath", "") | echohl NONE
+        echohl WarningMsg | echo "项目名称：" . item[0] . " 项目地址：" . get(item[1], "projectpath", "") . " 描述：" . get(item[1], "desc", "") | echohl NONE
         echo "Ycm：" . get(item[1], "youcompleteme", "0") . " Cscope：" . get(item[1], "cscope", "0") . " 远程IP：" . get(item[1], "ip", "") . " 远程目录：" . get(item[1], "remotepath", "")
     endfor
 endfunction
