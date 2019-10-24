@@ -87,7 +87,7 @@ let g:gruvbox_contrast_dark="hard"
 "去除第一行的帮助提示
 let NERDTreeMinimalUI=1
 " 打开/关闭 NERDTree
-nmap <silent> <F2> :NERDTreeCWD<CR>
+nmap <silent> <F2> :NERDTree<CR>
 " 打开 NERDTree 并选中当前文件
 nmap <Leader>t :NERDTreeFind<CR>
 " 过滤文件和文件夹的显示
@@ -393,6 +393,9 @@ let g:ycm_key_list_stop_completion = ['<C-y>', '<CR>']
 let g:ycm_key_invoke_completion = "<C-x><C-h>"
 "设置YCM的文件名补全时，相对路径是按照vim的当前工作目录还是活动缓冲区中的文件所在目录来解释。0是按照文件所在目录
 let g:ycm_filepath_completion_use_working_dir = 0
+"此选项控制使用哪种排名和过滤算法 '1'：使用ycmd的缓存和过滤逻辑。 '0'：使用clangd的缓存和过滤逻辑。
+let g:ycm_clangd_uses_ycmd_caching = 0
+let g:ycm_clangd_args = ['-log=verbose', '-pretty']
 "打开/关闭编译错误列表
 nnoremap <leader>eo :lopen<CR>
 nnoremap <leader>ec :lclose<CR>
@@ -459,7 +462,7 @@ let g:ycm_echo_current_diagnostic = 1
 "此选项控制在文件中检测到错误或警告时向用户显示的最大诊断数
 let g:ycm_max_diagnostics_to_display = 30
 "设置YCM的日志记录级别，可以是debug，info，warning，error或critical。debug是最详细的
-let g:ycm_server_log_level = 'debug'
+let g:ycm_server_log_level = 'error'
 "--------------------------------------------------------------------------
 
 "------------------------------------ vim-signify -------------------------
