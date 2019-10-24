@@ -168,9 +168,6 @@ endif
 
 set t_Co=256  
 
-" 修改Lender为','默认为'\'
-let g:mapleader = ","
-
 source ~/.vim/plug.vim
 source ~/.vim/self_conf.vim
 source ~/.vim/vundle_conf.vim

@@ -1,3 +1,6 @@
+" 修改Lender为','默认为'\'
+let g:mapleader = ","
+
 call plug#begin('~/.vim/plugged')
 
 let nerdtree_cmds = ['NERDTreeFind', 'NERDTree', 'NERDTreeToggle']
@@ -594,7 +597,7 @@ let g:DoxygenToolkit_classTag = "Class: "
 let g:DoxygenToolkit_authorName = "CaseZheng"
 let g:doxygen_enhanced_color = 1
 "let g:load_doxygen_syntax = 1
-"作者
+"文件注释
 nmap <Leader>dl :DoxAuthor<CR>
 "函数/类注释
 nmap <Leader>dd :Dox<CR>
@@ -636,8 +639,11 @@ autocmd BufNewFile * normal G
 "更新TAG
 map <F10> :call Do_CsTag()<CR><CR>
 map <F11> :call ResetCscope(1, 1)<CR>
+map <F3> :call CloseAllBuffer()<CR>
+map <F5> :call PrintKeyMap()<CR>
 
 iab xdatetime <c-r>=strftime("%Y-%m-%d %H:%M:%S")<CR>
+iab xdate <c-r>=strftime("%Y-%m-%d")<CR>
 
 " 取消高亮
 nmap <leader>nh :nohl<CR>
