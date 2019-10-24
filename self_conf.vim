@@ -298,6 +298,12 @@ au BufEnter * command! -buffer PL call ProjectList()
 au BufEnter * command! -buffer PI call ProjectInfo()
 au BufEnter * command! -buffer -nargs=1 PO call ProjectOpen(<f-args>)
 
+function DuplicateRemoval()
+    execute(':g/^\(.*\)$\n\1$/d')
+endfunction
+
+au BufEnter * command! -buffer UNIQ call DuplicateRemoval()
+
 function PrintKeyMap()
     echo "           # F1            # vim帮助文档                # F2        # 打开并强制刷新NERD目录   # F3  # 关闭所有的buffer"
     echo "           # F4            # 打开/关闭tags目录          # F5        # 打开按键帮助             # F6  # C/C++代码 cpp文件与h文件切换"
@@ -333,4 +339,5 @@ function PrintKeyMap()
     echo "           #               #                            #           #                          #     # "
     echo "杂项       # (             # 窗口跳转                   # ,u        # 编辑记录查看和复原       # ,nh # 去除高亮"
     echo "           # xdatetime空格 # 打印%Y-%m-%d %H:%M:%S      # xdate空格 # 打印%Y-%m-%d             #     # "
+    echo "           # :UNIQ         # 去除重复行                 #           #                          # "
 endfunction
