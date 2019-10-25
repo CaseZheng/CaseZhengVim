@@ -130,7 +130,7 @@ if (g:iswindows == 1)
             echo 'ip或username或password或项目路径或远程逻辑不存在'
             return
         endif
-        let s:filemask   = "|*.git;*.svn;*.vscode;*.vsdx,cscope.*;*git/;*svn/;*vscode/;*.xlsx;*.xls;*.pptx;*.ppt;*.docx;*.doc;"
+        let s:filemask   = "|*.git;*.svn;*.vscode;*.vsdx;cscope.*;*git/;*svn/;*vscode/;*.xlsx;*.xls;*.pptx;*.ppt;*.docx;*.doc;"
         if(a:ignore == "1" && type(dirmask) == 3)
             echo '忽略目录:'.string(dirmask)
             for diritem in dirmask
@@ -138,7 +138,7 @@ if (g:iswindows == 1)
                 let s:filemask = s:filemask . "*" . diritem . "/;"
             endfor
         endif
-        let s:commmsg = "!start /b WinSCP.exe /console /command   "
+        let s:commmsg = "!start WinSCP.exe /console /command   "
         let s:commmsg = s:commmsg . "  \"option batch on\"   "
         let s:commmsg = s:commmsg . "  \"option confirm off\"   "
         let s:commmsg = s:commmsg . "  \"option echo off\"   "
@@ -189,7 +189,7 @@ if (g:iswindows == 1)
         "echo s:relativedir
         let s:remotepath = s:remotepath.s:relativedir
         echo s:remotepath
-        let s:commmsg = "!start /b WinSCP.exe /console /command   "
+        let s:commmsg = "!start WinSCP.exe /console /command   "
         let s:commmsg = s:commmsg . "  \"option batch on\"   "
         let s:commmsg = s:commmsg . "  \"option confirm off\"   "
         let s:commmsg = s:commmsg . "  \"option echo off\"   "
