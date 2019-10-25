@@ -84,7 +84,7 @@ function Do_CsTag()
             " 会自动查找当前目录的cscope.files文件
             silent! execute "!cscope -b -q -k"  
         else
-            silent! execute "!start /b cscope -b -k"
+            silent! execute "!cscope -b -k"
         endif
         call ResetCscope(1, 1)
     endif
