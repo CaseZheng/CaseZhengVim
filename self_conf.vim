@@ -159,7 +159,7 @@ if (g:iswindows == 1)
     au BufEnter * command! -buffer UW call SynFile("0", "1")
 
     function SendFileToServer()
-        silent :set fileencoding=utf-8
+        "silent :set fileencoding=utf-8
         silent :w
         if(g:projectName == "")
             echo "未打开任何项目"
