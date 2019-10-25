@@ -74,7 +74,7 @@ function Do_CsTag()
         if(g:iswindows!=1)
             silent! execute "!ctags -f cscope.tags -L cscope.files --c++-kinds=+p --c-kinds=+p --fields=+nmKiaftl --extra=+fq --languages=C++,C,Python,Make,Sh,Lua,Vim  --langmap=c++:+.inl"
         else
-            silent! execute "!start ctags  -f cscope.tags -L cscope.files --c++-kinds=+p --c-kinds=+p --fields=+nmKiaftl --extra=+fq --languages=C++,C,Python,Make,Sh,Lua,Vim  --langmap=c++:+.inl"
+            silent! execute "!start /b ctags  -f cscope.tags -L cscope.files --c++-kinds=+p --c-kinds=+p --fields=+nmKiaftl --extra=+fq --languages=C++,C,Python,Make,Sh,Lua,Vim  --langmap=c++:+.inl"
         endif
     else
         echohl WarningMsg | echo "Fail ctags" | echohl None
@@ -84,7 +84,7 @@ function Do_CsTag()
             " 会自动查找当前目录的cscope.files文件
             silent! execute "!cscope -b -q -k"  
         else
-            silent! execute "!cscope -b -k"  
+            silent! execute "!start /b cscope -b -k"
         endif
         call ResetCscope(1, 1)
     endif
@@ -138,7 +138,7 @@ if (g:iswindows == 1)
                 let s:filemask = s:filemask . "*" . diritem . "/;"
             endfor
         endif
-        let s:commmsg = "!start WinSCP.exe /console /command   "
+        let s:commmsg = "!start /b WinSCP.exe /console /command   "
         let s:commmsg = s:commmsg . "  \"option batch on\"   "
         let s:commmsg = s:commmsg . "  \"option confirm off\"   "
         let s:commmsg = s:commmsg . "  \"option echo off\"   "
@@ -189,7 +189,7 @@ if (g:iswindows == 1)
         "echo s:relativedir
         let s:remotepath = s:remotepath.s:relativedir
         echo s:remotepath
-        let s:commmsg = "!start WinSCP.exe /console /command   "
+        let s:commmsg = "!start /b WinSCP.exe /console /command   "
         let s:commmsg = s:commmsg . "  \"option batch on\"   "
         let s:commmsg = s:commmsg . "  \"option confirm off\"   "
         let s:commmsg = s:commmsg . "  \"option echo off\"   "
