@@ -147,7 +147,7 @@ if (g:iswindows == 1)
         let s:commmsg = s:commmsg . "  \"synchronize remote ".s:localpath." ".s:remotepath." -delete -criteria=time -filemask=".s:filemask."\" "
         let s:commmsg = s:commmsg . "  \"close\"  "
         let s:commmsg = s:commmsg . "  \"exit\"  "
-        echo s:commmsg
+        echom s:commmsg
         silent! execute s:commmsg
         call setreg('+', s:remotepath)
         echo 'success'
@@ -198,9 +198,8 @@ if (g:iswindows == 1)
         let s:commmsg = s:commmsg . "  \"put " . s:localpath . " " . s:remotepath . "\"  "
         let s:commmsg = s:commmsg . "  \"close\"  "
         let s:commmsg = s:commmsg . "  \"exit\"  "
-        echo s:commmsg
+        echom s:commmsg
         silent! execute s:commmsg
-
     endfunction
 
     au BufEnter * command! -buffer W call SendFileToServer()
