@@ -1,3 +1,18 @@
+if(has("win32") || has("win95") || has("win64") || has("win16"))
+    set shell=C:\windows\system32\cmd.exe
+    let g:iswindows=1
+else
+	let g:iswindows=0
+endif
+
+if(g:iswindows)
+	let $HOMEPATH = expand("~/")
+	let $PATH = $PATH.";".$HOMEPATH.".vim/exec/"
+else
+    let g:ctags_ignore_directory = " -path '/usr/local/include' -prune -o"
+    let g:ctags_ignore_directory = g:ctags_ignore_directory . " -path '/usr/include' -prune -o"
+endif
+
 scriptencoding utf-8
 " ============================================================================
 " 基础配置
