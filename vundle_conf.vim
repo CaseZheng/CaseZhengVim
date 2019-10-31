@@ -25,7 +25,9 @@ Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 " markdown语法高亮
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 " 代码搜索
-Plug 'dyng/ctrlsf.vim', { 'on': ['<Plug>CtrlSF', 'CtrlSFToggle'] }
+Plug 'dyng/ctrlsf.vim', { 'tag': 'v1.9.0', 'on': ['<Plug>CtrlSF', 'CtrlSFToggle'] }
+" 多重光标选取功能
+Plug 'terryma/vim-multiple-cursors'
 " 窗口管理器
 Plug 't9md/vim-choosewin'
 " 快速注释/解开注释
@@ -519,7 +521,7 @@ let g:ctrlsf_mapping = {
     \ 'prev': 'N',
     \ }
 let g:ctrlsf_position = 'bottom'
-let g:ctrlsf_winsize = '50%'
+let g:ctrlsf_winsize = '30%'
 nmap <Leader>ft <Plug>CtrlSFPrompt
 vmap <Leader>ft <Plug>CtrlSFVwordPath
 nmap <leader>fw <Plug>CtrlSFCwordPath<CR>
@@ -607,7 +609,7 @@ nmap <Leader>dd :Dox<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""incsearch"""""""""""""""""""""""""""""""""""
-map /  <Plug>(incsearch-forward)
+"map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map n  <Plug>(incsearch-nohl-n)
 map N  <Plug>(incsearch-nohl-N)

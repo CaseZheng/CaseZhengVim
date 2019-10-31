@@ -6,7 +6,7 @@ function ResetCscope(cscope, youcompleteme)
         endif
     endif
     if 1 == a:youcompleteme
-        execute(":YcmRestartServer")
+        silent! execute(":YcmRestartServer")
     endif
 endfunction
 
