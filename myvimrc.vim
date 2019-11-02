@@ -168,7 +168,9 @@ set undofile                      " persistent undos - undo after you re-open th
 set undodir=~/.vim/dirs/undos
 set viminfo+=n~/.vim/dirs/viminfo
 " 将~/.vim加入到runtimepath中，使用set rtp可查看runtimepath的值
-set rtp+=~/.vim/
+if(g:iswindows)
+    set rtp+=~/.vim/
+endif
 
 " create needed directories if they don't exist
 if !isdirectory(&backupdir)
@@ -190,11 +192,6 @@ source ~/.vim/vundle_conf.vim
 set background=dark
 " 设置背景颜色
 syntax enable
-if(g:iswindows==0)
-    colorscheme gruvbox
-else
-    colorscheme gruvbox
-end
 
 "让vim换行后不自动添加新的注释行
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o

@@ -83,6 +83,9 @@ let g:gruvbox_bold=0
 "启用斜体注释 Enables italic for comments.  default: 1
 let g:gruvbox_italicize_comments=0
 let g:gruvbox_contrast_dark="hard"
+if(isdirectory(expand("~/.vim/plugged/gruvbox")))
+    colorscheme gruvbox
+endif
 "---------------------------------------------------------------------------------
 
 "----------------------------------- nerdtree ------------------------------------
@@ -113,6 +116,10 @@ let NERDTreeIgnore = [
     "\ '^.gitignore$',
     "\ '^.gitmodules$',
     \ ]
+
+let NERDTreeDirArrowExpandable="-"
+let NERDTreeDirArrowCollapsible="+"
+
 
 " 设置宽度
 let NERDTreeWinSize=40
