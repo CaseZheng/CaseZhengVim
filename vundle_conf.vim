@@ -25,7 +25,7 @@ Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 " markdown语法高亮
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 " 代码搜索
-Plug 'dyng/ctrlsf.vim', { 'tag': 'v1.9.0', 'on': ['<Plug>CtrlSF', 'CtrlSFToggle'] }
+Plug 'dyng/ctrlsf.vim', { 'on': ['<Plug>CtrlSF', 'CtrlSFToggle'] }
 " 多重光标选取功能
 Plug 'terryma/vim-multiple-cursors'
 " 窗口管理器
@@ -375,7 +375,7 @@ let g:ycm_complete_in_comments = 1
 "打开字符串自动补全功能。0代表关闭。这用于c系语言中#include后列出头文件很有用，如果设置为0则关闭文件名补全功能
 let g:ycm_complete_in_strings = 1
 "让YCM可以收集注释中的文字来分析以用于补全，默认为0，只能收集代码中的文字来分析
-let g:ycm_collect_identifiers_from_comments_and_strings = 1
+let g:ycm_collect_identifiers_from_comments_and_strings = 0
 "设置.ycm_extra_conf.py的全局路径，避免每次都需要复制到当前目录.若为空则每次都需复制.ycm_extra_conf.py文件到当前目录
 let g:ycm_global_ycm_extra_conf = '~/.vim/ycm_extra_conf.py'
 "允许自动加载.ycm_extra_conf.py，不再提示 ，设置为1，则每次都提示用于确认该文件是否安全
@@ -523,10 +523,6 @@ let g:ctrlsf_default_root='cwd'     "设置在当前工作目录下搜索
 let g:ctrlsf_case_sensitive='no'    "大小写不敏感
 let g:ctrlsf_auto_close=0   "设置不自动关闭
 let g:ctrlsf_ignore_dir = ['cscope.out', 'cscope.tags', 'cscope.files']
-let g:ctrlsf_mapping = {
-    \ 'next': 'n',
-    \ 'prev': 'N',
-    \ }
 let g:ctrlsf_position = 'bottom'
 let g:ctrlsf_winsize = '30%'
 nmap <Leader>ft <Plug>CtrlSFPrompt
