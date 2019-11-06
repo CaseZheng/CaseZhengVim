@@ -628,11 +628,12 @@ map N  <Plug>(incsearch-nohl-N)
 """"""""""""""""""""""""""""""""""gitv""""""""""""""""""""""""""""""""""""""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+set tags=cscope.tags
 if has("cscope")
+    "设定cst选项同时搜索cscope数据库和标签文件
     set cst
-    set csto=1
-    set nocsverb
-    let g:cscope_silent = 1
+    "如果csto被设为0,cscope数据库先被搜索,搜索失败的情况下在搜索标签文件.如果csto被设为1,标签文件会在cscope数据库之前被搜索
+    set csto=0
     set csverb
     nmap <leader>fs :cs find s <C-R>=expand("<cword>")<CR><CR>	
     nmap <leader>fg :cs find g <C-R>=expand("<cword>")<CR><CR>	
