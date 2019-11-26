@@ -521,7 +521,12 @@ let g:ctrlsf_ackprg = 'ag'
 let g:ctrlsf_default_view_mode='compact'
 let g:ctrlsf_default_root='cwd'     "设置在当前工作目录下搜索
 let g:ctrlsf_case_sensitive='no'    "大小写不敏感
-let g:ctrlsf_auto_close=0   "设置不自动关闭
+"设置自动关闭,不同模式下不同设置
+let g:ctrlsf_auto_close = {
+    \ "normal" : 0,
+    \ "compact": 0
+    \}
+let g:ctrlsf_populate_qflist = 1    "结果输出到quickfix
 let g:ctrlsf_ignore_dir = ['cscope.out', 'cscope.tags', 'cscope.files']
 let g:ctrlsf_position = 'bottom'
 let g:ctrlsf_winsize = '30%'
