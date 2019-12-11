@@ -526,10 +526,16 @@ let g:ctrlsf_auto_close = {
     \ "normal" : 0,
     \ "compact": 0
     \}
-let g:ctrlsf_populate_qflist = 1    "结果输出到quickfix
+"搜索聚焦结果窗口的时机
+let g:ctrlsf_auto_focus = {
+    \ "at" : "start"
+    \}
+let g:ctrlsf_populate_qflist = 0    "结果同时输出到quickfix
 let g:ctrlsf_ignore_dir = ['cscope.out', 'cscope.tags', 'cscope.files']
 let g:ctrlsf_position = 'bottom'
 let g:ctrlsf_winsize = '30%'
+"修改文件后保存确认提示
+let g:ctrlsf_confirm_save = 0
 nmap <Leader>ft <Plug>CtrlSFPrompt
 vmap <Leader>ft <Plug>CtrlSFVwordPath
 nmap <leader>fw <Plug>CtrlSFCwordPath<CR>
