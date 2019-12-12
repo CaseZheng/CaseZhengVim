@@ -87,8 +87,6 @@ endif
 "---------------------------------------------------------------------------------
 
 "----------------------------------- nerdtree ------------------------------------
-"去除第一行的帮助提示
-let NERDTreeMinimalUI=1
 " 打开/关闭 NERDTree
 nmap <silent> <F2> :NERDTree<CR>
 " 打开 NERDTree 并选中当前文件
@@ -117,21 +115,17 @@ let NERDTreeIgnore = [
 
 let NERDTreeDirArrowExpandable="-"
 let NERDTreeDirArrowCollapsible="+"
-
-
-" 设置宽度
-let NERDTreeWinSize=40
-" 排序
-let NERDTreeCaseSensitiveSort=1
-"let NERDTreeBookmarksFile=       "指定书签文件
-let NERDTreeHighlightCursorline=1       "高亮显示光标所在行
-let NERDTreeShowBookmarks=0             "当打开 NERDTree 窗口时，自动显示 Bookmarks
-" 默认显示文件
-let NERDTreeShowFiles=1
-let NERDTreeShowHidden=1                "默认显示隐藏文件
-"let NERDTreeShowLineNumbers=1           "默认显示行号
-"let NERDTreeWinPos='right'              "将 NERDTree 的窗口设置在 vim 窗口的右侧，默认在左
-let NERDChristmasTree=1                 "让树更好看
+let NERDTreeWinSize=40            " 设置宽度
+let NERDTreeCaseSensitiveSort=1   " 排序
+let NERDTreeHighlightCursorline=1 " 高亮显示光标所在行
+let NERDTreeShowBookmarks=0       " 当打开 NERDTree 窗口时，自动显示 Bookmarks
+let NERDTreeShowFiles=1           " 默认显示文件
+let NERDTreeShowHidden=1          " 默认显示隐藏文件
+let NERDChristmasTree=1           " 让树更好看
+let NERDTreeMinimalUI=1           " 去除第一行的帮助提示
+"let NERDTreeBookmarksFile=    " 指定书签文件
+"let NERDTreeShowLineNumbers=1 " 默认显示行号
+"let NERDTreeWinPos='right'    " 将 NERDTree 的窗口设置在 vim 窗口的右侧，默认在左
 "--------------------------------------------------------------------------------
 
 "---------------------------- nerdtree-git-plugin -------------------------------
