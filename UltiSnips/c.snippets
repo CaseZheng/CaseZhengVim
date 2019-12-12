@@ -1,0 +1,91 @@
+###########################################################################
+#                            TextMate Snippets                            #
+###########################################################################
+
+priority -10
+
+snippet #def "#define ..."
+#define $1
+endsnippet
+
+snippet #ifn "#ifndef ... #define ... #endif"
+#ifndef ${1/([A-Za-z0-9_]+).*/$1/}
+#define ${1:SYMBOL} ${2:value}
+#endif /* ifndef $1 */
+endsnippet
+
+snippet #if "#if #endif" b
+#if ${1:0}
+${VISUAL}$0
+#endif
+endsnippet
+
+snippet main "main() (main)"
+int main(int argc, char *argv[])
+{
+	${VISUAL}$0
+	return 0;
+}
+endsnippet
+
+snippet fori "for int loop (fori)"
+for(${4:int} ${2:i}=0; $2<${1:count}; ${3:++$2})
+{
+	${VISUAL}$0
+}
+endsnippet
+
+snippet fprintf "fprintf ..."
+fprintf(${1:stderr}, "${2:%s}\n"${2/([^%]|%%)*(%.)?.*/(?2:, :\);)/}$3${2/([^%]|%%)*(%.)?.*/(?2:\);)/}
+endsnippet
+
+snippet if "if .. "
+if(${1:/* condition */})
+{
+	${VISUAL}$0
+}
+endsnippet
+
+snippet elseif "else if .. (eli)"
+else if(${1:/* condition */})
+{
+	${VISUAL}$0
+}
+endsnippet
+
+snippet else "else .. "
+else
+{
+	${VISUAL}$0
+}
+endsnippet
+
+snippet printf "printf .. (printf)"
+printf("${1:%s}\n"${1/([^%]|%%)*(%.)?.*/(?2:, :\);)/}$2${1/([^%]|%%)*(%.)?.*/(?2:\);)/}
+endsnippet
+
+snippet struct "struct"
+struct ${1:`!p snip.rv = (snip.basename or "name") + "_t"`}
+{
+	${0:/* data */}
+};
+endsnippet
+
+snippet filehead "File Header"
+/**
+* FileName: `!p snip.rv = fn`
+* Description: ${2:Description}
+* Author: CaseZheng
+* Version: 
+* Date: `!v strftime("%Y-%m-%d")`
+*/
+${0}
+endsnippet
+
+snippet funchead "Function Header" 
+/**
+* Description: ${2:Description}
+*/
+endsnippet
+
+# vim:ft=snippets:

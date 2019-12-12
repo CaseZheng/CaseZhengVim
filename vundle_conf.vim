@@ -32,8 +32,6 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 't9md/vim-choosewin'
 " 快速注释/解开注释
 Plug 'scrooloose/nerdcommenter'
-" 注释快速生成
-Plug 'vim-scripts/DoxygenToolkit.vim'
 " tab管理工具
 Plug 'kien/tabman.vim'
 "让cpp文件在.h和.cpp文件中切换
@@ -43,7 +41,7 @@ Plug 'python-mode/python-mode', { 'for': 'python'}
 " 代码块补全
 Plug 'SirVer/ultisnips'
 " 代码块集合
-Plug 'honza/vim-snippets'
+"Plug 'honza/vim-snippets'
 " 自动补全插件
 if(g:iswindows)
     Plug 'CaseZheng/YouCompleteMe'
@@ -601,29 +599,6 @@ let g:UltiSnipsJumpForwardTrigger="<C-j>"
 let g:UltiSnipsJumpBackwardTrigger="<C-k>"
 let g:UltiSnipsEditSplit="vertical"
 "--------------------------------------------------------------------------
-
-"""""""""""""""""""""""""""""""""""""""" 注释 DoxygenToolkit""""""""""""""""
-let g:DoxygenToolkit_briefTag_funcName = "yes"
-"let g:DoxygenToolkit_commentType = "C++"
-let g:DoxygenToolkit_briefTag_pre = "Description: "            "描述
-let g:DoxygenToolkit_templateParamTag_pre = "TTaram: "
-let g:DoxygenToolkit_paramTag_pre = "Param: "                "参数
-let g:DoxygenToolkit_returnTag = "Return: "                 "返回值
-let g:DoxygenToolkit_throwTag_pre = "Throw " " @exception is also valid
-let g:DoxygenToolkit_fileTag = "FileName: "                     "文件名
-let g:DoxygenToolkit_dateTag = "Date: "                     "日期
-let g:DoxygenToolkit_authorTag = "Author: "                 "作者
-let g:DoxygenToolkit_versionTag = "Version: "               "版本
-let g:DoxygenToolkit_blockTag = "Name: "
-let g:DoxygenToolkit_classTag = "Class: "
-let g:DoxygenToolkit_authorName = "CaseZheng"
-let g:doxygen_enhanced_color = 1
-"let g:load_doxygen_syntax = 1
-"文件注释
-nmap <Leader>dl :DoxAuthor<CR>
-"函数/类注释
-nmap <Leader>dd :Dox<CR>
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""incsearch"""""""""""""""""""""""""""""""""""
 "map /  <Plug>(incsearch-forward)
