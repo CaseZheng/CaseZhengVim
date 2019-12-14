@@ -4,6 +4,8 @@ let g:mapleader = ","
 call plug#begin('~/.vim/plugged')
 
 let nerdtree_cmds = ['NERDTreeFind', 'NERDTree', 'NERDTreeToggle']
+" 高亮多个单词
+Plug 'lfv89/vim-interestingwords'
 " vim 树形目录插件
 Plug 'scrooloose/nerdtree', { 'on': nerdtree_cmds }
 " nerdtree目录git支持
@@ -34,10 +36,6 @@ Plug 't9md/vim-choosewin'
 Plug 'scrooloose/nerdcommenter'
 " tab管理工具
 Plug 'kien/tabman.vim'
-"让cpp文件在.h和.cpp文件中切换
-Plug 'vim-scripts/a.vim', { 'for': ['cpp', 'h', 'c', 'hpp', 'cc'] }
-" python插件
-Plug 'python-mode/python-mode', { 'for': 'python'}
 " 代码块补全
 Plug 'SirVer/ultisnips'
 " 代码块集合
@@ -60,8 +58,6 @@ Plug 'sjl/gundo.vim'
 Plug 'godlygeek/tabular', { 'on': 'Tabularize' }
 " 配色方案
 Plug 'morhetz/gruvbox'
-" 搜索 incsearch 增强vim中自带的 ? 和 ／ 搜索功能， 并且支持更加高级的正则表达式匹配, vim默认搜索是只能高亮一个当前匹配的字符，但是 incsearch 却可以同时高亮所有匹配的字符
-Plug 'haya14busa/incsearch.vim', { 'on': ['<Plug>(incsearch-forward)', '<Plug>(incsearch-backward)', '<Plug>(incsearch-nohl-n)', '<Plug>(incsearch-nohl-N)']}
 " 快速跳转
 Plug 'easymotion/vim-easymotion', { 'on': ['<Plug>(easymotion-linebackward)', '<Plug>(easymotion-j)', '<Plug>(easymotion-k)', '<Plug>(easymotion-lineforward)', '<Plug>(easymotion-w)', '<Plug>(easymotion-b)'] }
 
@@ -296,55 +292,6 @@ let g:airline_symbols.readonly = ' '
 let g:airline_symbols.linenr = ' '
 "--------------------------------------------------------------------------
     
-"------------------------------------- pymode ------------------------------
-if 1
-    " Python-mode
-    " Activate rope
-    " Keys: 按键：
-    " K             Show python docs 显示Python文档
-    " <Ctrl-Space>  Rope autocomplete  使用Rope进行自动补全
-    " <Ctrl-c>g     Rope goto definition  跳转到定义处
-    " <Ctrl-c>d     Rope show documentation  显示文档
-    " <Ctrl-c>f     Rope find occurrences  寻找该对象出现的地方
-    " <Leader>b     Set, unset breakpoint (g:pymode_breakpoint enabled) 断点
-    " [[            Jump on previous class or function (normal, visual, operator modes)
-    " ]]            Jump on next class or function (normal, visual, operator modes)
-    "               跳转到前一个/后一个类或函数
-    " [M            Jump on previous class or method (normal, visual, operator modes)
-    " ]M            Jump on next class or method (normal, visual, operator modes)
-    "               跳转到前一个/后一个类或方法
-    let g:pymode_rope = 0
-
-    " Documentation 显示文档
-    let g:pymode_doc = 1
-    let g:pymode_doc_key = '<leader>k'
-
-    " Linting 代码查错，=1为启用
-    let g:pymode_lint = 0
-    let g:pymode_lint_checker = 'pyflakes,pep8'
-    " Auto check on save
-    let g:pymode_lint_write = 1 " 0为关闭
-
-    " Support virtualenv
-    let g:pymode_virtualenv = 1
-
-    " Enable breakpoints plugin
-    let g:pymode_breakpoint = 0 " 0为关闭
-    "let g:pymode_breakpoint_bind = '<leader>b'
-
-    " syntax highlighting 高亮形式
-    let g:pymode_syntax = 1
-    let g:pymode_syntax_all = 1
-    let g:pymode_syntax_indent_errors = g:pymode_syntax_all
-    let g:pymode_syntax_space_errors = g:pymode_syntax_all
-
-    " Don't autofold code 禁用自动代码折叠
-    let g:pymode_folding = 0
-
-    let g:pymode_options_max_line_length = 200
-endif
-"--------------------------------------------------------------------------
-
 "-----------------------------------YouCompleteMe--------------------------
 "让Vim的补全菜单行为与一般IDE一致
 set completeopt=longest,menu
@@ -553,10 +500,6 @@ if(has('python3'))
 endif
 "---------------------------------------------------------------------------
 
-"----------------------------------------------- a.vim ---------------------
-map <F6> :A<CR>
-"---------------------------------------------------------------------------
-
 "-------------------------------------- vim-easymotion ----------------------------
 let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_smartcase = 1
@@ -594,18 +537,13 @@ let g:UltiSnipsJumpBackwardTrigger="<C-k>"
 let g:UltiSnipsEditSplit="vertical"
 "--------------------------------------------------------------------------
 
-""""""""""""""""""""""""""""""""incsearch"""""""""""""""""""""""""""""""""""
-"map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map n  <Plug>(incsearch-nohl-n)
-map N  <Plug>(incsearch-nohl-N)
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
 """"""""""""""""""""""""""""""vim-fugitive""""""""""""""""""""""""""""""""""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""gitv""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""vim-interestingwords"""""""""""""""""""""""""""""""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 set tags=cscope.tags

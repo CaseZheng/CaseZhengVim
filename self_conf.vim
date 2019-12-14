@@ -312,7 +312,7 @@ endif
 
 function PrintKeyMap()
     echo "           # F1            # vim帮助文档                # F2        # 打开并强制刷新NERD目录   # F3   # 关闭所有的buffer"
-    echo "           # F4            # 打开/关闭tags目录          # F5        # 打开按键帮助             # F6   # C/C++代码 cpp文件与h文件切换"
+    echo "           # F4            # 打开/关闭tags目录          # F5        # 打开按键帮助             # F6   # "
     echo "           # F7            #                            # F8        #                          # F9   # "
     echo "           # F10           # cscope tags 重新生成       # F11       # 重新启动cscope           # F12  # "
     echo "           #               #                            #           #                          #      # "
