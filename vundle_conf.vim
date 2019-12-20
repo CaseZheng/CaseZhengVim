@@ -10,6 +10,8 @@ Plug 'lfv89/vim-interestingwords'
 Plug 'scrooloose/nerdtree', { 'on': nerdtree_cmds }
 " nerdtree目录git支持
 Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': nerdtree_cmds }
+" nerdtree目录svn支持 
+"Plug 'CaseZheng/nerdtree-svn-plugin'
 " c++高亮增强 C++11/14 STL
 Plug 'octol/vim-cpp-enhanced-highlight', { 'for': ['cpp', 'h', 'c', 'hpp', 'cc'] }
 " Airline 状态栏
@@ -46,7 +48,7 @@ if(g:iswindows)
 else
     Plug 'ycm-core/YouCompleteMe'
 endif
-" 同时支持Git 和 Svn ，速度也是相当不错的，高亮当前修改.　比较全面的一个插件
+" 同时支持Git 和 Svn ，高亮当前修改
 Plug 'mhinz/vim-signify'
 " git支持
 Plug 'tpope/vim-fugitive'
@@ -183,31 +185,6 @@ let g:tagbar_compact = 1
 let g:tagbar_width = 30
 "当编辑代码时，在Tagbar自动追踪变量
 let g:tagbar_autoshowtag = 1
-"在tagbar中添加Lua支持
-let g:tagbar_type_lua = {
-    \ 'ctagstype' : 'MYLUA',
-    \ 'kinds' : [
-        \ 'f:Function',
-        \ 'e:Item',
-        \ 'v:Table',
-        \ 'm:Moudle',
-    \]
-\}
-"在tagbar中添加markdown支持
-let g:tagbar_type_markdown = {
-    \ 'ctagstype': 'markdown',
-    \ 'ctagsbin' : '~/.vim/exec/markdown2ctags.py',
-    \ 'ctagsargs' : '-f - --sort=yes',
-    \ 'kinds' : [
-        \ 's:sections',
-        \ 'i:images'
-    \ ],
-    \ 'sro' : '|',
-    \ 'kind2scope' : {
-        \ 's' : 'section',
-    \ },
-    \ 'sort': 0,
-\ }
 "--------------------------------------------------------------------------
 
 "------------------------------vim-markdown--------------------------------
@@ -324,7 +301,7 @@ let g:syntastic_always_populate_loc_list = 1
 "使用vim的语法标识符来建立标识符数据库
 let g:ycm_seed_identifiers_with_syntax = 1 
 "开启tags补全引擎 ，在vim中用:h 'tags’命令来查看相关信息，只支持ctags，切必须使用--fields=+l选项
-let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_collect_identifiers_from_tags_files = 0
 "为当前补全选项在vim顶部增加预览窗口，用来显示函数原型等信息，如果vim的completeopt已经设置为prieview则不会有影响，:h completeopt查看相关信息，用:set completeopt?查看当前vim的设置，默认为0
 let g:ycm_add_preview_to_completeopt = 0
 "启用ultisnips补全，1代表允许
@@ -546,7 +523,6 @@ let g:UltiSnipsEditSplit="vertical"
 """""""""""""""""""""""""vim-interestingwords"""""""""""""""""""""""""""""""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-set tags=cscope.tags
 if has("cscope")
     "设定cst选项同时搜索cscope数据库和标签文件
     set cst
@@ -557,7 +533,6 @@ if has("cscope")
     nmap <leader>fg :cs find g <C-R>=expand("<cword>")<CR><CR>	
     nmap <leader>fc :cs find c <C-R>=expand("<cword>")<CR><CR>	
 endif
-
 
 set wildmenu
 set wildmode=full

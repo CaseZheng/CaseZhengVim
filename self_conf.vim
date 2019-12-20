@@ -12,19 +12,14 @@ endfunction
 
 function Do_CsTag()
     let dir = getcwd()
-    let s:tagsdeleted=0
     let s:csfilesdeleted=0
     let s:csoutdeleted=0
     echohl WarningMsg | echo dir | echohl None
     if filereadable("cscope.tags")
         if(g:iswindows==1)
-            let s:tagsdeleted=delete(dir."\\"."cscope.tags")
+            call delete(dir."\\"."cscope.tags")
         else
-            let s:tagsdeleted=delete("./"."cscope.tags")
-        endif
-        if(s:tagsdeleted!=0)
-            echohl WarningMsg | echo "Fail to do tags! I cannot delete the tags" | echohl None
-        return
+            call delete("./"."cscope.tags")
         endif
     endif
     
@@ -69,15 +64,6 @@ function Do_CsTag()
         let s:command_msg = "!dir /s/b *.c,*.cpp,*.h,*.hpp,*.cc,*.inl "
         let s:command_msg = s:command_msg . " > cscope.files"
         silent! execute s:command_msg
-    endif
-    if(executable('ctags'))
-        if(g:iswindows!=1)
-            silent! execute "!ctags -f cscope.tags -L cscope.files --c++-kinds=+p --c-kinds=+p --fields=+nmKiaftl --extra=+fq --languages=C++,C,Python,Make,Sh,Lua,Vim  --langmap=c++:+.inl"
-        else
-            silent! execute "!start /b ctags  -f cscope.tags -L cscope.files --c++-kinds=+p --c-kinds=+p --fields=+nmKiaftl --extra=+fq --languages=C++,C,Python,Make,Sh,Lua,Vim  --langmap=c++:+.inl"
-        endif
-    else
-        echohl WarningMsg | echo "Fail ctags" | echohl None
     endif
     if(executable('cscope') && has("cscope") )
         if(g:iswindows!=1)
@@ -252,10 +238,6 @@ function ProjectOpen(name)
     silent! only "只剩余一个窗口
     call CloseAllBuffer()
     execute(":NERDTree")
-    let s:tags_files = get(s:info, 'tags', 0)
-    if s:tags_files != 0
-        set tags+=s:tags_files
-    endif
     call ResetCscope(get(s:info, 'cscope', 0), get(s:info, 'youcompleteme', 0))
     echo 'file: '.expand('%').', cwd: '.getcwd().', lines: '.line('$')
     let &titlestring=a:name
@@ -314,7 +296,7 @@ function PrintKeyMap()
     echo "           # F1            # vim帮助文档                # F2        # 打开并强制刷新NERD目录   # F3   # 关闭所有的buffer"
     echo "           # F4            # 打开/关闭tags目录          # F5        # 打开按键帮助             # F6   # "
     echo "           # F7            #                            # F8        #                          # F9   # "
-    echo "           # F10           # cscope tags 重新生成       # F11       # 重新启动cscope           # F12  # "
+    echo "           # F10           # cscope 重新生成            # F11       # 重新启动cscope           # F12  # "
     echo "           #               #                            #           #                          #      # "
     echo "项目       # :PO           # 打开项目                   # :PL       # 项目列表                 # :PE  # 项目编辑"
     echo "           # :PI           # 展示当前项目信息           #           #                          #      # "
