@@ -542,8 +542,8 @@ set wildmode=full
 autocmd BufNewFile * normal G
 
 "更新TAG
-map <F10> :call Do_CsTag()<CR><CR>
-map <F11> :call ResetCscope(1, 1)<CR>
+map <F10> :call GenTags()<CR><CR>
+map <F11> :call ResetTags()<CR>
 map <F3> :call CloseAllBuffer()<CR>
 map <F5> :call PrintKeyMap()<CR>
 

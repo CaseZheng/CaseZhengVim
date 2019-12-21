@@ -183,7 +183,9 @@ endif
 set t_Co=256  
 
 source ~/.vim/plug.vim
-source ~/.vim/self_conf.vim
+source ~/.vim/other.vim
+source ~/.vim/tags.vim
+source ~/.vim/project.vim
 source ~/.vim/vundle_conf.vim
 
 set background=dark
