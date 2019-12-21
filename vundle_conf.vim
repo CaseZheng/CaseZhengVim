@@ -318,6 +318,8 @@ let g:ycm_key_list_stop_completion = ['<C-y>', '<CR>']
 let g:ycm_key_invoke_completion = "<C-x><C-h>"
 "设置YCM的文件名补全时，相对路径是按照vim的当前工作目录还是活动缓冲区中的文件所在目录来解释。0是按照文件所在目录
 let g:ycm_filepath_completion_use_working_dir = 0
+"启用clangd
+let g:ycm_use_clangd = 1
 "此选项控制使用哪种排名和过滤算法 '1'：使用ycmd的缓存和过滤逻辑。 '0'：使用clangd的缓存和过滤逻辑。
 let g:ycm_clangd_uses_ycmd_caching = 0
 let g:ycm_clangd_args = ['-log=verbose', '-pretty']
