@@ -438,7 +438,7 @@ let g:indentLine_concealcursor = ''
 let g:ctrlsf_ackprg = 'ag'
 let g:ctrlsf_default_view_mode='compact'
 let g:ctrlsf_default_root='cwd'     "设置在当前工作目录下搜索
-let g:ctrlsf_case_sensitive='no'    "大小写不敏感
+let g:ctrlsf_case_sensitive='yes'    "大小写敏感
 "设置自动关闭,不同模式下不同设置
 let g:ctrlsf_auto_close = {
     \ "normal" : 0,
