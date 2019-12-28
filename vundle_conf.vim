@@ -95,7 +95,7 @@ let NERDTreeIgnore = [
     \ '\.pyo$',
     \ '\.git$',
     \ '\.svn$',
-    \ '^cscope.*$',
+    \ '\cscope.*$',
     \ '\.sln$',
     \ '\.vcxproj$',
     \ '\.filters$',
@@ -107,6 +107,9 @@ let NERDTreeIgnore = [
     \ '\.xls$',
     \ '\.pptx$',
     \ '\.ppt$',
+    \ '\GPATH$',
+    \ '\GTAGS$',
+    \ '\GRTAGS$',
     "\ '^.gitignore$',
     "\ '^.gitmodules$',
     \ ]
@@ -449,7 +452,7 @@ let g:ctrlsf_auto_focus = {
     \ "at" : "start"
     \}
 let g:ctrlsf_populate_qflist = 0    "结果同时输出到quickfix
-let g:ctrlsf_ignore_dir = ['cscope.out', 'cscope.tags', 'cscope.files']
+let g:ctrlsf_ignore_dir = ['cscope.out', 'cscope.tags', 'cscope.files', 'GTAGS', 'GPATH', 'GRTAGS']
 let g:ctrlsf_position = 'bottom'
 let g:ctrlsf_winsize = '30%'
 "修改文件后保存确认提示
@@ -526,10 +529,15 @@ let g:UltiSnipsEditSplit="vertical"
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 if has("cscope")
-    "设定cst选项同时搜索cscope数据库和标签文件
+    "设定cst选项同时搜索cscope数据库和标签文件cscopetag
     set cst
-    "如果csto被设为0,cscope数据库先被搜索,搜索失败的情况下在搜索标签文件.如果csto被设为1,标签文件会在cscope数据库之前被搜索
+    if executable('gtags-cscope')
+        "使用 gtags-cscope 代替 cscope
+        set cscopeprg=gtags-cscope
+    endif
+    "如果csto被设为0,cscope数据库先被搜索,搜索失败的情况下在搜索标签文件.如果csto被设为1,标签文件会在cscope数据库之前被搜索cscopetagorder
     set csto=0
+    "添加一个数据库时，显示添加成功或失败
     set csverb
     nmap <leader>fs :cs find s <C-R>=expand("<cword>")<CR><CR>	
     nmap <leader>fg :cs find g <C-R>=expand("<cword>")<CR><CR>	

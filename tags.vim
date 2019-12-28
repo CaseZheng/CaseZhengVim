@@ -7,7 +7,10 @@ let g:loaded_self_tags = 1
 "重置cscope连接
 function ResetCscope()
     silent! execute "cs kill -1"
-    if filereadable("cscope.out")
+    "优先使用gtags-cscope
+    if executable('gtags-cscope') && filereadable("GTAGS")
+        silent! execute "cs add GTAGS"
+    elseif filereadable("cscope.out")
         silent! execute "cs add cscope.out"
     endif
 endfunction
@@ -38,6 +41,9 @@ function GenTags()
         call delete(dir."\\"."cscope.out")
         call delete(dir."\\"."cscope.in.out")
         call delete(dir."\\"."cscope.po.out")
+        call delete(dir."\\"."GPATH")
+        call delete(dir."\\"."GRTAGS")
+        call delete(dir."\\"."GTAGS")
     else
         call delete("./"."cscope.tags")
         call delete("./"."cscope.files")
@@ -45,6 +51,9 @@ function GenTags()
         call delete("./"."cscope.out")
         call delete("./"."cscope.in.out")
         call delete("./"."cscope.po.out")
+        call delete("./"."GPATH")
+        call delete("./"."GRTAGS")
+        call delete("./"."GTAGS")
     endif
 
     if(g:iswindows!=1)
@@ -63,15 +72,20 @@ function GenTags()
         let s:command_msg = s:command_msg . " > cscope.files"
         silent! execute s:command_msg
     endif
-    if(executable('cscope') && has("cscope") )
-        if(g:iswindows!=1)
-            " 会自动查找当前目录的cscope.files文件
-            silent! execute "!cscope -b -k"  
-        else
-            silent! execute "!cscope -b -k"
-        endif
+    if(executable('gtags-cscope') && has("cscope"))
+        silent! execute "!gtags -f cscope.files"  
+    elseif(executable('cscope') && has("cscope"))
+        silent! execute "!cscope -b -k"  
     endif
     call ResetCscope()
     call ResetYcm()
     :redr!
 endfunction
+
+"保存时自动更新tags文件
+function GtagsAutoUpdate()
+    if executable('global') && filereadable("GTAGS")
+        call system("global -u --single-update=\"" . expand("%") . "\"")
+    endif
+endfunction
+autocmd! BufWritePost * call GtagsAutoUpdate()
