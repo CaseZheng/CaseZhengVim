@@ -66,19 +66,17 @@ function GenTags()
         let s:command_msg = s:command_msg . " -name '*.cc'  -print -o"
         let s:command_msg = s:command_msg . " -name '*.py'  -print"
         let s:command_msg = s:command_msg . " > cscope.files"
-        silent! execute s:command_msg
     else
         let s:command_msg = "!dir /s/b *.c,*.cpp,*.h,*.hpp,*.cc,*.inl "
         let s:command_msg = s:command_msg . " > cscope.files"
-        silent! execute s:command_msg
     endif
     if(executable('gtags-cscope') && has("cscope"))
-        silent! execute "!gtags -f cscope.files"  
+        let s:command_msg = s:command_msg . " & gtags -f cscope.files"
     elseif(executable('cscope') && has("cscope"))
-        silent! execute "!cscope -b -k"  
+        let s:command_msg = s:command_msg . " & cscope -b -k"
     endif
-    call ResetCscope()
-    call ResetYcm()
+    silent! execute s:command_msg
+    call ResetTags()
     :redr!
 endfunction
 
