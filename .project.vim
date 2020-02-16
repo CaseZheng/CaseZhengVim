@@ -1,20 +1,8 @@
-if(g:iswindows)
-    let g:ctags_ignore_directory = " | find \/v \"implements\\boost_lib\" "
-endif
-
 let g:projectInfo = {
-        \ 'wif' : {
-            \ 'projectpath' : 'E:\code\wxsettle_interface_server',  'youcompleteme' : 1,  'cscope' : 1,  'tags' : '',
-            \ 'ip' : '127.0.0.1',  'port' : '36000',  'username' : 'casezheng',  'password' : 'casezheng',  'remotepath' : '/data/casezheng/code/wxsettle_interface_server',
+        \ 'bsp' : {
+            \ 'projectpath' : 'C:\code\batch_settle_proj\',  'youcompleteme' : 1,  'cscope' : 1,
+            \ 'ip' : '127.0.0.1',  'port' : '36000',  'username' : 'casezheng',  'password' : 'casezheng',  'remotepath' : '/data/casezheng/code/batch_settle_proj',
+            \ 'rawsettings' : 'ProxyMethod=3 ProxyHost=127.0.0.1 ProxyPort=12639',
             \ 'dirmask' : ['branches'],
-        \ },
-        \ 'relay' : {
-            \ 'projectpath' : 'E:\relay_proxy\',  'youcompleteme' : 1,  'cscope' : 1,
-        \ },
-        \ 'vim' : {
-            \ 'projectpath' : 'C:\Users\casezheng\.vim',
-        \ },
-        \ 'hexo' : {
-            \ 'projectpath' : 'E:\git\BlogSourceCode',
         \ },
     \ }

@@ -29,6 +29,7 @@ function SynFile(ignore, current)
     let s:port       = get(s:info, 'port', '22')
     let s:localpath  = get(s:info, 'projectpath', '')
     let s:remotepath = get(s:info, 'remotepath', '')
+    let s:rawsetting = get(s:info, 'rawsettings', '')
     if(a:current=="1")  "只同步当前目录
         echo '只同步当前目录'
         let s:currentPath = getcwd()
@@ -59,7 +60,7 @@ function SynFile(ignore, current)
     let s:commmsg = s:commmsg . "  \"option batch on\"   "
     let s:commmsg = s:commmsg . "  \"option confirm off\"   "
     let s:commmsg = s:commmsg . "  \"option echo off\"   "
-    let s:commmsg = s:commmsg . "  \"open sftp://".s:username.":".s:password."@".s:ip.":".s:port."\"   "
+    let s:commmsg = s:commmsg . "  \"open sftp://".s:username.":".s:password."@".s:ip.":".s:port." -rawsettings ".s:rawsetting."\"   "
     let s:commmsg = s:commmsg . "  \"option transfer binary\"  "
     let s:commmsg = s:commmsg . "  \"synchronize remote ".s:localpath." ".s:remotepath." -delete -criteria=time -filemask=".s:filemask."\" "
     let s:commmsg = s:commmsg . "  \"close\"  "
@@ -94,6 +95,7 @@ function SendFileToServer()
     let s:port       = get(s:info, 'port', '22')
     let s:localdir  = get(s:info, 'projectpath', '')
     let s:remotepath = get(s:info, 'remotepath', '')
+    let s:rawsetting = get(s:info, 'rawsettings', '')
     if(s:ip=="" || s:username=="" || s:password=="" || s:localdir=="" || s:remotepath=="")
         echo 'ip或username或password或项目路径或远程逻辑不存在'
         return
@@ -111,7 +113,7 @@ function SendFileToServer()
     let s:commmsg = s:commmsg . "  \"option batch on\"   "
     let s:commmsg = s:commmsg . "  \"option confirm off\"   "
     let s:commmsg = s:commmsg . "  \"option echo off\"   "
-    let s:commmsg = s:commmsg . "  \"open ".s:username.":".s:password."@".s:ip.":".s:port."\"   "
+    let s:commmsg = s:commmsg . "  \"open sftp://".s:username.":".s:password."@".s:ip.":".s:port." -rawsettings ".s:rawsetting."\"   "
     let s:commmsg = s:commmsg . "  \"option transfer binary\"  "
     let s:commmsg = s:commmsg . "  \"put " . s:localpath . " " . s:remotepath . "\"  "
     let s:commmsg = s:commmsg . "  \"close\"  "
