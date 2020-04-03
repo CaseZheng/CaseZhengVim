@@ -9,7 +9,7 @@ Plug 'lfv89/vim-interestingwords'
 " vim 树形目录插件
 Plug 'scrooloose/nerdtree', { 'on': nerdtree_cmds }
 " c++高亮增强 C++11/14 STL
-Plug 'octol/vim-cpp-enhanced-highlight', { 'for': ['cpp', 'h', 'c', 'hpp', 'cc'] }
+Plug 'octol/vim-cpp-enhanced-highlight'
 " Airline 状态栏
 Plug 'vim-airline/vim-airline'
 " Airline主题
@@ -23,7 +23,7 @@ Plug 'Yggdroot/indentLine'
 " Vim 标签侧边栏插件
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 " markdown语法高亮
-Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+Plug 'plasticboy/vim-markdown'
 " 代码搜索
 Plug 'dyng/ctrlsf.vim', { 'on': ['<Plug>CtrlSF', 'CtrlSFToggle'] }
 " 多重光标选取功能
@@ -31,21 +31,21 @@ Plug 'terryma/vim-multiple-cursors'
 " 窗口管理器
 Plug 't9md/vim-choosewin'
 " 快速注释/解开注释
-Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdcommenter', { 'for': [ 'cpp' ] }
 " 代码块补全
-Plug 'SirVer/ultisnips'
+Plug 'SirVer/ultisnips', { 'for': [ 'cpp' ] }
 " 自动补全插件
 if(g:iswindows)
-    Plug 'CaseZheng/YouCompleteMe'
+    Plug 'CaseZheng/YouCompleteMe', { 'for': [ 'cpp' ] }
 else
-    Plug 'ycm-core/YouCompleteMe'
+    Plug 'ycm-core/YouCompleteMe', { 'for': [ 'cpp' ] }
 endif
 " 同时支持Git 和 Svn ，高亮当前修改
-Plug 'mhinz/vim-signify'
+Plug 'mhinz/vim-signify', { 'for': [ 'cpp' ] }
 " git支持
-Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive', { 'for': [ 'cpp' ] }
 " 查看Git详细提交日志
-Plug 'gregsexton/gitv'
+Plug 'gregsexton/gitv', { 'for': [ 'cpp' ] }
 "撤销重做功能
 Plug 'sjl/gundo.vim'
 " 代码对齐插件

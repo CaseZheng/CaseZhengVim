@@ -1,3 +1,22 @@
+" 设置背景颜色
+set background=dark
+
+if has("gui_running")
+    " 设置打开位置0 0
+    winpos 0 0
+    " 设置行列0 0
+    set lines=0 columns=0
+    " 打开后默认全屏
+    au GUIEnter * simalt ~x
+    set guioptions -=T  "隐藏工具栏
+    set guioptions -=m  "隐藏菜单栏
+    set guioptions-=L  "隐藏左侧滚动条
+    set guioptions-=r  "隐藏右侧滚动条
+    " 字体设置
+    set guifont=Consolas:h10
+endif
+
+
 if(has("win32") || has("win95") || has("win64") || has("win16"))
     set shell=C:\windows\system32\cmd.exe
     let g:iswindows=1
@@ -12,6 +31,7 @@ if(g:iswindows)
 endif
 
 scriptencoding utf-8
+
 " ============================================================================
 " 基础配置
 " no vi-compatible 不要使用vi的键盘模式，而是vim自己的
@@ -50,27 +70,6 @@ set shiftwidth=4
 " highlight cursor line and column 开启光亮光标行 开启高亮光标列
 set cursorline
 set cursorcolumn
-
-if has("gui_running")
-    set guioptions -=T  "隐藏工具栏
-    set guioptions -=m  "隐藏菜单栏
-    set guioptions-=L  "隐藏左侧滚动条
-    set guioptions-=r  "隐藏右侧滚动条
-    "set guioptions-=b  "隐藏底部滚动条
-    "set showtabline=0  "隐藏Tab栏
-    " 字体设置
-    set guifont=Consolas:h10
-    " 打开后默认全屏
-    if has('win32')    
-        au GUIEnter * simalt ~x
-    else    
-        au GUIEnter * call MaximizeWindow()
-    endif 
-
-    function! MaximizeWindow()    
-        silent !wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz
-    endfunction
-endif
 
 " hidden startup messages 启动的时候不显示那个援助乌干达儿童的提示
 set shortmess=atI
@@ -155,7 +154,7 @@ set foldlevel=9999
 " 命令行设置
 " 命令行显示输入的命令
 set showcmd
-" 命令行显示vim当前模
+" 命令行显示vim当前模式
 set showmode
 
 " better backup, swap and undos storage
@@ -189,8 +188,6 @@ source ~/.vim/tags.vim
 source ~/.vim/project.vim
 source ~/.vim/vundle_conf.vim
 
-set background=dark
-" 设置背景颜色
 syntax enable
 
 "让vim换行后不自动添加新的注释行
