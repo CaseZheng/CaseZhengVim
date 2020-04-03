@@ -36,12 +36,8 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 't9md/vim-choosewin'
 " 快速注释/解开注释
 Plug 'scrooloose/nerdcommenter'
-" tab管理工具
-Plug 'kien/tabman.vim'
 " 代码块补全
 Plug 'SirVer/ultisnips'
-" 代码块集合
-"Plug 'honza/vim-snippets'
 " 自动补全插件
 if(g:iswindows)
     Plug 'CaseZheng/YouCompleteMe'
@@ -463,17 +459,6 @@ nmap <leader>fw <Plug>CtrlSFCwordPath<CR>
 vmap <leader>fw <Plug>CtrlSFVwordExec
 nmap <leader>fl :CtrlSFToggle<CR>
 "--------------------------------------------------------------------------
-
-"-------------------------------------- tabman ----------------------------
-"开启/关闭tab管理
-let g:tabman_toggle = '<leader>tl'
-"将光标移动到tab管理窗口
-let g:tabman_focus  = '<leader>tf'
-let g:tabman_width = 25
-let g:tabman_side = 'left'
-let g:tabman_specials = 0
-let g:tabman_number = 1
-"---------------------------------------------------------------------------
 
 "-------------------------------------- gundo ------------------------------
 nnoremap <Leader>u :GundoToggle<CR>
