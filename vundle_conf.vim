@@ -31,7 +31,7 @@ Plug 'terryma/vim-multiple-cursors'
 " 窗口管理器
 Plug 't9md/vim-choosewin'
 " 快速注释/解开注释
-Plug 'scrooloose/nerdcommenter', { 'for': [ 'cpp' ] }
+Plug 'scrooloose/nerdcommenter', { 'for': [ 'cpp', 'vim', 'sh', 'python' ] }
 " 代码块补全
 Plug 'SirVer/ultisnips', { 'for': [ 'cpp' ] }
 " 自动补全插件
@@ -41,11 +41,11 @@ else
     Plug 'ycm-core/YouCompleteMe', { 'for': [ 'cpp' ] }
 endif
 " 同时支持Git 和 Svn ，高亮当前修改
-Plug 'mhinz/vim-signify', { 'for': [ 'cpp' ] }
+Plug 'mhinz/vim-signify', { 'for': [ 'cpp', 'vim', 'sh', 'python' ] }
 " git支持
-Plug 'tpope/vim-fugitive', { 'for': [ 'cpp' ] }
+Plug 'tpope/vim-fugitive', { 'for': [ 'cpp', 'vim', 'sh', 'python' ] }
 " 查看Git详细提交日志
-Plug 'gregsexton/gitv', { 'for': [ 'cpp' ] }
+Plug 'gregsexton/gitv', { 'for': [ 'cpp', 'vim', 'sh', 'python' ] }
 "撤销重做功能
 Plug 'sjl/gundo.vim'
 " 代码对齐插件
