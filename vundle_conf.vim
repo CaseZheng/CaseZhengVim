@@ -8,10 +8,6 @@ let nerdtree_cmds = ['NERDTreeFind', 'NERDTree', 'NERDTreeToggle']
 Plug 'lfv89/vim-interestingwords'
 " vim 树形目录插件
 Plug 'scrooloose/nerdtree', { 'on': nerdtree_cmds }
-" nerdtree目录git支持
-Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': nerdtree_cmds }
-" nerdtree目录svn支持 
-"Plug 'CaseZheng/nerdtree-svn-plugin'
 " c++高亮增强 C++11/14 STL
 Plug 'octol/vim-cpp-enhanced-highlight', { 'for': ['cpp', 'h', 'c', 'hpp', 'cc'] }
 " Airline 状态栏
@@ -123,22 +119,6 @@ let NERDTreeMinimalUI=1           " 去除第一行的帮助提示
 "let NERDTreeBookmarksFile=    " 指定书签文件
 "let NERDTreeShowLineNumbers=1 " 默认显示行号
 "let NERDTreeWinPos='right'    " 将 NERDTree 的窗口设置在 vim 窗口的右侧，默认在左
-"--------------------------------------------------------------------------------
-
-"---------------------------- nerdtree-git-plugin -------------------------------
-let g:NERDTreeShowIgnoredStatus = 1
-let g:NERDTreeIndicatorMapCustom = {
-    \ "Modified"  : "修",
-    \ "Staged"    : "暂",
-    \ "Untracked" : "跟",
-    \ "Renamed"   : "重",
-    \ "Unmerged"  : "合",
-    \ "Deleted"   : "删",
-    \ "Dirty"     : "脏",
-    \ "Clean"     : "清",
-    \ "Ignored"   : "忽",
-    \ "Unknown"   : "未"
-    \ }
 "--------------------------------------------------------------------------------
 
 "-------------------------vim-cpp-enhanced-highlight-----------------------------
