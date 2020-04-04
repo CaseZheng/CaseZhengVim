@@ -332,25 +332,17 @@ let g:ycm_filetype_specific_completion_to_disable={'gitcommit': 1}
 let g:ycm_filepath_blacklist = {'html' : 1, 'jsx' : 1,'xml' : 1,}
 "文件类型白名单，vim打开这些类型文件时会开启YCM
 let g:ycm_filetype_whitelist = { 
-    \ "py":1,
+    \ "python":1,
     \ "lua":1,
     \ "sh":1,
-    \ "h":1,
-    \ "hpp":1,
-    \ "hxx":1,
-    \ "hh":1,
-    \ "inl":1,
-    \ "cxx":1,
-    \ "cc":1,
     \ "c":1,
     \ "cpp":1
     \ }
 "设置YCM的语义触发器的关键字 代表在 C/C++ 下面写代码的时候必须输入：. 或 -> 或 :: 才能弹出语义补全, 这里追加了一个正则表达式，代表相关语言的源文件中，用户只需要输入符号的几个字母，即可自动弹出语义补全, 默认的 . / -> / :: 是不会被覆盖的
 let g:ycm_semantic_triggers =  {
   \   'c': ['->', '.', 're!\w{2}'],
-  \   'cpp,cuda,objcpp': ['->', '.', '::', 're!\w{2}'],
-  \   'php': ['->', '::'],
-  \   'go,java,javascript,python': ['.'],
+  \   'cpp': ['->', '.', '::', 're!\w{2}'],
+  \   'go,python': ['.'],
   \   'lua': ['.', ':', 're!\w{2}'],
   \ }
 "设置错误标志
@@ -492,22 +484,6 @@ let g:UltiSnipsEditSplit="vertical"
 
 """""""""""""""""""""""""vim-interestingwords"""""""""""""""""""""""""""""""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-if has("cscope")
-    "设定cst选项同时搜索cscope数据库和标签文件cscopetag
-    set cst
-    if executable('gtags-cscope')
-        "使用 gtags-cscope 代替 cscope
-        set cscopeprg=gtags-cscope
-    endif
-    "如果csto被设为0,cscope数据库先被搜索,搜索失败的情况下在搜索标签文件.如果csto被设为1,标签文件会在cscope数据库之前被搜索cscopetagorder
-    set csto=0
-    "添加一个数据库时，显示添加成功或失败
-    set csverb
-    nmap <leader>fs :cs find s <C-R>=expand("<cword>")<CR><CR>	
-    nmap <leader>fg :cs find g <C-R>=expand("<cword>")<CR><CR>	
-    nmap <leader>fc :cs find c <C-R>=expand("<cword>")<CR><CR>	
-endif
 
 set wildmenu
 set wildmode=full

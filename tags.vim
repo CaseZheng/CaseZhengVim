@@ -4,14 +4,36 @@ endif
 
 let g:loaded_self_tags = 1
 
+if has("cscope")
+    let g:use_gtags=0
+    "设定cst选项同时搜索cscope数据库和标签文件cscopetag
+    set cst
+    if executable('gtags-cscope')
+        "使用 gtags-cscope 代替 cscope
+        set cscopeprg=gtags-cscope
+        let g:use_gtags=1
+    endif
+    "如果csto被设为0,cscope数据库先被搜索,搜索失败的情况下在搜索标签文件.如果csto被设为1,标签文件会在cscope数据库之前被搜索cscopetagorder
+    set csto=0
+    "添加一个数据库时，显示添加成功或失败
+    set csverb
+    nmap <leader>fs :cs find s <C-R>=expand("<cword>")<CR><CR>	
+    nmap <leader>fg :cs find g <C-R>=expand("<cword>")<CR><CR>	
+    nmap <leader>fc :cs find c <C-R>=expand("<cword>")<CR><CR>	
+endif
+
 "重置cscope连接
 function ResetCscope()
     silent! execute "cs kill -1"
     "优先使用gtags-cscope
-    if executable('gtags-cscope') && filereadable("GTAGS")
-        silent! execute "cs add GTAGS"
-    elseif filereadable("cscope.out")
-        silent! execute "cs add cscope.out"
+    if g:use_gtags==1
+        if filereadable("GTAGS")
+            silent! execute "cs add GTAGS"
+        endif
+    else
+        if filereadable("cscope.out")
+            silent! execute "cs add cscope.out"
+        endif
     endif
 endfunction
 
@@ -70,12 +92,14 @@ function GenTags()
         let s:command_msg = "!dir /s/b *.c,*.cpp,*.h,*.hpp,*.cc,*.inl "
         let s:command_msg = s:command_msg . " > cscope.files"
     endif
-    if(executable('gtags-cscope') && has("cscope"))
-        let s:command_msg = s:command_msg . " & gtags -f cscope.files"
-    elseif(executable('cscope') && has("cscope"))
-        let s:command_msg = s:command_msg . " & cscope -b -k"
+    if has("cscope")
+        if(g:use_gtags==1)
+            let s:command_msg = s:command_msg . " & gtags -f cscope.files"
+        else
+            let s:command_msg = s:command_msg . " & cscope -b -k"
+        endif
+        silent! execute s:command_msg
     endif
-    silent! execute s:command_msg
     call ResetTags()
     :redr!
 endfunction
@@ -86,4 +110,5 @@ function GtagsAutoUpdate()
         call system("global -u --single-update=\"" . expand("%") . "\"")
     endif
 endfunction
+
 autocmd! BufWritePost * call GtagsAutoUpdate()

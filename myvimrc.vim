@@ -5,7 +5,7 @@ if has("gui_running")
     " 设置打开位置0 0
     winpos 0 0
     " 设置行列0 0
-    set lines=0 columns=0
+    set lines=100 columns=300
     " 打开后默认全屏
     au GUIEnter * simalt ~x
     set guioptions -=T  "隐藏工具栏
