@@ -258,9 +258,9 @@ let g:ycm_min_num_of_chars_for_completion=1
 "设置要在标示符补全列表中显示的候选项的最小字符数，0表示没有限制，对语义补全无影响
 let g:ycm_min_num_identifier_candidate_chars = 0
 "设置语义补全的最大候选项数量，0表示没有限制
-let g:ycm_max_num_candidates = 20
+let g:ycm_max_num_candidates = 30
 "设置标识符补全的最大候选项数量，0表示没有限制
-let g:ycm_max_num_identifier_candidates = 20
+let g:ycm_max_num_identifier_candidates = 10
 " 0表示关闭ycm语义补全和标识符补全触发器，但仍可以用ctrl+space 打开语义补全，1表示打开
 let g:ycm_auto_trigger=1
 "选中补全选项后自动关闭预览窗口，当g:ycm_add_preview_to_completeopt设为1时或者vim的completeopt设为preview有效
@@ -275,16 +275,26 @@ let g:ycm_collect_identifiers_from_comments_and_strings = 0
 let g:ycm_global_ycm_extra_conf = '~/.vim/ycm_extra_conf.py'
 "允许自动加载.ycm_extra_conf.py，不再提示 ，设置为1，则每次都提示用于确认该文件是否安全
 let g:ycm_confirm_extra_conf = 0
+"设置加载 .ycm_extra_conf.py的路径，*表示匹配任何字符，?匹配任何单个字符，[seq] 匹配seq中的任何单个字符，[!seq] 匹配不在seq中的任何单个字符，路径前加！表示不加载所有改路径上匹配的文件
+let g:ycm_extra_conf_globlist = []
 "将诊断错误信息写道locationlist
 let g:syntastic_always_populate_loc_list = 1
 "使用vim的语法标识符来建立标识符数据库
 let g:ycm_seed_identifiers_with_syntax = 1 
-"开启tags补全引擎 ，在vim中用:h 'tags’命令来查看相关信息，只支持ctags，切必须使用--fields=+l选项
+"将数据从Vim发送到.ycm_extra_conf.py文件中的FlagsForFile函数
+let g:ycm_extra_conf_vim_data = []
+"为ycm服务器指定特定的python解释器，默认为空表示在系统上搜索适当的Python解释器
+let g:ycm_server_python_interpreter = ''
+"YCM关闭时保存日志，0表示关闭
+let g:ycm_keep_logfiles = 0
+"开启tags补全引擎 ，在vim中用:h 'tags'命令来查看相关信息，只支持ctags，切必须使用--fields=+l选项
 let g:ycm_collect_identifiers_from_tags_files = 0
 "为当前补全选项在vim顶部增加预览窗口，用来显示函数原型等信息，如果vim的completeopt已经设置为prieview则不会有影响，:h completeopt查看相关信息，用:set completeopt?查看当前vim的设置，默认为0
 let g:ycm_add_preview_to_completeopt = 0
 "启用ultisnips补全，1代表允许
 let g:ycm_use_ultisnips_completer = 1
+"设置使用goto跳转快捷键时新窗口的打开方式
+let g:ycm_goto_buffer_command = 'same-buffer'
 "某些omni补全引擎引起与YCM缓存不适配，可能不会为给定的前缀产生所有可能的结果，如果关闭该选项则每次都重新查询omni补全引擎生成匹配项 ，默认为1代表开启
 let g:ycm_cache_omnifunc=0
 "设置用于选择补全列表中的第一个选项以及进入补全列表后向下选择的快捷键，默认为tab键和方向下键
@@ -297,6 +307,10 @@ let g:ycm_key_list_stop_completion = ['<C-y>', '<CR>']
 let g:ycm_key_invoke_completion = "<C-x><C-h>"
 "设置YCM的文件名补全时，相对路径是按照vim的当前工作目录还是活动缓冲区中的文件所在目录来解释。0是按照文件所在目录
 let g:ycm_filepath_completion_use_working_dir = 0
+"设置查看光标停留处的错误诊断详细信息的快捷键,默认为,d
+let g:ycm_key_detailed_diagnostics = '<leader>ei'
+"设置YCM的作用的文件大小上限，单位为Kb，0表示无上限
+let g:ycm_disable_for_files_larger_than_kb = 0
 "启用clangd
 let g:ycm_use_clangd = 1
 "此选项控制使用哪种排名和过滤算法 '1'：使用ycmd的缓存和过滤逻辑。 '0'：使用clangd的缓存和过滤逻辑。
@@ -305,12 +319,16 @@ let g:ycm_clangd_args = ['-log=verbose', '-pretty']
 "打开/关闭编译错误列表
 nnoremap <leader>eo :lopen<CR>
 nnoremap <leader>ec :lclose<CR>
-"跳转到申明或定义
-nnoremap <leader>ee :YcmCompleter GoToDefinitionElseDeclaration<CR>
 "跳转到定义
 nnoremap <leader>ef :YcmCompleter GoToDefinition<CR>
 "跳转到声明
 nnoremap <leader>el :YcmCompleter GoToDeclaration<CR>
+"跳转到引用
+nnoremap <leader>er :YcmCompleter GoToReferences<CR>
+"查看文档注释中的标识符
+nnoremap <leader>ed :YcmCompleter GetDoc<CR>
+"重命名标识符
+nnoremap <leader>en :YcmCompleter RefactorRename 
 
 "文件类型黑名单，vim打开这些类型文件时会关闭YCM
 let g:ycm_filetype_blacklist = {
@@ -352,15 +370,23 @@ let g:ycm_warning_symbol = 'WW'
 "开启YCM的显示诊断信息的功能，0表示关闭
 let g:ycm_show_diagnostics_ui = 0
 "在代码中高亮显示YCM诊断对应的内容，如果关闭，则会关闭错误和警告高亮功能，0表示关闭
-let g:ycm_enable_diagnostic_signs = 0
+let g:ycm_enable_diagnostic_signs = 1
 "高亮显示代码中与诊断信息有关的文本或代码，0表示关闭
-let g:ycm_enable_diagnostic_highlighting = 0
+let g:ycm_enable_diagnostic_highlighting = 1
 "当光标移到所在行时显示诊断信息
 let g:ycm_echo_current_diagnostic = 1
+"诊断信息过滤器，此选项控制YCM将呈现哪些诊断，针对特定文件类型，用正则表达式控制要显示的内容，用level控制消息的级别，{}表示显示所有诊断信息
+let g:ycm_filter_diagnostics={}
+"每次获取新诊断数据时自动填充位置列表，1表示打开，默认关闭以免干扰可能已放置在位置列表中的其他数据。在vim中用:help location-list命令查看位置列表的具体解释
+let g:ycm_always_populate_location_list = 0
+"在强制编译后自动打位置列表并用诊断信息填充，所谓位置列表就是标出各错误或警告对应在哪些行的小窗口，可以实现直接跳转到错误行
+let g:ycm_open_loclist_on_ycm_diags = 1
 "此选项控制在文件中检测到错误或警告时向用户显示的最大诊断数
-let g:ycm_max_diagnostics_to_display = 30
+let g:ycm_max_diagnostics_to_display = 100000
 "设置YCM的日志记录级别，可以是debug，info，warning，error或critical。debug是最详细的
 let g:ycm_server_log_level = 'error'
+"指定OmniSharp server的监视端口，0表示使用os自动提供的未使用的端口
+let g:ycm_csharp_server_port = 0
 "--------------------------------------------------------------------------
 
 "------------------------------------ vim-signify -------------------------

@@ -4,8 +4,9 @@ endif
 
 let g:loaded_self_tags = 1
 
+let g:use_gtags=0
+
 if has("cscope")
-    let g:use_gtags=0
     "设定cst选项同时搜索cscope数据库和标签文件cscopetag
     set cst
     if executable('gtags-cscope')
@@ -106,7 +107,7 @@ endfunction
 
 "保存时自动更新tags文件
 function GtagsAutoUpdate()
-    if executable('global') && filereadable("GTAGS")
+    if(g:use_gtags==1 && filereadable("GTAGS"))
         call system("global -u --single-update=\"" . expand("%") . "\"")
     endif
 endfunction

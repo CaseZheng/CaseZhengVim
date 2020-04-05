@@ -35,8 +35,6 @@ if platform.system() != 'Windows':
 
 # 系统库
 selfFlags = [
-    'c++',
-    'mysql',
 ]
 
 for v in selfFlags:
