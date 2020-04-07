@@ -1,22 +1,3 @@
-" 设置背景颜色
-set background=dark
-
-if has("gui_running")
-    " 设置打开位置0 0
-    winpos 0 0
-    " 设置行列0 0
-    set lines=100 columns=300
-    " 打开后默认全屏
-    au GUIEnter * simalt ~x
-    set guioptions -=T  "隐藏工具栏
-    set guioptions -=m  "隐藏菜单栏
-    set guioptions-=L  "隐藏左侧滚动条
-    set guioptions-=r  "隐藏右侧滚动条
-    " 字体设置
-    set guifont=Consolas:h10
-endif
-
-
 if(has("win32") || has("win95") || has("win64") || has("win16"))
     set shell=C:\windows\system32\cmd.exe
     let g:iswindows=1
@@ -169,6 +150,24 @@ if !isdirectory(&undodir)
 endif
 
 set t_Co=256  
+
+" 设置背景颜色
+set background=dark
+
+if has("gui_running")
+    " 设置打开位置0 0
+    winpos 0 0
+    " 设置行列0 0
+    set lines=100 columns=300
+    " 打开后默认全屏
+    au GUIEnter * simalt ~x
+    set guioptions -=T  "隐藏工具栏
+    set guioptions -=m  "隐藏菜单栏
+    set guioptions-=L  "隐藏左侧滚动条
+    set guioptions-=r  "隐藏右侧滚动条
+    " 字体设置
+    set guifont=Consolas:h10
+endif
 
 source ~/.vim/plug.vim
 source ~/.vim/other.vim
