@@ -102,8 +102,8 @@ let NERDTreeIgnore = [
     \ '\GPATH$',
     \ '\GTAGS$',
     \ '\GRTAGS$',
-    "\ '^.gitignore$',
-    "\ '^.gitmodules$',
+    \ '^.gitignore$',
+    \ '^.gitmodules$',
     \ ]
 
 let NERDTreeDirArrowExpandable="-"
