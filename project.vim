@@ -5,7 +5,7 @@ endif
 let g:loaded_self_project = 1
 
 "同步项目文件到远程
-function SynFile(ignore, current)
+function SynFile(type)
     if (g:iswindows != 1)
         echo "非windows平台"
         return
@@ -19,10 +19,7 @@ function SynFile(ignore, current)
         echo '项目: '.g:projectName.' 不存在'
         return
     endif
-    if(a:ignore!="0" && a:ignore!="1")
-        echo '传递参数错误 0:不忽略目录 1:忽略目录'
-    endif
-    echo "ignore:".a:ignore
+
     let s:ip         = get(s:info, 'ip', '')
     let s:username   = get(s:info, 'username', '')
     let s:password   = get(s:info, 'password', '')
@@ -30,7 +27,8 @@ function SynFile(ignore, current)
     let s:localpath  = get(s:info, 'projectpath', '')
     let s:remotepath = get(s:info, 'remotepath', '')
     let s:rawsetting = get(s:info, 'rawsettings', '')
-    if(a:current=="1")  "只同步当前目录
+    let s:remotepathsplit = []
+    if(a:type=="current")
         echo '只同步当前目录'
         let s:currentPath = getcwd()
         let s:col = stridx(s:currentPath, s:localpath)
@@ -39,28 +37,34 @@ function SynFile(ignore, current)
             return
         endif
         let s:truncated = strpart(s:currentPath, strlen(s:localpath))
+        echo s:truncated
+        let s:remotepathsplit = split(s:truncated, "\\")
+        echo s:remotepathsplit
         let s:remotepath = s:remotepath.s:truncated
         let s:remotepath = substitute(s:remotepath, "\\", "/", 'g')
         let s:localpath = s:currentPath
+    else
+        echo "全量同步"
     endif
+
     let s:dirmask    = get(s:info, "dirmask", '')
     if(s:ip=="" || s:username=="" || s:password=="" || s:localpath=="" || s:remotepath=="")
         echo 'ip或username或password或项目路径或远程逻辑不存在'
         return
     endif
     let s:filemask   = "|*.git;*.svn;*.vscode;*.vsdx;cscope.*;*git/;*svn/;*vscode/;*.xlsx;*.xls;*.pptx;*.ppt;*.docx;*.doc;GPATH;GTAGS;GRTAGS"
-    if(a:ignore == "1" && type(dirmask) == 3)
-        echo '忽略目录:'.string(dirmask)
-        for diritem in dirmask
-            echo diritem
-            let s:filemask = s:filemask . "*" . diritem . "/;"
-        endfor
-    endif
     let s:commmsg = "!start WinSCP.exe /console /command   "
     let s:commmsg = s:commmsg . "  \"option batch on\"   "
     let s:commmsg = s:commmsg . "  \"option confirm off\"   "
     let s:commmsg = s:commmsg . "  \"option echo off\"   "
     let s:commmsg = s:commmsg . "  \"open sftp://".s:username.":".s:password."@".s:ip.":".s:port." -rawsettings ".s:rawsetting."\"   "
+    if(a:type=="current")
+        let s:mkdirremotepath = get(s:info, 'remotepath', '')
+        for pathsplit in s:remotepathsplit
+            let s:mkdirremotepath = s:mkdirremotepath."/".pathsplit
+            let s:commmsg = s:commmsg . "  \"mkdir ".s:mkdirremotepath."\" "
+        endfor
+    endif
     let s:commmsg = s:commmsg . "  \"option transfer binary\"  "
     let s:commmsg = s:commmsg . "  \"synchronize remote ".s:localpath." ".s:remotepath." -delete -criteria=time -filemask=".s:filemask."\" "
     let s:commmsg = s:commmsg . "  \"close\"  "
@@ -123,9 +127,8 @@ function SendFileToServer()
 endfunction
 
 au BufEnter * command! -buffer -nargs=* UU call SynFile(<f-args>)
-au BufEnter * command! -buffer UP call SynFile("0", "0")
-au BufEnter * command! -buffer UI call SynFile("1", "0")
-au BufEnter * command! -buffer UW call SynFile("0", "1")
+au BufEnter * command! -buffer UP call SynFile("")
+au BufEnter * command! -buffer UW call SynFile("current")
 au BufEnter * command! -buffer W call SendFileToServer()
 
 "打印项目列表
