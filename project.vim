@@ -65,7 +65,7 @@ function SynFile(type)
     let s:local_dir_name = substitute(s:local_dir_name, "\\", "", 'g')
     "/root/share/shettle/casezheng/asset
     let s:remotepath = s:remotepath."/".s:local_dir_name
-    let s:remote_base_path = s:remotepath."/".s:local_dir_name
+    let s:remote_base_path = s:remotepath
 
     if(a:type=="current")
         echo '只同步当前目录'

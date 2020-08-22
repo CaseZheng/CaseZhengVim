@@ -28,7 +28,14 @@ function DuplicateRemoval()
     execute(':g/^\(.*\)$\n\1$/d')
 endfunction
 
+"文件编码
+function SetFile()
+    execute(':set fileencoding=utf8')
+    execute(':set fileformat=unix')
+endfunction
+
 au BufEnter * command! -buffer UNIQ call DuplicateRemoval()
+au BufEnter * command! -buffer SETFILE call SetFile()
 
 if (g:iswindows == 1)
     au BufEnter * command! -buffer GIT silent! execute "!start git-bash.exe --cd=".getcwd()
