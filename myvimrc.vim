@@ -38,11 +38,11 @@ filetype indent on
 
 set expandtab
 " 设置制表符(tab键)的宽度
-set tabstop=4
+set tabstop=2
 " 设置软制表符的宽度
-set softtabstop=4
+set softtabstop=2
 " (自动) 缩进使用的4个空格
-set shiftwidth=4            
+set shiftwidth=2
 
 " 开启光亮光标行 开启高亮光标列
 set cursorline

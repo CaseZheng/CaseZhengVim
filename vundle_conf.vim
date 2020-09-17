@@ -320,15 +320,17 @@ let g:ycm_clangd_args = ['-log=verbose', '-pretty']
 nnoremap <leader>eo :lopen<CR>
 nnoremap <leader>ec :lclose<CR>
 "跳转到定义
-nnoremap <leader>ef :YcmCompleter GoToDefinition<CR>
+"nnoremap <leader>e1 :YcmCompleter GoToDefinition<CR>
 "跳转到声明
-nnoremap <leader>el :YcmCompleter GoToDeclaration<CR>
+"nnoremap <leader>e2 :YcmCompleter GoToDeclaration<CR>
 "跳转到引用
 nnoremap <leader>er :YcmCompleter GoToReferences<CR>
 "查看文档注释中的标识符
 nnoremap <leader>ed :YcmCompleter GetDoc<CR>
 "重命名标识符
 nnoremap <leader>en :YcmCompleter RefactorRename 
+"格式化
+nnoremap <leader>ef  :YcmComplete Format<CR>
 
 "文件类型黑名单，vim打开这些类型文件时会关闭YCM
 let g:ycm_filetype_blacklist = {

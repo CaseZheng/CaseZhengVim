@@ -28,14 +28,16 @@ function DuplicateRemoval()
     execute(':g/^\(.*\)$\n\1$/d')
 endfunction
 
+au BufEnter * command! -buffer UNIQ call DuplicateRemoval()
+
 "文件编码
 function SetFile()
     execute(':set fileencoding=utf8')
     execute(':set fileformat=unix')
+    execute(':w')
 endfunction
 
-au BufEnter * command! -buffer UNIQ call DuplicateRemoval()
-au BufEnter * command! -buffer SETFILE call SetFile()
+map <F8> :call SetFile()<CR>
 
 if (g:iswindows == 1)
     au BufEnter * command! -buffer GIT silent! execute "!start git-bash.exe --cd=".getcwd()
@@ -52,7 +54,7 @@ endif
 function PrintKeyMap()
     echo "           # F1            # vim帮助文档                # F2        # 打开并强制刷新NERD目录   # F3   # 关闭所有的buffer"
     echo "           # F4            # 打开/关闭tags目录          # F5        # 打开按键帮助             # F6   # "
-    echo "           # F7            #                            # F8        #                          # F9   # "
+    echo "           # F7            #                            # F8        # 文件编码设为UFT8         # F9   # "
     echo "           # F10           # cscope 重新生成            # F11       # 重新启动cscope           # F12  # "
     echo "           #               #                            #           #                          #      # "
     echo "项目       # :PO           # 打开项目                   # :PL       # 项目列表                 # :PE  # 项目编辑"
