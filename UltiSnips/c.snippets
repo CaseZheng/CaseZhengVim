@@ -76,13 +76,12 @@ struct ${1:`!p snip.rv = (snip.basename or "name") + "_t"`}
 endsnippet
 
 snippet filehead "File Header"
-/**
- * FileName: `!p snip.rv = fn`
- * Description: ${2:Description}
- * Author: CaseZheng
- * Version: 
- * Date: `!v strftime("%Y-%m-%d")`
- */
+// Copyright (c) 2020, Tencent Inc. All rights reserved.
+// FileName: `!p snip.rv = fn`
+// Description: ${2:Description}
+// Author: CaseZheng
+// Version: 1.0
+// Date: `!v strftime("%Y-%m-%d")`
 ${0}
 endsnippet
 

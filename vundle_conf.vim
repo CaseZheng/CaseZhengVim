@@ -63,6 +63,9 @@ else
     Plug 'Yggdroot/LeaderF', { 'do': './install.sh', 'on': leaderf_cmds }
 endif
 
+" terminal封装插件
+Plug 'skywind3000/vim-terminal-help'
+
 call plug#end()
 
 "----------------------------------------gruvbox--------------------------------
