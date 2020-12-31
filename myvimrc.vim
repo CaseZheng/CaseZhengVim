@@ -59,7 +59,7 @@ set confirm                 "
 " 从不备份
 set nobackup
 set langmenu=zh_CN.UTF-8
-if g:iswindows == 1
+if(g:iswindows)
     set mouse=a
 else
     set mouse=v

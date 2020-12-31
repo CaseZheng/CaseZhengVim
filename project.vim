@@ -9,7 +9,7 @@ endfunction
 
 "同步项目文件到远程
 function SynFile(type)
-    if (g:iswindows != 1)
+    if(!g:iswindows)
         echo "非windows平台"
         return
     endif
@@ -123,7 +123,7 @@ endfunction
 "同步项目中单个文件到远程
 function SendFileToServer()
     silent :w
-    if (g:iswindows != 1)
+    if(!g:iswindows)
         echo "非windows平台"
         return
     endif

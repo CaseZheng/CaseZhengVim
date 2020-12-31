@@ -57,7 +57,7 @@ function GenTags()
         silent! execute "cs kill -1"
     endif
 
-    if(g:iswindows==1)
+    if(g:iswindows)
         call delete(dir."\\"."cscope.tags")
         call delete(dir."\\"."cscope.files")
         call delete(dir."\\"."ncscope.out")
@@ -71,15 +71,18 @@ function GenTags()
         call delete("./"."cscope.tags")
         call delete("./"."cscope.files")
         call delete("./"."cscope.out")
-        call delete("./"."cscope.out")
-        call delete("./"."cscope.in.out")
-        call delete("./"."cscope.po.out")
-        call delete("./"."GPATH")
-        call delete("./"."GRTAGS")
-        call delete("./"."GTAGS")
-    endif
+        call delete("./"."cscope.out")                       
+        call delete("./"."cscope.in.out")                    
+        call delete("./"."cscope.po.out")                    
+        call delete("./"."GPATH")                            
+        call delete("./"."GRTAGS")                           
+        call delete("./"."GTAGS")                            
+    endif                                                    
 
-    if(g:iswindows!=1)
+    if(g:iswindows)
+        let s:command_msg = "!dir /s/b *.c,*.cpp,*.h,*.hpp,*.cc,*.inl "
+        let s:command_msg = s:command_msg . " > cscope.files"
+    else
         let s:command_msg = "!find $(pwd)"
         let s:command_msg = s:command_msg . " -name '*.h'   -print -o"
         let s:command_msg = s:command_msg . " -name '*.hpp' -print -o"
@@ -89,10 +92,9 @@ function GenTags()
         let s:command_msg = s:command_msg . " -name '*.cc'  -print -o"
         let s:command_msg = s:command_msg . " -name '*.py'  -print"
         let s:command_msg = s:command_msg . " > cscope.files"
-    else
-        let s:command_msg = "!dir /s/b *.c,*.cpp,*.h,*.hpp,*.cc,*.inl "
-        let s:command_msg = s:command_msg . " > cscope.files"
+
     endif
+
     if has("cscope")
         if(g:use_gtags==1)
             let s:command_msg = s:command_msg . " & gtags -f cscope.files"

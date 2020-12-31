@@ -515,6 +515,19 @@ let g:UltiSnipsEditSplit="vertical"
 
 """""""""""""""""""""""""vim-interestingwords"""""""""""""""""""""""""""""""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+                                                              
+"""""""""""""""""""""""""""""""vim-terminal-help""""""""""""""""""""""""""""
+let g:terminal_cwd = 2                                        
+let g:terminal_height = 10                                    
+let g:terminal_pos = 'rightbelow'
+if(g:iswindows)
+    let g:terminal_shell = (g:gitBash != '') ? g:gitBash : ''
+endif
+let g:terminal_kill = 'term'
+let g:terminal_list = 0
+let g:terminal_fixheight = 1
+let g:terminal_close = 1
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 set wildmenu
 set wildmode=full
