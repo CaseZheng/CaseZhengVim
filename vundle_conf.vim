@@ -36,9 +36,9 @@ Plug 'scrooloose/nerdcommenter', { 'for': [ 'cpp', 'vim', 'sh', 'python' ] }
 Plug 'SirVer/ultisnips', { 'for': [ 'cpp' ] }
 " 自动补全插件
 if(g:iswindows)
-    Plug 'CaseZheng/YouCompleteMe', { 'for': [ 'cpp' ] }
+    Plug 'CaseZheng/YouCompleteMe', { 'for': [ 'cpp', 'python' ] }
 else
-    Plug 'ycm-core/YouCompleteMe', { 'for': [ 'cpp' ] }
+    Plug 'ycm-core/YouCompleteMe', { 'for': [ 'cpp', 'python' ] }
 endif
 " 同时支持Git 和 Svn ，高亮当前修改
 Plug 'mhinz/vim-signify', { 'for': [ 'cpp', 'vim', 'sh', 'python' ] }
@@ -107,6 +107,8 @@ let NERDTreeIgnore = [
     \ '\GRTAGS$',
     \ '^.gitignore$',
     \ '^.gitmodules$',
+    \ '^__pycache__$',
+    \ '^.pytest_cache$',
     \ ]
 
 let NERDTreeDirArrowExpandable="-"
@@ -451,7 +453,7 @@ let g:ctrlsf_auto_focus = {
     \ "at" : "start"
     \}
 let g:ctrlsf_populate_qflist = 0    "结果同时输出到quickfix
-let g:ctrlsf_ignore_dir = ['cscope.out', 'cscope.tags', 'cscope.files', 'GTAGS', 'GPATH', 'GRTAGS']
+let g:ctrlsf_ignore_dir = ['cscope.out', 'cscope.tags', 'cscope.files', 'GTAGS', 'GPATH', 'GRTAGS', '__pycache__', '.pytest_cache']
 let g:ctrlsf_position = 'bottom'
 let g:ctrlsf_winsize = '30%'
 "修改文件后保存确认提示
@@ -494,7 +496,7 @@ map <leader>lb :LeaderfBuffer<CR>
 map <leader>lc :LeaderfHistoryCmd<CR>
 map <leader>ls :LeaderfHistorySearch<CR>
 let g:Lf_WildIgnore = {
-        \ 'dir': ['.svn','.git','.hg','.vscode','.wine','.deepinwine','.oh-my-zsh'],
+        \ 'dir': ['.svn','.git','.hg','.vscode','.wine','.deepinwine','.oh-my-zsh', '__pycache__', '.pytest_cache'],
         \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
         \}
 "--------------------------------------------------------------------------

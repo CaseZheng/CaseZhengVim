@@ -4,7 +4,8 @@ import os
 import subprocess
 import ycm_core
 
-DIR_OF_THIS_SCRIPT = os.path.abspath( os.path.dirname( __file__ ) )
+#DIR_OF_THIS_SCRIPT = os.path.abspath( os.path.dirname( __file__ ) )
+DIR_OF_THIS_SCRIPT = os.path.abspath( '~/.vim/plugged/YouCompleteMe/' )
 DIR_OF_THIRD_PARTY = os.path.join( DIR_OF_THIS_SCRIPT, 'third_party' )
 SOURCE_EXTENSIONS = [ '.cpp', '.cxx', '.cc', '.c', '.m', '.mm' ]
 
