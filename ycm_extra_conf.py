@@ -5,7 +5,7 @@ import subprocess
 import ycm_core
 
 #DIR_OF_THIS_SCRIPT = os.path.abspath( os.path.dirname( __file__ ) )
-DIR_OF_THIS_SCRIPT = os.path.abspath( '~/.vim/plugged/YouCompleteMe/' )
+DIR_OF_THIS_SCRIPT = os.path.expanduser( '~/.vim/plugged/YouCompleteMe/' )
 DIR_OF_THIRD_PARTY = os.path.join( DIR_OF_THIS_SCRIPT, 'third_party' )
 SOURCE_EXTENSIONS = [ '.cpp', '.cxx', '.cc', '.c', '.m', '.mm' ]
 
@@ -136,6 +136,7 @@ def GetStandardLibraryIndexInSysPath( sys_path ):
 
 def PythonSysPath( **kwargs ):
   sys_path = kwargs[ 'sys_path' ]
+
   for folder in os.listdir( DIR_OF_THIRD_PARTY ):
     if folder == 'python-future':
       folder = os.path.join( folder, 'src' )
