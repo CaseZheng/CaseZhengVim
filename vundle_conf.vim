@@ -186,12 +186,13 @@ Plug 'dyng/ctrlsf.vim', { 'on': ['<Plug>CtrlSF', 'CtrlSFToggle'] }
       \}
   "搜索聚焦结果窗口的时机
   let g:ctrlsf_auto_focus = {
-      \ "at" : "start"
+      \ "at" : "none"
       \}
   let g:ctrlsf_populate_qflist = 0    "结果同时输出到quickfix
   let g:ctrlsf_ignore_dir = ['cscope.out', 'cscope.tags', 'cscope.files', 'GTAGS', 'GPATH', 'GRTAGS', '__pycache__', '.pytest_cache', '*.py1.stats']
   let g:ctrlsf_position = 'bottom'
   let g:ctrlsf_winsize = '30%'
+  let g:ctrlsf_auto_preview = 1
   "修改文件后保存确认提示
   let g:ctrlsf_confirm_save = 0
   nmap <Leader>ft <Plug>CtrlSFPrompt
@@ -504,17 +505,19 @@ Plug 'dense-analysis/ale'
   " Only run linters named in ale_linters settings.
   let g:ale_linters_explicit = 1
   " Set this variable to 1 to fix files when you save them.
-  let g:ale_fix_on_save = 0
+  let g:ale_fix_on_save = 1
   "打开文件时不检查
   let g:ale_lint_on_enter = 1
   " 检查工具设置
   let g:ale_linters = {
   \   'python': ['flake8', 'pylint'],
   \}
-  "let g:ale_python_flake8_options = '--ignore=E501,W291,N806,F405'
+  let g:ale_python_flake8_options = '--max-line-length=120 --ignore=E121,E123,E126,E226,E24,E704,W503'
+  let g:ale_python_pylint_options = '--max-line-length=120'
+  let g:ale_python_autopep8_options = '--max-line-length=120'
   " 修复工具设置
   let g:ale_fixers = {
-  \   'python': ['autopep8','yapf', 'black', 'isort', 'add_blank_lines_for_python_control_statements'],
+  \   'python': ['autopep8', 'yapf', 'isort'],
   \}
   let g:ale_completion_enabled = 0
   let g:ale_completion_autoimport = 0

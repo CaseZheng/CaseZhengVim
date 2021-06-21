@@ -96,7 +96,7 @@ function SynFile(type)
     endif
 
     let s:dirmask    = get(s:info, "dirmask", '')
-    let s:filemask   = "|*.git;*.svn;*.vscode;*.vsdx;cscope.*;*git/;*svn/;*vscode/;*.xlsx;*.xls;*.pptx;*.ppt;*.docx;*.doc;GPATH;GTAGS;GRTAGS"
+    let s:filemask   = "|*.git;*.svn;*.vscode;*.vsdx;cscope.*;*git/;*svn/;*vscode/;*.xlsx;*.xls;*.pptx;*.ppt;*.docx;*.doc;GPATH;GTAGS;GRTAGS;*fit_test/;"
     let s:commmsg = "!start WinSCP.exe /console /command   "
     let s:commmsg = s:commmsg . "  \"option batch on\"   "
     let s:commmsg = s:commmsg . "  \"option confirm off\"   "
