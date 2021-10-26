@@ -328,27 +328,27 @@ endif
   "此选项控制使用哪种排名和过滤算法 '1'：使用ycmd的缓存和过滤逻辑。 '0'：使用clangd的缓存和过滤逻辑。
   let g:ycm_clangd_uses_ycmd_caching = 0
   let g:ycm_clangd_args = ['-log=verbose', '-pretty']
+
   "打开/关闭编译错误列表
   autocmd FileType c nnoremap <leader>eo :lopen<CR>
   autocmd FileType cpp nnoremap <leader>ec :lclose<CR>
-  "跳转到定义
-  "autocmd FileType c nnoremap <leader>e1 :YcmCompleter GoToDefinition<CR>
-  "autocmd FileType cpp nnoremap <leader>e1 :YcmCompleter GoToDefinition<CR>
-  "跳转到声明
-  "autocmd FileType c nnoremap <leader>e2 :YcmCompleter GoToDeclaration<CR>
-  "autocmd FileType cpp nnoremap <leader>e2 :YcmCompleter GoToDeclaration<CR>
+  "跳转
+  autocmd FileType c nnoremap <leader>et :YcmCompleter GoTo<CR>
+  autocmd FileType cpp nnoremap <leader>et :YcmCompleter GoTo<CR>
+  "符号查找
+  autocmd FileType c nnoremap <leader>es :YcmCompleter GoToSymbol
+  autocmd FileType cpp nnoremap <leader>es :YcmCompleter GoToSymbol
   "跳转到引用
   autocmd FileType c nnoremap <leader>er :YcmCompleter GoToReferences<CR>
   autocmd FileType cpp nnoremap <leader>er :YcmCompleter GoToReferences<CR>
-  "查看文档注释中的标识符
-  autocmd FileType c nnoremap <leader>ed :YcmCompleter GetDoc<CR>
-  autocmd FileType cpp nnoremap <leader>ed :YcmCompleter GetDoc<CR>
   "重命名标识符
   autocmd FileType c nnoremap <leader>en :YcmCompleter RefactorRename 
   autocmd FileType cpp nnoremap <leader>en :YcmCompleter RefactorRename 
   "格式化
   autocmd FileType c nnoremap <leader>ef  :YcmComplete Format<CR>
   autocmd FileType cpp nnoremap <leader>ef  :YcmComplete Format<CR>
+  "文档显示
+  autocmd FileType cpp nnoremap <leader>ed <plug>(YCMHover)
 
   "文件类型黑名单，vim打开这些类型文件时会关闭YCM
   let g:ycm_filetype_blacklist = {

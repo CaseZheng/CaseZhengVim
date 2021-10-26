@@ -154,6 +154,9 @@ set t_Co=256
 " 设置背景颜色
 set background=dark
 
+" 设置空闲时间updatetime
+set updatetime=1000
+
 if has("gui_running")
     " 设置打开位置0 0
     winpos 0 0
