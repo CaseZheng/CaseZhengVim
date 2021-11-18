@@ -155,7 +155,7 @@ set t_Co=256
 set background=dark
 
 " 设置空闲时间updatetime
-set updatetime=1000
+set updatetime=3000
 
 if has("gui_running")
     " 设置打开位置0 0
