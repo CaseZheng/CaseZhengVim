@@ -36,9 +36,17 @@ endfunction
 
 map <F8> :call SetFile()<CR>
 
-if(g:iswindows)
+if (g:iswindows == 1)
+    au BufEnter * command! -buffer GGIT silent! execute "!start GitExtensions.exe browse ".getcwd()
+    au BufEnter * command! -buffer GIT silent! execute "!start bash.exe --cd=".getcwd()
     au BufEnter * command! -buffer CD silent! execute "!start explorer ".getcwd()
+    if(executable('powershell'))
+        au BufEnter * command! -buffer CMD silent! execute "!start powershell.exe"
+    else
+        au BufEnter * command! -buffer CMD silent! execute "!start cmd.exe"
+    endif
 endif
+
 
 "打印常用的快捷键
 function PrintKeyMap()
@@ -76,4 +84,6 @@ function PrintKeyMap()
     echo "杂项       # (             # 窗口跳转                   # ,u        # 编辑记录查看和复原       # ,nh  # 去除高亮"
     echo "           # xdatetime空格 # 打印%Y-%m-%d %H:%M:%S      # xdate空格 # 打印%Y-%m-%d             #      # "
     echo "           # :UNIQ         # 去除重复行                 #           #                          #      # "
+    echo "           # :GIT          # 打开git bash               # :CD       # 打开文档资源管理器       # :CMD # 打开windows自带的cmd或powershell"
+    echo "           # :GGIT         # 打开Git Extensions         #"
 endfunction
