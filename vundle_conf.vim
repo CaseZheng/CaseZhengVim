@@ -320,7 +320,7 @@ endif
   "设置YCM的文件名补全时，相对路径是按照vim的当前工作目录还是活动缓冲区中的文件所在目录来解释。0是按照文件所在目录
   let g:ycm_filepath_completion_use_working_dir = 0
   "设置查看光标停留处的错误诊断详细信息的快捷键,默认为,d
-  let g:ycm_key_detailed_diagnostics = '<leader>ei'
+  let g:ycm_key_detailed_diagnostics = ''
   "设置YCM的作用的文件大小上限，单位为Kb，0表示无上限
   let g:ycm_disable_for_files_larger_than_kb = 0
   "启用clangd
@@ -328,27 +328,19 @@ endif
   "此选项控制使用哪种排名和过滤算法 '1'：使用ycmd的缓存和过滤逻辑。 '0'：使用clangd的缓存和过滤逻辑。
   let g:ycm_clangd_uses_ycmd_caching = 0
   let g:ycm_clangd_args = ['-log=verbose', '-pretty']
+  let g:ycm_auto_hover = 'CursorHold'
 
-  "打开/关闭编译错误列表
-  autocmd FileType c nnoremap <leader>eo :lopen<CR>
-  autocmd FileType cpp nnoremap <leader>ec :lclose<CR>
   "跳转
-  autocmd FileType c nnoremap <leader>et :YcmCompleter GoTo<CR>
-  autocmd FileType cpp nnoremap <leader>et :YcmCompleter GoTo<CR>
+  nmap <leader>et :YcmCompleter GoTo<CR>
   "符号查找
-  autocmd FileType c nnoremap <leader>es :YcmCompleter GoToSymbol
-  autocmd FileType cpp nnoremap <leader>es :YcmCompleter GoToSymbol
+  nmap <leader>es :YcmCompleter GoToSymbol
   "跳转到引用
-  autocmd FileType c nnoremap <leader>er :YcmCompleter GoToReferences<CR>
-  autocmd FileType cpp nnoremap <leader>er :YcmCompleter GoToReferences<CR>
+  nmap <leader>er :YcmCompleter GoToReferences<CR>
   "重命名标识符
-  autocmd FileType c nnoremap <leader>en :YcmCompleter RefactorRename 
-  autocmd FileType cpp nnoremap <leader>en :YcmCompleter RefactorRename 
+  nmap <leader>en :YcmCompleter RefactorRename 
   "格式化
-  autocmd FileType c nnoremap <leader>ef  :YcmComplete Format<CR>
   autocmd FileType cpp nnoremap <leader>ef  :YcmComplete Format<CR>
-  "文档显示
-  autocmd FileType cpp nnoremap <leader>ed <plug>(YCMHover)
+  nmap <leader>D <plug>(YCMHover)
 
   "文件类型黑名单，vim打开这些类型文件时会关闭YCM
   let g:ycm_filetype_blacklist = {
@@ -384,9 +376,9 @@ endif
     \   'lua': ['.', ':', 're!\w{2}'],
     \ }
   "设置错误标志
-  let g:ycm_error_symbol = 'EE'
+  let g:ycm_error_symbol = '_E'
   "设置警告标志
-  let g:ycm_warning_symbol = 'WW'
+  let g:ycm_warning_symbol = '_W'
   "开启YCM的显示诊断信息的功能，0表示关闭
   let g:ycm_show_diagnostics_ui = 0
   "在代码中高亮显示YCM诊断对应的内容，如果关闭，则会关闭错误和警告高亮功能，0表示关闭
@@ -498,32 +490,40 @@ Plug 'dense-analysis/ale'
   "显示linter名称,出错或警告等相关信息
   let g:ale_echo_msg_error_str = "E"
   let g:ale_echo_msg_warning_str = "W"
-  let g:ale_echo_msg_format = '[%linter%] %s [%serverity%]'
+  let g:ale_echo_msg_format = '[%severity%][%code%][%linter%]%s'
   "只有保存时才进行语法检测
   let g:ale_lint_on_text_changed = "never"
   let g:ale_lint_on_insert_leave = 0
-  " Only run linters named in ale_linters settings.
-  let g:ale_linters_explicit = 1
-  " Set this variable to 1 to fix files when you save them.
-  let g:ale_fix_on_save = 1
   "打开文件时不检查
   let g:ale_lint_on_enter = 1
+  "Only run linters named in ale_linters settings.
+  let g:ale_linters_explicit = 1
+  "保存文件时自动修复文件
+  let g:ale_fix_on_save = 0
   " 检查工具设置
   let g:ale_linters = {
   \   'python': ['flake8', 'pylint'],
   \}
   let g:ale_python_flake8_options = '--max-line-length=120 --ignore=E121,E123,E126,E226,E24,E704,W503'
-  let g:ale_python_pylint_options = '--max-line-length=120'
+  let g:ale_python_pylint_options = '--max-line-length=120 --disable=C0114,C0115,C0116,W0201,R0902'
   let g:ale_python_autopep8_options = '--max-line-length=120'
   " 修复工具设置
   let g:ale_fixers = {
   \   'python': ['autopep8', 'yapf', 'isort'],
   \}
+  "代码补全开关
   let g:ale_completion_enabled = 0
   let g:ale_completion_autoimport = 0
 
   "格式化
   autocmd FileType python nnoremap <leader>ef  :ALEFix<CR>
+  "前、后一个错误或警告
+  nmap <Leader>ek <Plug>(ale_previous_wrap)
+  nmap <Leader>ej <Plug>(ale_next_wrap)
+  "开启／关闭语法检查
+  nmap <Leader>ec :ALEToggle<CR>
+  "查看详细信息
+  nmap <Leader>ed :ALEDetail<CR>
 " }}}
 
 " 查找文件插件 
