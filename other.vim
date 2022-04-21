@@ -38,7 +38,7 @@ map <F8> :call SetFile()<CR>
 
 if (g:iswindows == 1)
     au BufEnter * command! -buffer GGIT silent! execute "!start GitExtensions.exe browse ".getcwd()
-    au BufEnter * command! -buffer GIT silent! execute "!start bash.exe --cd=".getcwd()
+    au BufEnter * command! -buffer GIT silent! execute "!start "g:git_bash" --cd=".getcwd()
     au BufEnter * command! -buffer CD silent! execute "!start explorer ".getcwd()
     if(executable('powershell'))
         au BufEnter * command! -buffer CMD silent! execute "!start powershell.exe"

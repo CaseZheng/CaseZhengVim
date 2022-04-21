@@ -11,6 +11,9 @@ let g:plugged_path = g:vim_conf_path."/plugged"
 
 call plug#begin(g:plugged_path)
 
+" 配色方案
+Plug 'morhetz/gruvbox'
+
 " 高亮多个单词
 Plug 'lfv89/vim-interestingwords'
 
@@ -18,8 +21,101 @@ Plug 'lfv89/vim-interestingwords'
 Plug 'Shougo/defx.nvim'
 Plug 'roxma/nvim-yarp'
 Plug 'roxma/vim-hug-neovim-rpc'
-" defx {{{
-" Defx ======================================================================{{{
+Plug 'kristijanhusak/defx-git'
+Plug 'kristijanhusak/defx-icons'
+Plug 'ryanoasis/vim-devicons'
+
+" c++高亮增强 C++11/14 STL
+Plug 'octol/vim-cpp-enhanced-highlight'
+
+" Airline 状态栏
+Plug 'vim-airline/vim-airline'
+
+" Airline主题
+Plug 'vim-airline/vim-airline-themes'
+if(g:iswindows)
+    " 字体
+    Plug 'eugeii/consolas-powerline-vim'
+endif
+
+" 缩进标线
+Plug 'Yggdroot/indentLine'
+
+" Vim 标签侧边栏插件
+Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
+
+" markdown语法高亮
+Plug 'plasticboy/vim-markdown'
+
+" 代码搜索
+Plug 'dyng/ctrlsf.vim', { 'on': ['<Plug>CtrlSF', 'CtrlSFToggle'] }
+
+" 多重光标选取功能
+Plug 'terryma/vim-multiple-cursors'
+
+" 窗口管理器
+Plug 't9md/vim-choosewin'
+
+" 快速注释/解开注释
+Plug 'scrooloose/nerdcommenter', { 'for': [ 'cpp', 'vim', 'sh', 'python' ] }
+
+" 代码块补全
+Plug 'SirVer/ultisnips', { 'for': [ 'cpp' ] }
+
+" 自动补全插件
+if(g:iswindows)
+    Plug 'CaseZheng/YouCompleteMe', { 'for': [ 'cpp', 'python' ] }
+else
+    Plug 'ycm-core/YouCompleteMe', { 'for': [ 'cpp', 'python' ] }
+endif
+
+" 同时支持Git 和 Svn ，高亮当前修改
+Plug 'mhinz/vim-signify', { 'for': [ 'cpp', 'vim', 'sh', 'python' ] }
+
+" git支持
+Plug 'tpope/vim-fugitive', { 'for': [ 'cpp', 'vim', 'sh', 'python' ] }
+
+" 查看Git详细提交日志
+Plug 'gregsexton/gitv', { 'for': [ 'cpp', 'vim', 'sh', 'python' ] }
+
+"撤销重做功能
+Plug 'sjl/gundo.vim'
+
+" 代码对齐插件
+Plug 'godlygeek/tabular', { 'on': 'Tabularize' }
+
+" 快速跳转
+Plug 'easymotion/vim-easymotion', { 'on': ['<Plug>(easymotion-linebackward)', '<Plug>(easymotion-j)', '<Plug>(easymotion-k)', '<Plug>(easymotion-lineforward)', '<Plug>(easymotion-w)', '<Plug>(easymotion-b)'] }
+
+" 语法格式提示
+Plug 'dense-analysis/ale'
+
+" 查找文件插件 
+let leaderf_cmds = ['LeaderfFile', 'LeaderfBuffer', 'LeaderfHistoryCmd', 'LeaderfHistorySearch']
+if(g:iswindows)
+    Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat', 'on': leaderf_cmds }
+else
+    Plug 'Yggdroot/LeaderF', { 'do': './install.sh', 'on': leaderf_cmds }
+endif
+
+" terminal封装插件
+Plug 'skywind3000/vim-terminal-help'
+
+call plug#end()
+
+" gruvbox =================================================================== {{{
+  "使用粗字体 1开启 0关闭 Enables bold text.  default: 1
+  let g:gruvbox_bold=0
+  "启用斜体注释 Enables italic for comments.  default: 1
+  let g:gruvbox_italicize_comments=0
+  let g:gruvbox_contrast_dark="hard"
+
+  if(isdirectory(g:plugged_path."/gruvbox"))
+      colorscheme gruvbox
+  endif
+" }}}
+
+" defx =================================================================== {{{
   nmap <silent> <F2> :Defx<CR>
 	autocmd FileType defx call s:defx_my_settings()
 
@@ -78,11 +174,30 @@ Plug 'roxma/vim-hug-neovim-rpc'
     " 缩写defx宽度
     nnoremap <silent><buffer><expr> < defx#do_action('resize', defx#get_context().winwidth - 10)
 	endfunction
+
+  call defx#custom#column('icon', {
+      \ 'directory_icon': '▸',
+      \ 'opened_icon': '▾',
+      \ 'root_icon': ' ',
+      \ })
+
+  call defx#custom#option('_', {
+    \ 'ignored_files': '.*,*.pyc,*.pyo,*.git,*.svn,*.sln,*.vcxproj,*.filters,*.exe,*.docx,*.doc,*.xlsx,*.xls,*.pptx,*.ppt,*.pytest_cache,*.py1.stats,GPATH,__pycache__,cscope,GTAGS,GRTAGS',
+    \ 'ignored_recursive_files': '',
+    \ 'auto_cd': 1,
+    \ 'winwidth': 50,
+    \ 'split': 'vertical',
+    \ 'show_ignored_files': 0,
+    \ 'buffer_name': '',
+    \ 'resume': 1,
+    \ 'toggle': 1,
+    \ 'direction': 'topleft',
+    \ 'columns': 'git:icon:filename',
+    \ })
 " }}}
 
-Plug 'kristijanhusak/defx-git'
-" defx-git {{{
-  let g:defx_git#indicators = {
+" defx-git =================================================================== {{{
+  call defx#custom#column('git', 'indicators', {
     \ 'Modified'  : '✹',
     \ 'Staged'    : '✚',
     \ 'Untracked' : '✭',
@@ -91,8 +206,9 @@ Plug 'kristijanhusak/defx-git'
     \ 'Ignored'   : '☒',
     \ 'Deleted'   : '✖',
     \ 'Unknown'   : '?'
-    \ }
-  let g:defx_git#column_length = 0
+    \ })
+
+  call defx#custom#column('git', 'column_length', 0)
   hi def link Defx_filename_directory NERDTreeDirSlash
   hi def link Defx_git_Modified Special
   hi def link Defx_git_Staged Function
@@ -102,32 +218,27 @@ Plug 'kristijanhusak/defx-git'
   hi def link Defx_git_Ignored Comment
 " }}}
 
-Plug 'kristijanhusak/defx-icons'
-" defx-icons {{{
+" defx-icons =================================================================== {{{
   let g:defx_icons_enable_syntax_highlight = 1
 " }}}
 
-" c++高亮增强 C++11/14 STL
-Plug 'octol/vim-cpp-enhanced-highlight'
-" vim-cpp-enhanced-highlight {{{
+" vim-cpp-enhanced-highlight =================================================================== {{{
   "高亮类，成员函数，标准库和模板
   let g:cpp_class_scope_highlight = 1
   let g:cpp_member_variable_highlight = 1
   let g:cpp_concepts_highlight = 1
-  "let g:cpp_experimental_simple_template_highlight = 1
+  let g:cpp_experimental_simple_template_highlight = 1
   "开启声明中类名的高亮显示
-  "let g:cpp_class_decl_highlight = 1
+  let g:cpp_class_decl_highlight = 1
   "成员变量的突出显示
   "let g:cpp_member_variable_highlight = 1
   "类代码高亮
-  "let g:cpp_class_scope_highlight = 1
+  let g:cpp_class_scope_highlight = 1
   "文件较大时使用下面的设置高亮模板速度较快，但会有一些小错误
-  "let g:cpp_experimental_template_highlight = 1
+  let g:cpp_experimental_template_highlight = 1
 " }}}
 
-" Airline 状态栏
-Plug 'vim-airline/vim-airline'
-" vim-airline {{{
+" vim-airline =================================================================== {{{
   let g:airline_powerline_fonts = 1
   let g:airline_theme = 'bubblegum'
   "打开tabline功能,方便查看Buffer和切换,省去了minibufexpl插件
@@ -179,25 +290,14 @@ Plug 'vim-airline/vim-airline'
   let g:airline_symbols.linenr = ' '
 " }}}
 
-" Airline主题
-Plug 'vim-airline/vim-airline-themes'
-if(g:iswindows)
-    " 字体
-    Plug 'eugeii/consolas-powerline-vim'
-endif
-
-" 缩进标线
-Plug 'Yggdroot/indentLine'
-" indentLine {{{
+" indentLine =================================================================== {{{
   let g:indentLine_noConcealCursor = 1
   let g:indentLine_color_term = 0
   let g:indentLine_char = '¦'
   let g:indentLine_concealcursor = ''
 " }}}
 
-" Vim 标签侧边栏插件
-Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
-" tagbar {{{ 
+" tagbar =================================================================== {{{ 
   " toggle tagbar display 打开 Tag 列表
   map <F4> :TagbarToggle<CR>
   "去除第一行的帮助信息
@@ -209,9 +309,7 @@ Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
   let g:tagbar_autoshowtag = 1
 " }}}
 
-" markdown语法高亮
-Plug 'plasticboy/vim-markdown'
-" vim-markdown {{{
+" vim-markdown =================================================================== {{{
   "禁用markdown隐藏标记的功能
   set conceallevel=0
   let g:vim_markdown_conceal=1
@@ -220,9 +318,7 @@ Plug 'plasticboy/vim-markdown'
   let g:vim_markdown_conceal_code_blocks=0
 " }}}
 
-" 代码搜索
-Plug 'dyng/ctrlsf.vim', { 'on': ['<Plug>CtrlSF', 'CtrlSFToggle'] }
-" ctrlsf {{{
+" ctrlsf =================================================================== {{{
   let g:ctrlsf_ackprg = 'ag'
   let g:ctrlsf_default_view_mode='compact'
   let g:ctrlsf_default_root='cwd'     "设置在当前工作目录下搜索
@@ -250,12 +346,7 @@ Plug 'dyng/ctrlsf.vim', { 'on': ['<Plug>CtrlSF', 'CtrlSFToggle'] }
   nmap <leader>fl :CtrlSFToggle<CR>
 " }}}
 
-" 多重光标选取功能
-Plug 'terryma/vim-multiple-cursors'
-
-" 窗口管理器
-Plug 't9md/vim-choosewin'
-" vim-choosewin {{{
+" vim-choosewin =================================================================== {{{
   nmap  (  <Plug>(choosewin)
   " show big letters
   let g:choosewin_overlay_enable = 1
@@ -274,9 +365,7 @@ Plug 't9md/vim-choosewin'
   "                 Disable predefined keymaping
 " }}}
 
-" 快速注释/解开注释
-Plug 'scrooloose/nerdcommenter', { 'for': [ 'cpp', 'vim', 'sh', 'python' ] }
-" nerdcommenter {{{
+" nerdcommenter =================================================================== {{{
   "1、 \cc 注释当前行和选中行  
   "2、 \cn 没有发现和\cc有区别  
   "3、 \c<空格> 如果被选区域有部分被注释，则对被选区域执行取消注释操作，其它情况执行反转注释操作  
@@ -292,9 +381,7 @@ Plug 'scrooloose/nerdcommenter', { 'for': [ 'cpp', 'vim', 'sh', 'python' ] }
   "命令 \cc 中的 \ 为<Leader>符，<Leader>符默认为 \ 
 " }}}
 
-" 代码块补全
-Plug 'SirVer/ultisnips', { 'for': [ 'cpp' ] }
-" ultisnips {{{
+" ultisnips =================================================================== {{{
   "快速插入代码片段
   let g:UltiSnipsExpandTrigger="<C-j>"
   let g:UltiSnipsJumpForwardTrigger="<C-j>"
@@ -302,13 +389,7 @@ Plug 'SirVer/ultisnips', { 'for': [ 'cpp' ] }
   let g:UltiSnipsEditSplit="vertical"
 " }}}
 
-" 自动补全插件
-if(g:iswindows)
-    Plug 'CaseZheng/YouCompleteMe', { 'for': [ 'cpp', 'python' ] }
-else
-    Plug 'ycm-core/YouCompleteMe', { 'for': [ 'cpp', 'python' ] }
-endif
-" YouCompleteMe {{{
+" YouCompleteMe =================================================================== {{{
   "让Vim的补全菜单行为与一般IDE一致
   set completeopt=longest,menu
   "离开插入模式后自动关闭预览窗口，当g:ycm_add_preview_to_completeopt设为1时或者vim的completeopt设为preview有效
@@ -449,9 +530,7 @@ endif
   let g:ycm_csharp_server_port = 0
 " }}}
 
-" 同时支持Git 和 Svn ，高亮当前修改
-Plug 'mhinz/vim-signify', { 'for': [ 'cpp', 'vim', 'sh', 'python' ] }
-"vim-signify {{{
+"vim-signify =================================================================== {{{
   let g:signify_vcs_list = [ 'git', 'svn' ]
   " 下一个变更
   nmap <leader>gj <plug>(signify-next-hunk)   
@@ -470,24 +549,14 @@ Plug 'mhinz/vim-signify', { 'for': [ 'cpp', 'vim', 'sh', 'python' ] }
   highlight SignifySignChange cterm=bold ctermbg=237  ctermfg=227
 " }}}
 
-" git支持
-Plug 'tpope/vim-fugitive', { 'for': [ 'cpp', 'vim', 'sh', 'python' ] }
-
-" 查看Git详细提交日志
-Plug 'gregsexton/gitv', { 'for': [ 'cpp', 'vim', 'sh', 'python' ] }
-
-"撤销重做功能
-Plug 'sjl/gundo.vim'
-" gundo {{{
+" gundo =================================================================== {{{
   nnoremap <Leader>u :GundoToggle<CR>
   if(has('python3'))
       let g:gundo_prefer_python3 = 1
   endif
 " }}}
 
-" 代码对齐插件
-Plug 'godlygeek/tabular', { 'on': 'Tabularize' }
-" tabular {{{
+" tabular =================================================================== {{{
   "代码对齐
   nmap <Leader>a= :Tabularize /=<CR>
   vmap <Leader>a= :Tabularize /=<CR>
@@ -499,19 +568,7 @@ Plug 'godlygeek/tabular', { 'on': 'Tabularize' }
   vmap <Leader>a  :Tabularize /
 " }}}
 
-" 配色方案
-Plug 'morhetz/gruvbox'
-" gruvbox {{{
-  "使用粗字体 1开启 0关闭 Enables bold text.  default: 1
-  let g:gruvbox_bold=0
-  "启用斜体注释 Enables italic for comments.  default: 1
-  let g:gruvbox_italicize_comments=0
-  let g:gruvbox_contrast_dark="hard"
-" }}}
-
-" 快速跳转
-Plug 'easymotion/vim-easymotion', { 'on': ['<Plug>(easymotion-linebackward)', '<Plug>(easymotion-j)', '<Plug>(easymotion-k)', '<Plug>(easymotion-lineforward)', '<Plug>(easymotion-w)', '<Plug>(easymotion-b)'] }
-" vim-easymotion {{{
+" vim-easymotion =================================================================== {{{
   let g:EasyMotion_do_mapping = 0
   let g:EasyMotion_smartcase = 1
   let g:EasyMotion_startofline = 0
@@ -524,9 +581,7 @@ Plug 'easymotion/vim-easymotion', { 'on': ['<Plug>(easymotion-linebackward)', '<
   map <Leader><Leader>b <Plug>(easymotion-b)
 " }}}
 
-" 语法格式提示
-Plug 'dense-analysis/ale'
-" ale {{{
+" ale =================================================================== {{{
   "始终开启标志列
   let g:ale_sig_column_always = 0
   let g:ale_set_highlights = 1
@@ -574,14 +629,7 @@ Plug 'dense-analysis/ale'
   nmap <Leader>ed :ALEDetail<CR>
 " }}}
 
-" 查找文件插件 
-let leaderf_cmds = ['LeaderfFile', 'LeaderfBuffer', 'LeaderfHistoryCmd', 'LeaderfHistorySearch']
-if(g:iswindows)
-    Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat', 'on': leaderf_cmds }
-else
-    Plug 'Yggdroot/LeaderF', { 'do': './install.sh', 'on': leaderf_cmds }
-endif
-" LeaderF {{{
+" LeaderF =================================================================== {{{
   let g:Lf_UseCache=0
   let g:Lf_UseMemoryCache=0
   let g:Lf_ReverseOrder=1
@@ -596,9 +644,7 @@ endif
           \}
 " }}}
 
-" terminal封装插件
-Plug 'skywind3000/vim-terminal-help'
-" vim-terminal-help {{{
+" vim-terminal-help =================================================================== {{{
   let g:terminal_cwd = 2                                        
   let g:terminal_height = 50                                    
   let g:terminal_pos = 'rightbelow'
@@ -610,26 +656,6 @@ Plug 'skywind3000/vim-terminal-help'
   let g:terminal_fixheight = 1
   let g:terminal_close = 1
 " }}}
-
-call plug#end()
-
-call defx#custom#option('_', {
-      \ 'ignored_files': '.*,*.pyc,*.pyo,*.git,*.svn,*.sln,*.vcxproj,*.filters,*.exe,*.docx,*.doc,*.xlsx,*.xls,*.pptx,*.ppt,*.pytest_cache,*.py1.stats,GPATH,__pycache__,cscope,GTAGS,GRTAGS',
-      \ 'ignored_recursive_files': '',
-      \ 'auto_cd': 1,
-      \ 'winwidth': 50,
-      \ 'split': 'vertical',
-      \ 'direction': 'topleft',
-      \ 'show_ignored_files': 0,
-      \ 'buffer_name': '',
-      \ 'toggle': 1,
-      \ 'resume': 1,
-      \ 'columns': 'mark:indent:icon:filename:type',
-      \ })
-
-if(isdirectory(g:plugged_path."/gruvbox"))
-    colorscheme gruvbox
-endif
 
 set wildmenu
 set wildmode=full
