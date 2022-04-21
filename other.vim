@@ -8,7 +8,7 @@ let g:loaded_self_other = 1
 function CloseAllBuffer()
     silent! execute(":e ~/.vim/dirs/tmp/未命名")
     let s:bufferlist = getbufinfo()
-	let s:currentbufnr = bufnr("%")
+    let s:currentbufnr = bufnr("%")
     for bufferinfo in s:bufferlist
         if s:currentbufnr == bufferinfo.bufnr 
             continue

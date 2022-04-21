@@ -7,8 +7,8 @@ endif
 
 if(g:iswindows)
 	let $HOMEPATH = expand("~/")
-	let $PATH = $PATH.";".$HOMEPATH.".vim/exec/"
-	let $PATH = $PATH.";".$HOMEPATH.".vim/gtags/"
+	let $PATH = $PATH.";".g:vim_conf_path."/exec/"
+	let $PATH = $PATH.";".g:vim_conf_path."/gtags/"
 endif
 
 scriptencoding utf-8
@@ -32,7 +32,7 @@ set ambiwidth=double
 " 侦测文件类型
 filetype on
 " 载入文件类型插件
-filetype plugin on          
+filetype plugin on
 " 为特定文件类型载入相关缩进文件
 filetype indent on
 
@@ -41,7 +41,7 @@ set expandtab
 set tabstop=2
 " 设置软制表符的宽度
 set softtabstop=2
-" (自动) 缩进使用的4个空格
+" 自动缩进时，缩进长度
 set shiftwidth=2
 
 " 开启光亮光标行 开启高亮光标列
@@ -169,11 +169,17 @@ if has("gui_running")
     set guifont=Consolas:h10
 endif
 
-source ~/.vim/plug.vim
-source ~/.vim/other.vim
-source ~/.vim/tags.vim
-source ~/.vim/project.vim
-source ~/.vim/vundle_conf.vim
+let $plug_path = g:vim_conf_path."plug.vim"
+source $plug_path
+let $other_path = g:vim_conf_path."other.vim"
+source $other_path
+let $tags_path = g:vim_conf_path."tags.vim"
+source $tags_path
+let $project_path = g:vim_conf_path."project.vim"
+source $project_path
+let $plug_conf_path = g:vim_conf_path."plug_conf.vim"
+source $plug_conf_path
+
 
 syntax enable
 

@@ -1,60 +1,110 @@
+if exists('g:loaded_self_plug_conf')
+    finish
+endif
+
+let g:loaded_self_plug_conf = 1
+
 " 修改Lender为','默认为'\'
 let g:mapleader = ","
 
-call plug#begin('~/.vim/plugged')
+let g:plugged_path = g:vim_conf_path."/plugged"
 
-let nerdtree_cmds = ['NERDTreeFind', 'NERDTree', 'NERDTreeToggle']
+call plug#begin(g:plugged_path)
+
 " 高亮多个单词
 Plug 'lfv89/vim-interestingwords'
 
-" vim 树形目录插件
-Plug 'scrooloose/nerdtree', { 'on': nerdtree_cmds }
-" nerdtree {{{
-  " 打开/关闭 NERDTree
-  nmap <silent> <F2> :NERDTree<CR>
-  " 打开 NERDTree 并选中当前文件
-  nmap <Leader>t :NERDTreeFind<CR>
-  " 过滤文件和文件夹的显示
-  let NERDTreeIgnore = [
-      \ '\.pyc$', 
-      \ '\.pyo$',
-      \ '\.git$',
-      \ '\.svn$',
-      \ '\cscope.*$',
-      \ '\.sln$',
-      \ '\.vcxproj$',
-      \ '\.filters$',
-      \ '\.vcxproj\.user$',
-      \ '^.exe$',
-      \ '\.docx$',
-      \ '\.doc$',
-      \ '\.xlsx$',
-      \ '\.xls$',
-      \ '\.pptx$',
-      \ '\.ppt$',
-      \ '\GPATH$',
-      \ '\GTAGS$',
-      \ '\GRTAGS$',
-      \ '^.gitignore$',
-      \ '^.gitmodules$',
-      \ '^__pycache__$',
-      \ '^.pytest_cache$',
-      \ '\.py1.stats$',
-      \ ]
+" 文件管理
+Plug 'Shougo/defx.nvim'
+Plug 'roxma/nvim-yarp'
+Plug 'roxma/vim-hug-neovim-rpc'
+" defx {{{
+" Defx ======================================================================{{{
+  nmap <silent> <F2> :Defx<CR>
+	autocmd FileType defx call s:defx_my_settings()
 
-  let NERDTreeDirArrowExpandable="-"
-  let NERDTreeDirArrowCollapsible="+"
-  let NERDTreeWinSize=40            " 设置宽度
-  let NERDTreeCaseSensitiveSort=1   " 排序
-  let NERDTreeHighlightCursorline=1 " 高亮显示光标所在行
-  let NERDTreeShowBookmarks=0       " 当打开 NERDTree 窗口时，自动显示 Bookmarks
-  let NERDTreeShowFiles=1           " 默认显示文件
-  let NERDTreeShowHidden=1          " 默认显示隐藏文件
-  let NERDChristmasTree=1           " 让树更好看
-  let NERDTreeMinimalUI=1           " 去除第一行的帮助提示
-  "let NERDTreeBookmarksFile=    " 指定书签文件
-  "let NERDTreeShowLineNumbers=1 " 默认显示行号
-  "let NERDTreeWinPos='right'    " 将 NERDTree 的窗口设置在 vim 窗口的右侧，默认在左
+	function! s:defx_my_settings() abort
+    " 不在defx栏不显示行号
+    setl nonu
+    " 打开目录或文档
+	  nnoremap <silent><buffer><expr> <CR> 
+            \ defx#is_directory() ? 
+            \ defx#do_action('open_tree', 'toggle') :
+            \ defx#do_action('open', 'choose')
+   " 打开文档
+	  nnoremap <silent><buffer><expr> e defx#do_action('open', 'vsplit')
+    " 预览
+	  nnoremap <silent><buffer><expr> P defx#do_action('preview')
+    " 拷贝
+	  nnoremap <silent><buffer><expr> c defx#do_action('copy')
+    " 删除
+	  nnoremap <silent><buffer><expr> m defx#do_action('move')
+    " 粘帖
+	  nnoremap <silent><buffer><expr> p defx#do_action('paste')
+    " 创建新目录
+	  nnoremap <silent><buffer><expr> K defx#do_action('new_directory')
+    " 创建新文件
+	  nnoremap <silent><buffer><expr> N defx#do_action('new_file')
+    " 删除文件
+	  nnoremap <silent><buffer><expr> d defx#do_action('remove')
+    " 文件改名
+	  nnoremap <silent><buffer><expr> r defx#do_action('rename')
+    " 执行文件
+	  nnoremap <silent><buffer><expr> x defx#do_action('execute_system')
+    " 复制文件地址
+	  nnoremap <silent><buffer><expr> yy defx#do_action('yank_path')
+    " 显示/忽略隐藏文件
+	  nnoremap <silent><buffer><expr> . defx#do_action('toggle_ignored_files')
+    " 打开上一个目录
+	  nnoremap <silent><buffer><expr> u defx#do_action('cd', ['..'])
+    " 打开家目录
+	  nnoremap <silent><buffer><expr> ~ defx#do_action('cd')
+    " 打开当前目录并改变根目录
+	  nnoremap <silent><buffer><expr> cd defx#do_action('cd', [defx#get_candidate().action__path])
+    " 打开到当前根目录
+	  nnoremap <silent><buffer><expr> CD defx#do_action('cd', [getcwd()])
+    " 退出目录
+	  nnoremap <silent><buffer><expr> q defx#do_action('quit')
+    " 向下
+	  nnoremap <silent><buffer><expr> j line('.') == line('$') ? 'gg' : 'j'
+    " 向上
+	  nnoremap <silent><buffer><expr> k line('.') == 1 ? 'G' : 'k'
+    " 刷新Defx
+	  nnoremap <silent><buffer><expr> R defx#do_action('redraw')
+    " 打印文件名
+	  nnoremap <silent><buffer><expr> <C-g> defx#do_action('print')
+    " 扩大defx宽度
+    nnoremap <silent><buffer><expr> > defx#do_action('resize', defx#get_context().winwidth + 10)
+    " 缩写defx宽度
+    nnoremap <silent><buffer><expr> < defx#do_action('resize', defx#get_context().winwidth - 10)
+	endfunction
+" }}}
+
+Plug 'kristijanhusak/defx-git'
+" defx-git {{{
+  let g:defx_git#indicators = {
+    \ 'Modified'  : '✹',
+    \ 'Staged'    : '✚',
+    \ 'Untracked' : '✭',
+    \ 'Renamed'   : '➜',
+    \ 'Unmerged'  : '═',
+    \ 'Ignored'   : '☒',
+    \ 'Deleted'   : '✖',
+    \ 'Unknown'   : '?'
+    \ }
+  let g:defx_git#column_length = 0
+  hi def link Defx_filename_directory NERDTreeDirSlash
+  hi def link Defx_git_Modified Special
+  hi def link Defx_git_Staged Function
+  hi def link Defx_git_Renamed Title
+  hi def link Defx_git_Unmerged Label
+  hi def link Defx_git_Untracked Tag
+  hi def link Defx_git_Ignored Comment
+" }}}
+
+Plug 'kristijanhusak/defx-icons'
+" defx-icons {{{
+  let g:defx_icons_enable_syntax_highlight = 1
 " }}}
 
 " c++高亮增强 C++11/14 STL
@@ -119,13 +169,11 @@ Plug 'vim-airline/vim-airline'
       " 设置consolas字体
       set guifont=Consolas\ for\ Powerline\ FixedD:h9
   endif
-  if !exists('g:airline_symbols')
-     let g:airline_symbols = {}
-  endif
   let g:airline_left_sep = '>'
   let g:airline_left_alt_sep = ' '
   let g:airline_right_sep = ' '
   let g:airline_right_alt_sep = ' '
+  let g:airline_symbols = {}
   let g:airline_symbols.branch = ' '
   let g:airline_symbols.readonly = ' '
   let g:airline_symbols.linenr = ' '
@@ -555,7 +603,7 @@ Plug 'skywind3000/vim-terminal-help'
   let g:terminal_height = 50                                    
   let g:terminal_pos = 'rightbelow'
   if(g:iswindows)
-      let g:terminal_shell = (g:gitBash != '') ? g:gitBash : ''
+      let g:terminal_shell = (g:git_bash != '') ? g:git_bash : ''
   endif
   let g:terminal_kill = 'term'
   let g:terminal_list = 0
@@ -565,7 +613,21 @@ Plug 'skywind3000/vim-terminal-help'
 
 call plug#end()
 
-if(isdirectory(expand("~/.vim/plugged/gruvbox")))
+call defx#custom#option('_', {
+      \ 'ignored_files': '.*,*.pyc,*.pyo,*.git,*.svn,*.sln,*.vcxproj,*.filters,*.exe,*.docx,*.doc,*.xlsx,*.xls,*.pptx,*.ppt,*.pytest_cache,*.py1.stats,GPATH,__pycache__,cscope,GTAGS,GRTAGS',
+      \ 'ignored_recursive_files': '',
+      \ 'auto_cd': 1,
+      \ 'winwidth': 50,
+      \ 'split': 'vertical',
+      \ 'direction': 'topleft',
+      \ 'show_ignored_files': 0,
+      \ 'buffer_name': '',
+      \ 'toggle': 1,
+      \ 'resume': 1,
+      \ 'columns': 'mark:indent:icon:filename:type',
+      \ })
+
+if(isdirectory(g:plugged_path."/gruvbox"))
     colorscheme gruvbox
 endif
 

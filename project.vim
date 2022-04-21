@@ -4,9 +4,6 @@ endif
 
 let g:loaded_self_project = 1
 
-function GetRoteInfo()
-endfunction
-
 "同步项目文件到远程
 function SynFile(type)
     if(!g:iswindows)
@@ -14,24 +11,24 @@ function SynFile(type)
         return
     endif
 
-    if(g:projectName == "")
+    if(g:project_name == "")
         echo "未打开任何项目"
         return
     endif
 
-    let s:info = get(g:projectInfo, g:projectName, '')
+    let s:info = get(g:project_conf_info, g:project_name, '')
     if(1 == type(s:info) && '' == s:info)
-        echo '项目: '.g:projectName.' 不存在'
+        echo '项目: '.g:project_name.' 不存在'
         return
     endif
 
-    if('' == g:remoteName)
+    if('' == g:remote_name)
         echo '未设置远程地址信息'
         return
     endif
 
-    let s:remote = get(g:remoteInfo, g:remoteName, '')
-    if('' == g:remoteName)
+    let s:remote = get(g:remote_conf_info, g:remote_name, '')
+    if('' == g:remote_name)
         echo '未设置远程地址信息'
         return
     endif
@@ -96,7 +93,7 @@ function SynFile(type)
     endif
 
     let s:dirmask    = get(s:info, "dirmask", '')
-    let s:filemask   = "|*.git;*.svn;*.vscode;*.vsdx;cscope.*;*git/;*svn/;*vscode/;*.xlsx;*.xls;*.pptx;*.ppt;*.docx;*.doc;GPATH;GTAGS;GRTAGS;"
+    let s:filemask   = "|*.git;*.svn;*.vscode;*.vsdx;cscope.*;*git/;*svn/;*vscode/;*.xlsx;*.xls;*.pptx;*.ppt;*.docx;*.doc;GPATH;GTAGS;GRTAGS;*.py1.stats;"
     let s:commmsg = "!start WinSCP.exe /console /command   "
     let s:commmsg = s:commmsg . "  \"option batch on\"   "
     let s:commmsg = s:commmsg . "  \"option confirm off\"   "
@@ -128,24 +125,24 @@ function SendFileToServer()
         return
     endif
 
-    if(g:projectName == "")
+    if(g:project_name == "")
         echo "未打开任何项目"
         return
     endif
 
-    let s:info = get(g:projectInfo, g:projectName, '')
+    let s:info = get(g:project_conf_info, g:project_name, '')
     if(1 == type(s:info) && '' == s:info)
-        echo '项目: '.g:projectName.' 不存在'
+        echo '项目: '.g:project_name.' 不存在'
         return
     endif
 
-    if('' == g:remoteName)
+    if('' == g:remote_name)
         echo '未设置远程地址信息'
         return
     endif
 
-    let s:remote = get(g:remoteInfo, g:remoteName, '')
-    if('' == g:remoteName)
+    let s:remote = get(g:remote_conf_info, g:remote_name, '')
+    if('' == g:remote_name)
         echo '未设置远程地址信息'
         return
     endif
@@ -214,7 +211,7 @@ au BufEnter * command! -buffer W call SendFileToServer()
 "打印项目列表
 function ProjectList()
     echo "项目列表:"
-    for item in items(g:projectInfo)
+    for item in items(g:project_conf_info)
         echo ' '
         echohl WarningMsg | echo "项目名称：" . item[0] . " 项目地址：" . get(item[1], "projectpath", "") . " 描述：" . get(item[1], "desc", "") | echohl NONE
         echo "Ycm：" . get(item[1], "ycm", "0") . " Cscope：" . get(item[1], "cscope", "0") . " 远程IP：" . get(item[1], "ip", "") . " 远程目录：" . get(item[1], "remotepath", "")
@@ -223,22 +220,22 @@ endfunction
 
 "打印项目信息
 function ProjectInfo()
-    if(g:projectName == "")
+    if(g:project_name == "")
         echohl ErrorMsg | echo "未打开任何项目" | echohl NONE
         return
     endif
-    let s:info = get(g:projectInfo, g:projectName, '')
+    let s:info = get(g:project_conf_info, g:project_name, '')
     if(1 == type(s:info) && '' == s:info)
-        echohl ErrorMsg | echo '项目: '.g:projectName.' 不存在' | echohl NONE
+        echohl ErrorMsg | echo '项目: '.g:project_name.' 不存在' | echohl NONE
         return
     endif
-    echo g:projectName
+    echo g:project_name
     echo s:info
 endfunction
 
 "打开项目
 function ProjectOpen(name)
-    let s:info = get(g:projectInfo, a:name, '')
+    let s:info = get(g:project_conf_info, a:name, '')
     if(1 == type(s:info) && '' == s:info)
         echohl ErrorMsg | echo '项目：'.a:name.' 不存在' | echohl NONE
         call ProjectList()
@@ -257,14 +254,14 @@ function ProjectOpen(name)
 
     let s:remote = get(s:info, 'remote', '')
     if('' != s:remote)
-        let g:remoteName = s:remote
+        let g:remote_name = s:remote
     endif
 
-    let g:projectName = a:name
+    let g:project_name = a:name
     silent! execute(":cd ".s:projectpath)
     silent! only "只剩余一个窗口
     call CloseAllBuffer()
-    execute(":NERDTree")
+    execute(":Defx")
     if(get(s:info, 'cscope', 0) == 1)
         call ResetCscope()
     endif
@@ -278,11 +275,11 @@ endfunction
 
 "编辑项目配置文件
 function ProjectEdit()
-    if filewritable($project)
-        silent! execute(":e ".$project)
-        silent! execute(":source ".$project)
+    if filewritable($project_conf_path)
+        silent! execute(":e ".$project_conf_path)
+        silent! execute(":source ".$project_conf_path)
     else
-        echohl ErrorMsg | echo '项目文件'.$project'不存在'
+        echohl ErrorMsg | echo '项目文件'.$project_conf_path'不存在'
     endif
 endfunction
 
