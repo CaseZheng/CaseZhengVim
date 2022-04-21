@@ -47,9 +47,6 @@ Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 " markdown语法高亮
 Plug 'plasticboy/vim-markdown'
 
-" 代码搜索
-Plug 'dyng/ctrlsf.vim', { 'on': ['<Plug>CtrlSF', 'CtrlSFToggle'] }
-
 " 多重光标选取功能
 Plug 'terryma/vim-multiple-cursors'
 
@@ -90,13 +87,8 @@ Plug 'easymotion/vim-easymotion', { 'on': ['<Plug>(easymotion-linebackward)', '<
 " 语法格式提示
 Plug 'dense-analysis/ale'
 
-" 查找文件插件 
-let leaderf_cmds = ['LeaderfFile', 'LeaderfBuffer', 'LeaderfHistoryCmd', 'LeaderfHistorySearch']
-if(g:iswindows)
-    Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat', 'on': leaderf_cmds }
-else
-    Plug 'Yggdroot/LeaderF', { 'do': './install.sh', 'on': leaderf_cmds }
-endif
+" 查找文件插件
+Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension'}
 
 " terminal封装插件
 Plug 'skywind3000/vim-terminal-help'
@@ -123,8 +115,8 @@ call plug#end()
     " 不在defx栏不显示行号
     setl nonu
     " 打开目录或文档
-	  nnoremap <silent><buffer><expr> <CR> 
-            \ defx#is_directory() ? 
+	  nnoremap <silent><buffer><expr> <CR>
+            \ defx#is_directory() ?
             \ defx#do_action('open_tree', 'toggle') :
             \ defx#do_action('open', 'choose')
    " 打开文档
@@ -182,7 +174,7 @@ call plug#end()
       \ })
 
   call defx#custom#option('_', {
-    \ 'ignored_files': '.*,*.pyc,*.pyo,*.git,*.svn,*.sln,*.vcxproj,*.filters,*.exe,*.docx,*.doc,*.xlsx,*.xls,*.pptx,*.ppt,*.pytest_cache,*.py1.stats,GPATH,__pycache__,cscope,GTAGS,GRTAGS',
+    \ 'ignored_files': '.*,*.pyc,*.pyo,*.git,*.svn,*.sln,*.vcxproj,*.filters,*.exe,*.docx,*.doc,*.xlsx,*.xls,*.pptx,*.ppt,*.pytest_cache,*.py1.stats,GPATH,__pycache__,cscope.*,GTAGS,GRTAGS',
     \ 'ignored_recursive_files': '',
     \ 'auto_cd': 1,
     \ 'winwidth': 50,
@@ -192,7 +184,7 @@ call plug#end()
     \ 'resume': 1,
     \ 'toggle': 1,
     \ 'direction': 'topleft',
-    \ 'columns': 'git:icon:filename',
+    \ 'columns': 'git:mark:indent:icon:filename',
     \ })
 " }}}
 
@@ -256,7 +248,7 @@ call plug#end()
   "let g:airline#extensions#tabline#tab_nr_type = 2 " splits and tab number
   let g:airline#extensions#tabline#buffers_label = 'b'
   let g:airline#extensions#tabline#tabs_label = 't'
-  " 这个是安装字体后 必须设置此项" 
+  " 这个是安装字体后 必须设置此项"
   let g:airline_powerline_fonts = 1
   let g:airline#extensions#quickfix#quickfix_text = 'Quickfix'
   let g:airline#extensions#quickfix#location_text = 'Location'
@@ -297,7 +289,7 @@ call plug#end()
   let g:indentLine_concealcursor = ''
 " }}}
 
-" tagbar =================================================================== {{{ 
+" tagbar =================================================================== {{{
   " toggle tagbar display 打开 Tag 列表
   map <F4> :TagbarToggle<CR>
   "去除第一行的帮助信息
@@ -316,34 +308,6 @@ call plug#end()
   let g:tex_conceal=""
   let g:vim_markdown_math=1
   let g:vim_markdown_conceal_code_blocks=0
-" }}}
-
-" ctrlsf =================================================================== {{{
-  let g:ctrlsf_ackprg = 'ag'
-  let g:ctrlsf_default_view_mode='compact'
-  let g:ctrlsf_default_root='cwd'     "设置在当前工作目录下搜索
-  let g:ctrlsf_case_sensitive='yes'    "大小写敏感
-  "设置自动关闭,不同模式下不同设置
-  let g:ctrlsf_auto_close = {
-      \ "normal" : 0,
-      \ "compact": 0
-      \}
-  "搜索聚焦结果窗口的时机
-  let g:ctrlsf_auto_focus = {
-      \ "at" : "none"
-      \}
-  let g:ctrlsf_populate_qflist = 0    "结果同时输出到quickfix
-  let g:ctrlsf_ignore_dir = ['cscope.out', 'cscope.tags', 'cscope.files', 'GTAGS', 'GPATH', 'GRTAGS', '__pycache__', '.pytest_cache', '*.py1.stats']
-  let g:ctrlsf_position = 'bottom'
-  let g:ctrlsf_winsize = '30%'
-  let g:ctrlsf_auto_preview = 1
-  "修改文件后保存确认提示
-  let g:ctrlsf_confirm_save = 0
-  nmap <Leader>ft <Plug>CtrlSFPrompt
-  vmap <Leader>ft <Plug>CtrlSFVwordPath
-  nmap <leader>fw <Plug>CtrlSFCwordPath<CR>
-  vmap <leader>fw <Plug>CtrlSFVwordExec
-  nmap <leader>fl :CtrlSFToggle<CR>
 " }}}
 
 " vim-choosewin =================================================================== {{{
@@ -366,19 +330,19 @@ call plug#end()
 " }}}
 
 " nerdcommenter =================================================================== {{{
-  "1、 \cc 注释当前行和选中行  
-  "2、 \cn 没有发现和\cc有区别  
-  "3、 \c<空格> 如果被选区域有部分被注释，则对被选区域执行取消注释操作，其它情况执行反转注释操作  
-  "4、 \cm 对被选区域用一对注释符进行注释，前面的注释对每一行都会添加注释  
-  "5、 \ci 执行反转注释操作，选中区域注释部分取消注释，非注释部分添加注释  
-  "6、 \cs 添加性感的注释，代码开头介绍部分通常使用该注释  
-  "7、 \cy 添加注释，并复制被添加注释的部分  
-  "8、 \c$ 注释当前光标到改行结尾的内容  
-  "9、 \cA 跳转到该行结尾添加注释，并进入编辑模式  
-  "10、\ca 转换注释的方式，比如： /**/和//  
-  "11、\cl \cb 左对齐和左右对其，左右对其主要针对/**/  
-  "12、\cu 取消注释 
-  "命令 \cc 中的 \ 为<Leader>符，<Leader>符默认为 \ 
+  "1、 \cc 注释当前行和选中行
+  "2、 \cn 没有发现和\cc有区别
+  "3、 \c<空格> 如果被选区域有部分被注释，则对被选区域执行取消注释操作，其它情况执行反转注释操作
+  "4、 \cm 对被选区域用一对注释符进行注释，前面的注释对每一行都会添加注释
+  "5、 \ci 执行反转注释操作，选中区域注释部分取消注释，非注释部分添加注释
+  "6、 \cs 添加性感的注释，代码开头介绍部分通常使用该注释
+  "7、 \cy 添加注释，并复制被添加注释的部分
+  "8、 \c$ 注释当前光标到改行结尾的内容
+  "9、 \cA 跳转到该行结尾添加注释，并进入编辑模式
+  "10、\ca 转换注释的方式，比如： /**/和//
+  "11、\cl \cb 左对齐和左右对其，左右对其主要针对/**/
+  "12、\cu 取消注释
+  "命令 \cc 中的 \ 为<Leader>符，<Leader>符默认为 \
 " }}}
 
 " ultisnips =================================================================== {{{
@@ -413,7 +377,7 @@ call plug#end()
   "让YCM可以收集注释中的文字来分析以用于补全，默认为0，只能收集代码中的文字来分析
   let g:ycm_collect_identifiers_from_comments_and_strings = 0
   "设置.ycm_extra_conf.py的全局路径，避免每次都需要复制到当前目录.若为空则每次都需复制.ycm_extra_conf.py文件到当前目录
-  let g:ycm_global_ycm_extra_conf = '~/.vim/ycm_extra_conf.py'
+  let g:ycm_global_ycm_extra_conf = g:vim_conf_path.'/ycm_extra_conf.py'
   "允许自动加载.ycm_extra_conf.py，不再提示 ，设置为1，则每次都提示用于确认该文件是否安全
   let g:ycm_confirm_extra_conf = 0
   "设置加载 .ycm_extra_conf.py的路径，*表示匹配任何字符，?匹配任何单个字符，[seq] 匹配seq中的任何单个字符，[!seq] 匹配不在seq中的任何单个字符，路径前加！表示不加载所有改路径上匹配的文件
@@ -421,7 +385,7 @@ call plug#end()
   "将诊断错误信息写道locationlist
   let g:syntastic_always_populate_loc_list = 1
   "使用vim的语法标识符来建立标识符数据库
-  let g:ycm_seed_identifiers_with_syntax = 1 
+  let g:ycm_seed_identifiers_with_syntax = 1
   "将数据从Vim发送到.ycm_extra_conf.py文件中的FlagsForFile函数
   let g:ycm_extra_conf_vim_data = []
   "为ycm服务器指定特定的python解释器，默认为空表示在系统上搜索适当的Python解释器
@@ -466,7 +430,7 @@ call plug#end()
   "跳转到引用
   nmap <leader>er :YcmCompleter GoToReferences<CR>
   "重命名标识符
-  nmap <leader>en :YcmCompleter RefactorRename 
+  nmap <leader>en :YcmCompleter RefactorRename
   "格式化
   autocmd FileType cpp nnoremap <leader>ef  :YcmComplete Format<CR>
   nmap <leader>D <plug>(YCMHover)
@@ -490,7 +454,7 @@ call plug#end()
   "对特定文件类型禁用文件路径补全
   let g:ycm_filepath_blacklist = {'html' : 1, 'jsx' : 1,'xml' : 1,}
   "文件类型白名单，vim打开这些类型文件时会开启YCM
-  let g:ycm_filetype_whitelist = { 
+  let g:ycm_filetype_whitelist = {
       \ "python":1,
       \ "lua":1,
       \ "sh":1,
@@ -533,7 +497,7 @@ call plug#end()
 "vim-signify =================================================================== {{{
   let g:signify_vcs_list = [ 'git', 'svn' ]
   " 下一个变更
-  nmap <leader>gj <plug>(signify-next-hunk)   
+  nmap <leader>gj <plug>(signify-next-hunk)
   " 上一个变更
   nmap <leader>gk <plug>(signify-prev-hunk)
   " 第一个变更
@@ -633,20 +597,54 @@ call plug#end()
   let g:Lf_UseCache=0
   let g:Lf_UseMemoryCache=0
   let g:Lf_ReverseOrder=1
-  "搜索当前文件下的文件
+  let g:Lf_WindowHeight = 0.30
+  let g:Lf_DefaultExternalTool='rg'
+  let g:Lf_PreviewInPopup = 1
+  let g:Lf_HideHelp = 1
+  let g:Lf_ShowDevIcons = 0
+  let g:Lf_GtagsAutoGenerate = 0
+  let g:Lf_RootMarkers = ['.git', '.svn']
+  let g:Lf_GtagsAutoGenerate = 1
+  let g:Lf_Gtagslabel = 'native-pygments'
+
+  " 搜索文件
   map <leader>lf :LeaderfFile<CR>
+  " 搜索buffer
   map <leader>lb :LeaderfBuffer<CR>
+  " 搜索历史命令
   map <leader>lc :LeaderfHistoryCmd<CR>
+  " 搜索历史查询命令
   map <leader>ls :LeaderfHistorySearch<CR>
+
+  " 搜索
+  nmap <unique> <leader>ft <Plug>LeaderfRgPrompt
+  " 搜索光标或选择的word，没有边界
+  nmap <unique> <leader>fw <Plug>LeaderfRgCwordLiteralNoBoundary<CR>
+  vmap <unique> <leader>fw <Plug>LeaderfRgVisualLiteralNoBoundary<CR>
+  " 搜索光标或选择的word，有边界
+  nmap <unique> <leader>fW <Plug>LeaderfRgCwordLiteralBoundary<CR>
+  vmap <unique> <leader>fW <Plug>LeaderfRgVisualLiteralBoundary<CR>
+
+  "搜索当前光标下函数引用，如果搜索结果只有一个则直接跳转。
+  noremap <leader>ff :<C-U><C-R>=printf("Leaderf! gtags -r %s --auto-jump", expand("<cword>"))<CR><CR>
+  "搜索当前光标下函数定义，如果搜索结果只有一个则直接跳转。
+  noremap <leader>fd :<C-U><C-R>=printf("Leaderf! gtags -d %s --auto-jump", expand("<cword>"))<CR><CR>
+  "打开上一次gtags搜索窗口。
+  noremap <leader>fr :<C-U><C-R>=printf("Leaderf! gtags --recall %s", "")<CR><CR>
+  "跳转到下一个搜索结果。
+  noremap <leader>fn :<C-U><C-R>=printf("Leaderf gtags --next %s", "")<CR><CR>
+  "跳转到上一个搜索结果。
+  noremap <leader>fp :<C-U><C-R>=printf("Leaderf gtags --previous %s", "")<CR><CR>
+
   let g:Lf_WildIgnore = {
-          \ 'dir': ['.svn','.git','.hg','.vscode','.wine','.deepinwine','.oh-my-zsh', '__pycache__', '.pytest_cache'],
-          \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
+          \ 'dir': ['.svn','.git','.hg','.vscode','.wine','.deepinwine','.oh-my-zsh','__pycache__','.pytest_cache'],
+          \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]','cscope.out','cscope.tags','cscope.files','GTAGS','GPATH','GRTAGS','*.py1.stats']
           \}
 " }}}
 
 " vim-terminal-help =================================================================== {{{
-  let g:terminal_cwd = 2                                        
-  let g:terminal_height = 50                                    
+  let g:terminal_cwd = 2
+  let g:terminal_height = 50
   let g:terminal_pos = 'rightbelow'
   if(g:iswindows)
       let g:terminal_shell = (g:git_bash != '') ? g:git_bash : ''

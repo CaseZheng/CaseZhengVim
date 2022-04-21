@@ -38,11 +38,6 @@ function ResetCscope()
     endif
 endfunction
 
-"重启YoucompleteMe
-function ResetYcm()
-    silent! execute(":YcmRestartServer")
-endfunction
-
 "重置Cscope和Ycm
 function ResetTags()
     call ResetCscope()

@@ -233,6 +233,11 @@ function ProjectInfo()
     echo s:info
 endfunction
 
+"重启YoucompleteMe
+function ResetYcm()
+    silent! execute(":YcmRestartServer")
+endfunction
+
 "打开项目
 function ProjectOpen(name)
     let s:info = get(g:project_conf_info, a:name, '')
@@ -262,12 +267,9 @@ function ProjectOpen(name)
     silent! only "只剩余一个窗口
     call CloseAllBuffer()
     execute(":Defx")
-    if(get(s:info, 'cscope', 0) == 1)
-        call ResetCscope()
-    endif
-    if(get(s:info, 'ycm', 0) == 1)
-        call ResetYcm()
-    endif
+    "if(get(s:info, 'ycm', 0) == 1)
+        "call ResetYcm()
+    "endif
     echo 'file: '.expand('%').', cwd: '.getcwd().', lines: '.line('$')
     let &titlestring=a:name
     set titlestring+=@%F

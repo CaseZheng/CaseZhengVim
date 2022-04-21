@@ -8,7 +8,7 @@ endif
 if(g:iswindows)
 	let $HOMEPATH = expand("~/")
 	let $PATH = $PATH.";".g:vim_conf_path."/exec/"
-	let $PATH = $PATH.";".g:vim_conf_path."/gtags/"
+	let $PATH = $PATH.";".g:vim_conf_path."/gtags/bin/"
 endif
 
 scriptencoding utf-8
