@@ -22,8 +22,6 @@ Plug 'Shougo/defx.nvim'
 Plug 'roxma/nvim-yarp'
 Plug 'roxma/vim-hug-neovim-rpc'
 Plug 'kristijanhusak/defx-git'
-Plug 'kristijanhusak/defx-icons'
-Plug 'ryanoasis/vim-devicons'
 
 " c++高亮增强 C++11/14 STL
 Plug 'octol/vim-cpp-enhanced-highlight'
@@ -168,8 +166,8 @@ call plug#end()
 	endfunction
 
   call defx#custom#column('icon', {
-      \ 'directory_icon': '▸',
-      \ 'opened_icon': '▾',
+      \ 'directory_icon': '>',
+      \ 'opened_icon': '-',
       \ 'root_icon': ' ',
       \ })
 
@@ -184,19 +182,19 @@ call plug#end()
     \ 'resume': 1,
     \ 'toggle': 1,
     \ 'direction': 'topleft',
-    \ 'columns': 'git:mark:indent:icon:filename',
+    \ 'columns': 'git:indent:icon:filename',
     \ })
 " }}}
 
 " defx-git =================================================================== {{{
   call defx#custom#column('git', 'indicators', {
-    \ 'Modified'  : '✹',
-    \ 'Staged'    : '✚',
-    \ 'Untracked' : '✭',
-    \ 'Renamed'   : '➜',
-    \ 'Unmerged'  : '═',
-    \ 'Ignored'   : '☒',
-    \ 'Deleted'   : '✖',
+    \ 'Modified'  : 'M',
+    \ 'Staged'    : 'S',
+    \ 'Untracked' : 'U',
+    \ 'Renamed'   : 'R',
+    \ 'Unmerged'  : '=',
+    \ 'Ignored'   : 'I',
+    \ 'Deleted'   : 'D',
     \ 'Unknown'   : '?'
     \ })
 
@@ -208,10 +206,6 @@ call plug#end()
   hi def link Defx_git_Unmerged Label
   hi def link Defx_git_Untracked Tag
   hi def link Defx_git_Ignored Comment
-" }}}
-
-" defx-icons =================================================================== {{{
-  let g:defx_icons_enable_syntax_highlight = 1
 " }}}
 
 " vim-cpp-enhanced-highlight =================================================================== {{{
@@ -351,6 +345,7 @@ call plug#end()
   let g:UltiSnipsJumpForwardTrigger="<C-j>"
   let g:UltiSnipsJumpBackwardTrigger="<C-k>"
   let g:UltiSnipsEditSplit="vertical"
+  let g:UltiSnipsSnippetDirectories=[g:vim_conf_path.'/UltiSnips']
 " }}}
 
 " YouCompleteMe =================================================================== {{{
@@ -457,7 +452,6 @@ call plug#end()
   let g:ycm_filetype_whitelist = {
       \ "python":1,
       \ "lua":1,
-      \ "sh":1,
       \ "c":1,
       \ "cpp":1
       \ }
