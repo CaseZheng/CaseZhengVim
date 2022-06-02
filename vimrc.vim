@@ -173,8 +173,6 @@ let $plug_path = g:vim_conf_path."plug.vim"
 source $plug_path
 let $other_path = g:vim_conf_path."other.vim"
 source $other_path
-let $tags_path = g:vim_conf_path."tags.vim"
-source $tags_path
 let $project_path = g:vim_conf_path."project.vim"
 source $project_path
 let $plug_conf_path = g:vim_conf_path."plug_conf.vim"

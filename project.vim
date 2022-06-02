@@ -266,10 +266,7 @@ function ProjectOpen(name)
     silent! execute(":cd ".s:projectpath)
     silent! only "只剩余一个窗口
     call CloseAllBuffer()
-    execute(":Defx")
-    "if(get(s:info, 'ycm', 0) == 1)
-        "call ResetYcm()
-    "endif
+    execute(":Defx ./")
     echo 'file: '.expand('%').', cwd: '.getcwd().', lines: '.line('$')
     let &titlestring=a:name
     set titlestring+=@%F

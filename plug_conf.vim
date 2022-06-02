@@ -128,13 +128,13 @@ call plug#end()
     " 粘帖
 	  nnoremap <silent><buffer><expr> p defx#do_action('paste')
     " 创建新目录
-	  nnoremap <silent><buffer><expr> K defx#do_action('new_directory')
+	  nnoremap <silent><buffer><expr> nd defx#do_action('new_directory')
     " 创建新文件
-	  nnoremap <silent><buffer><expr> N defx#do_action('new_file')
+	  nnoremap <silent><buffer><expr> nf defx#do_action('new_file')
     " 删除文件
-	  nnoremap <silent><buffer><expr> d defx#do_action('remove')
+	  nnoremap <silent><buffer><expr> rm defx#do_action('remove')
     " 文件改名
-	  nnoremap <silent><buffer><expr> r defx#do_action('rename')
+	  nnoremap <silent><buffer><expr> rn defx#do_action('rename')
     " 执行文件
 	  nnoremap <silent><buffer><expr> x defx#do_action('execute_system')
     " 复制文件地址
@@ -172,7 +172,7 @@ call plug#end()
       \ })
 
   call defx#custom#option('_', {
-    \ 'ignored_files': '.*,*.pyc,*.pyo,*.git,*.svn,*.sln,*.vcxproj,*.filters,*.exe,*.docx,*.doc,*.xlsx,*.xls,*.pptx,*.ppt,*.pytest_cache,*.py1.stats,GPATH,__pycache__,cscope.*,GTAGS,GRTAGS',
+    \ 'ignored_files': '*.pyc,*.pyo,*.sln,*.vcxproj,*.filters,*.exe,*.docx,*.doc,*.xlsx,*.xls,*.pptx,*.ppt,*.pytest_cache,*.py1.stats,GPATH,__pycache__,cscope.*,GTAGS,GRTAGS',
     \ 'ignored_recursive_files': '',
     \ 'auto_cd': 1,
     \ 'winwidth': 50,
@@ -610,14 +610,17 @@ call plug#end()
   " 搜索历史查询命令
   map <leader>ls :LeaderfHistorySearch<CR>
 
-  " 搜索
+  "搜索
   nmap <unique> <leader>ft <Plug>LeaderfRgPrompt
-  " 搜索光标或选择的word，没有边界
+  "搜索光标或选择的word，没有边界
   nmap <unique> <leader>fw <Plug>LeaderfRgCwordLiteralNoBoundary<CR>
   vmap <unique> <leader>fw <Plug>LeaderfRgVisualLiteralNoBoundary<CR>
-  " 搜索光标或选择的word，有边界
+  "搜索光标或选择的word，有边界
   nmap <unique> <leader>fW <Plug>LeaderfRgCwordLiteralBoundary<CR>
   vmap <unique> <leader>fW <Plug>LeaderfRgVisualLiteralBoundary<CR>
+
+  "手动更新gtags 
+  map <F10> :Leaderf gtags --update<CR>
 
   "搜索当前光标下函数引用，如果搜索结果只有一个则直接跳转。
   noremap <leader>ff :<C-U><C-R>=printf("Leaderf! gtags -r %s --auto-jump", expand("<cword>"))<CR><CR>
@@ -632,7 +635,7 @@ call plug#end()
 
   let g:Lf_WildIgnore = {
           \ 'dir': ['.svn','.git','.hg','.vscode','.wine','.deepinwine','.oh-my-zsh','__pycache__','.pytest_cache'],
-          \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]','cscope.out','cscope.tags','cscope.files','GTAGS','GPATH','GRTAGS','*.py1.stats']
+          \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]','*.py1.stats']
           \}
 " }}}
 
@@ -652,11 +655,7 @@ call plug#end()
 set wildmenu
 set wildmode=full
 
-"更新TAG
-map <F10> :call GenTags()<CR><CR>
-map <F11> :call ResetTags()<CR>
 map <F3> :call CloseAllBuffer()<CR>
-map <F5> :call PrintKeyMap()<CR>
 
 iab xdatetime <c-r>=strftime("%Y-%m-%d %H:%M:%S")<CR>
 iab xdate <c-r>=strftime("%Y-%m-%d")<CR>

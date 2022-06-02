@@ -16,6 +16,27 @@ flags = [
     '-std=c++11',
 ]
 
+# 公共库
+dev_lib_path = os.getenv('DEV_LIBRARY_PATH')
+if dev_lib_path is not None:
+    dev_lib_path = dev_lib_path.split(';')
+    for lib in dev_lib_path:
+        if lib == '':
+            continue
+        flags.append("-I")
+        flags.append(lib)
+        path_dir_list = os.listdir(lib)
+        for dir_name in path_dir_list:
+            if dir_name in (".git", ".svn"):
+                continue
+
+            dir_path = lib + '/' + dir_name
+            if not os.path.isdir(dir_path):
+                continue
+
+            flags.append("-I")
+            flags.append(dir_path)
+
 # 项目文件
 project_path = os.getcwd()
 path_dir_list = os.listdir(project_path)
