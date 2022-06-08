@@ -70,9 +70,6 @@ Plug 'mhinz/vim-signify', { 'for': [ 'cpp', 'vim', 'sh', 'python', 'go' ] }
 " git支持
 Plug 'tpope/vim-fugitive', { 'for': [ 'cpp', 'vim', 'sh', 'python', 'go' ] }
 
-" 查看Git详细提交日志
-Plug 'gregsexton/gitv', { 'for': [ 'cpp', 'vim', 'sh', 'python', 'go' ] }
-
 "撤销重做功能
 Plug 'sjl/gundo.vim'
 
@@ -454,7 +451,7 @@ call plug#end()
       \ "python":1,
       \ "lua":1,
       \ "c":1,
-      \ "cpp":1
+      \ "cpp":1,
       \ "go":1
       \ }
   "设置YCM的语义触发器的关键字 代表在 C/C++ 下面写代码的时候必须输入：. 或 -> 或 :: 才能弹出语义补全, 这里追加了一个正则表达式，代表相关语言的源文件中，用户只需要输入符号的几个字母，即可自动弹出语义补全, 默认的 . / -> / :: 是不会被覆盖的
