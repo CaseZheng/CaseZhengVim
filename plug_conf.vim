@@ -52,26 +52,26 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 't9md/vim-choosewin'
 
 " 快速注释/解开注释
-Plug 'scrooloose/nerdcommenter', { 'for': [ 'cpp', 'vim', 'sh', 'python' ] }
+Plug 'scrooloose/nerdcommenter', { 'for': [ 'cpp', 'vim', 'sh', 'python', 'go' ] }
 
 " 代码块补全
 Plug 'SirVer/ultisnips', { 'for': [ 'cpp' ] }
 
 " 自动补全插件
 if(g:iswindows)
-    Plug 'CaseZheng/YouCompleteMe', { 'for': [ 'cpp', 'python' ] }
+    Plug 'CaseZheng/YouCompleteMe', { 'for': [ 'cpp', 'python', 'go' ] }
 else
-    Plug 'ycm-core/YouCompleteMe', { 'for': [ 'cpp', 'python' ] }
+    Plug 'ycm-core/YouCompleteMe', { 'for': [ 'cpp', 'python', 'go' ] }
 endif
 
 " 同时支持Git 和 Svn ，高亮当前修改
-Plug 'mhinz/vim-signify', { 'for': [ 'cpp', 'vim', 'sh', 'python' ] }
+Plug 'mhinz/vim-signify', { 'for': [ 'cpp', 'vim', 'sh', 'python', 'go' ] }
 
 " git支持
-Plug 'tpope/vim-fugitive', { 'for': [ 'cpp', 'vim', 'sh', 'python' ] }
+Plug 'tpope/vim-fugitive', { 'for': [ 'cpp', 'vim', 'sh', 'python', 'go' ] }
 
 " 查看Git详细提交日志
-Plug 'gregsexton/gitv', { 'for': [ 'cpp', 'vim', 'sh', 'python' ] }
+Plug 'gregsexton/gitv', { 'for': [ 'cpp', 'vim', 'sh', 'python', 'go' ] }
 
 "撤销重做功能
 Plug 'sjl/gundo.vim'
@@ -428,6 +428,7 @@ call plug#end()
   nmap <leader>en :YcmCompleter RefactorRename
   "格式化
   autocmd FileType cpp nnoremap <leader>ef  :YcmComplete Format<CR>
+  autocmd FileType go nnoremap <leader>ef  :YcmComplete Format<CR>
   nmap <leader>D <plug>(YCMHover)
 
   "文件类型黑名单，vim打开这些类型文件时会关闭YCM
@@ -454,6 +455,7 @@ call plug#end()
       \ "lua":1,
       \ "c":1,
       \ "cpp":1
+      \ "go":1
       \ }
   "设置YCM的语义触发器的关键字 代表在 C/C++ 下面写代码的时候必须输入：. 或 -> 或 :: 才能弹出语义补全, 这里追加了一个正则表达式，代表相关语言的源文件中，用户只需要输入符号的几个字母，即可自动弹出语义补全, 默认的 . / -> / :: 是不会被覆盖的
   let g:ycm_semantic_triggers =  {
