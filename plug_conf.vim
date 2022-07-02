@@ -97,7 +97,7 @@ call plug#end()
   let g:gruvbox_italicize_comments=0
   let g:gruvbox_contrast_dark="hard"
 
-  if(isdirectory(g:plugged_path."/gruvbox"))
+  if(isdirectory(g:vim_conf_path."/plugged/gruvbox"))
       colorscheme gruvbox
   endif
 " }}}
@@ -482,7 +482,7 @@ call plug#end()
   "此选项控制在文件中检测到错误或警告时向用户显示的最大诊断数
   let g:ycm_max_diagnostics_to_display = 100000
   "设置YCM的日志记录级别，可以是debug，info，warning，error或critical。debug是最详细的
-  let g:ycm_server_log_level = 'error'
+  let g:ycm_server_log_level = 'debug'
   "指定OmniSharp server的监视端口，0表示使用os自动提供的未使用的端口
   let g:ycm_csharp_server_port = 0
 " }}}
