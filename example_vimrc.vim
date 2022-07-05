@@ -1,7 +1,7 @@
 let $vimrc_path = 'D:\vim_conf\vimrc.vim'
 let $project_conf_path = 'D:\vim_conf\project_conf.vim'
 
-# 写绝对路径
+"写绝对路径
 let g:vim_conf_path = 'D:\vim_conf\'
 let g:project_name = ''
 let g:project_info = {}
