@@ -20,7 +20,7 @@ Plug 'lfv89/vim-interestingwords'
 " 文件管理
 Plug 'Shougo/defx.nvim'
 Plug 'roxma/nvim-yarp'
-Plug 'roxma/vim-hug-neovim-rpc'
+Plug 'roxma/vim-hug-neovim-rpc', { 'do': ':UpdateRemotePlugins' }
 Plug 'kristijanhusak/defx-git'
 
 " c++高亮增强 C++11/14 STL
