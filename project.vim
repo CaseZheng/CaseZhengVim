@@ -6,6 +6,11 @@ let g:loaded_self_project = 1
 
 "同步项目文件到远程
 function SynFile(type)
+    if (g:iswindows == 1)
+        echo "windows 环境不支持"
+        return
+    endif
+
     if(g:project_name == "")
         echo "未打开任何项目"
         return
