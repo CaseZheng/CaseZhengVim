@@ -6,11 +6,6 @@ let g:loaded_self_project = 1
 
 "同步项目文件到远程
 function SynFile(type)
-    if(!g:iswindows)
-        echo "非windows平台"
-        return
-    endif
-
     if(g:project_name == "")
         echo "未打开任何项目"
         return
@@ -38,175 +33,29 @@ function SynFile(type)
     let s:password     = get(s:remote, 'password', '')
     let s:port         = get(s:remote, 'port', '22')
     let s:project_path = get(s:info, 'projectpath', '')
-    let s:rawsetting   = get(s:info, 'rawsettings', '')
+    let s:remotepath   = get(s:remote, 'remotepath', '')
 
-    if(s:ip=="" || s:username=="" || s:password=="" || s:project_path=="")
-        echo 'ip或username或password或项目路径'
+    if(s:ip=="" || s:username=="" || s:password=="" || s:project_path=="" || s:remotepath=="")
+        echo 'ip或username或password或项目路径或远程目录 为空'
         return
     endif
 
-    let s:remotepathsplit = []
-    "/root/share/shettle/casezheng/
-    let s:remotepath = get(s:remote, 'remotepath', '')
-    if(s:remotepath=="")
-        echo "远程逻辑不存在"
-        return
-    endif
+    let s:exclude = ""
+    let s:exclude = s:exclude . "--exclude '.git'"
+    let s:exclude = s:exclude . " --exclude '.svn'"
 
-    if(strlen(s:project_path) == strridx(s:project_path, "\\")+1)
-        let s:project_path = strpart(s:project_path, 0, strridx(s:project_path, "\\"))
-    endif
+    let s:pro_exclude = get(s:info, "exclude", [])
+    for item in s:pro_exclude
+      let s:exclude = s:exclude . " --exclude '".item."'"
+    endfor
 
-    "asset
-    let s:local_dir_name = strpart(s:project_path, strridx(s:project_path, "\\"))
-    let s:local_dir_name = substitute(s:local_dir_name, "\\", "", 'g')
-    "/root/share/shettle/casezheng/asset
-    let s:remotepath = s:remotepath."/".s:local_dir_name
-    let s:remote_base_path = s:remotepath
-
-    if(a:type=="current")
-        echo '只同步当前目录'
-        "D:\code\asset\asset_settle
-        let s:currentPath = getcwd()
-        "D:\code\asset\
-        let s:col = stridx(s:currentPath, s:project_path)
-        if(s:col!=0)
-            echo '当前目录与项目目录不匹配'
-            return
-        endif
-        "asset_settle
-        let s:truncated = strpart(s:currentPath, strlen(s:project_path))
-        echo "当前目录与项目目录差值：".s:truncated
-        "['asset_settle']
-        let s:remotepathsplit = split(s:truncated, "\\")
-        echo "远程目录理论新建层级："
-        for pathsplit in s:remotepathsplit
-            echo pathsplit
-        endfor
-        "/root/share/shettle/casezheng/asset/asset_settle
-        let s:remotepath = s:remotepath.s:truncated
-        let s:remotepath = substitute(s:remotepath, "\\", "/", 'g')
-        echo "远程目录：".s:remotepath
-        let s:project_path = s:currentPath
-    else
-        echo "全量同步"
-    endif
-
-    let s:dirmask    = get(s:info, "dirmask", '')
-    let s:filemask   = "|*.git;*.svn;*.vscode;*.vsdx;cscope.*;*git/;*svn/;*vscode/;*.xlsx;*.xls;*.pptx;*.ppt;*.docx;*.doc;GPATH;GTAGS;GRTAGS;*.py1.stats;"
-    let s:commmsg = "!start WinSCP.exe /console /command   "
-    let s:commmsg = s:commmsg . "  \"option batch on\"   "
-    let s:commmsg = s:commmsg . "  \"option confirm off\"   "
-    let s:commmsg = s:commmsg . "  \"option echo off\"   "
-    let s:commmsg = s:commmsg . "  \"open sftp://".s:username.":".s:password."@".s:ip.":".s:port." -rawsettings ".s:rawsetting."\"   "
-    if(a:type=="current")
-        "/root/share/shettle/casezheng/asset
-        let s:mkdirremotepath = s:remote_base_path
-        for pathsplit in s:remotepathsplit
-            let s:mkdirremotepath = s:mkdirremotepath."/".pathsplit
-            let s:commmsg = s:commmsg . "  \"mkdir ".s:mkdirremotepath."\" "
-        endfor
-    endif
-    let s:commmsg = s:commmsg . "  \"option transfer binary\"  "
-    let s:commmsg = s:commmsg . "  \"synchronize remote ".s:project_path." ".s:remotepath." -delete -criteria=time -filemask=".s:filemask."\" "
-    let s:commmsg = s:commmsg . "  \"close\"  "
-    let s:commmsg = s:commmsg . "  \"exit\"  "
-    echom s:commmsg
-    silent! execute s:commmsg
-    call setreg('+', s:remotepath)
-    echo 'success'
+    let s:cmd = "sshpass -p".s:password." rsync -e 'ssh -p".s:port."' -ar --delete --ignore-errors -p ".s:exclude." ".s:project_path." ".s:username."@".s:ip.":".s:remotepath."&"
+    echo s:cmd
+    execute('!'.s:cmd)
 endfunction
 
-"同步项目中单个文件到远程
-function SendFileToServer()
-    silent :w
-    if(!g:iswindows)
-        echo "非windows平台"
-        return
-    endif
-
-    if(g:project_name == "")
-        echo "未打开任何项目"
-        return
-    endif
-
-    let s:info = get(g:project_conf_info, g:project_name, '')
-    if(1 == type(s:info) && '' == s:info)
-        echo '项目: '.g:project_name.' 不存在'
-        return
-    endif
-
-    if('' == g:remote_name)
-        echo '未设置远程地址信息'
-        return
-    endif
-
-    let s:remote = get(g:remote_conf_info, g:remote_name, '')
-    if('' == g:remote_name)
-        echo '未设置远程地址信息'
-        return
-    endif
-
-    let s:ip           = get(s:remote, 'ip', '')
-    let s:username     = get(s:remote, 'username', '')
-    let s:password     = get(s:remote, 'password', '')
-    let s:port         = get(s:remote, 'port', '22')
-    let s:project_path = get(s:info, 'projectpath', '')
-    let s:rawsetting   = get(s:info, 'rawsettings', '')
-
-    if(s:ip=="" || s:username=="" || s:password=="" || s:project_path=="")
-        echo 'ip或username或password或项目路径'
-        return
-    endif
-
-    let s:remotepathsplit = []
-    "/root/share/shettle/casezheng/
-    let s:remotepath = get(s:remote, 'remotepath', '')
-    if(s:remotepath=="")
-        echo "远程逻辑不存在"
-        return
-    endif
-
-    if(strlen(s:project_path) == strridx(s:project_path, "\\")+1)
-        let s:project_path = strpart(s:project_path, 0, strridx(s:project_path, "\\"))
-    endif
-
-    "asset
-    let s:local_dir_name = strpart(s:project_path, strridx(s:project_path, "\\"))
-    let s:local_dir_name = substitute(s:local_dir_name, "\\", "", 'g')
-    "/root/share/shettle/casezheng/asset
-    let s:remotepath = s:remotepath."/".s:local_dir_name
-    echo "远程项目路径：".s:remotepath
-
-    "D:\code\asset\asset_settle\src\asset.cpp
-    let s:file_path = expand("%:p")                             "获得当前文件的路径 包括文件名
-    echo "上传文件：".s:file_path
-    "D:/code/asset
-    let s:project_path = substitute(s:project_path, '\', '/', "g")
-    "echo s:project_path
-    "/asset_settle/src/asset.cpp
-    let s:relativedir = substitute(substitute(s:file_path, '\', '/', "g"), s:project_path, '', "")    "取出具体文件名 保留路径
-    "echo s:relativedir
-    "/root/share/settle/casezheng/asset/asset_settle/src/asset.cpp
-    let s:remotepath = s:remotepath.s:relativedir
-    echo "远程文件：".s:remotepath
-    let s:commmsg = "!start WinSCP.exe /console /command   "
-    let s:commmsg = s:commmsg . "  \"option batch on\"   "
-    let s:commmsg = s:commmsg . "  \"option confirm off\"   "
-    let s:commmsg = s:commmsg . "  \"option echo off\"   "
-    let s:commmsg = s:commmsg . "  \"open sftp://".s:username.":".s:password."@".s:ip.":".s:port." -rawsettings ".s:rawsetting."\"   "
-    let s:commmsg = s:commmsg . "  \"option transfer binary\"  "
-    let s:commmsg = s:commmsg . "  \"put " . s:file_path . " " . s:remotepath . "\"  "
-    let s:commmsg = s:commmsg . "  \"close\"  "
-    let s:commmsg = s:commmsg . "  \"exit\"  "
-    echom s:commmsg
-    silent! execute s:commmsg
-endfunction
-
-au BufEnter * command! -buffer -nargs=* UU call SynFile(<f-args>)
 au BufEnter * command! -buffer UP call SynFile("")
 au BufEnter * command! -buffer UW call SynFile("current")
-au BufEnter * command! -buffer W call SendFileToServer()
 
 "打印项目列表
 function ProjectList()
@@ -214,7 +63,7 @@ function ProjectList()
     for item in items(g:project_conf_info)
         echo ' '
         echohl WarningMsg | echo "项目名称：" . item[0] . " 项目地址：" . get(item[1], "projectpath", "") . " 描述：" . get(item[1], "desc", "") | echohl NONE
-        echo "Ycm：" . get(item[1], "ycm", "0") . " Cscope：" . get(item[1], "cscope", "0") . " 远程IP：" . get(item[1], "ip", "") . " 远程目录：" . get(item[1], "remotepath", "")
+        echo "Ycm：" . get(item[1], "ycm", "0") . " 远程IP：" . get(item[1], "ip", "") . " 远程目录：" . get(item[1], "remotepath", "")
     endfor
 endfunction
 
@@ -252,10 +101,6 @@ function ProjectOpen(name)
         call ProjectList()
         return
     endif
-    let s:dirmask    = get(s:info, "dirmask", [])
-    for diritem in s:dirmask
-        call add(g:ctrlsf_ignore_dir, diritem)
-    endfor
 
     let s:remote = get(s:info, 'remote', '')
     if('' != s:remote)
