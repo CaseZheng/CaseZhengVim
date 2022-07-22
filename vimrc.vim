@@ -26,7 +26,7 @@ set fileencodings=utf-8,chinese,cp936
 set fileformats=unix,dos        "文件格式问题
 source $VIMRUNTIME/delmenu.vim  "vim的菜单乱码解决
 source $VIMRUNTIME/menu.vim     "vim的菜单乱码解决
-language messages zh_CN.utf-8   "vim提示信息乱码的解决
+"language messages zh_CN.utf-8   "vim提示信息乱码的解决
 "设置为双字宽显示，否则无法完整显示如:☆
 set ambiwidth=double
 " 侦测文件类型
