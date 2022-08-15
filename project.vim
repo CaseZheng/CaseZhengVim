@@ -107,10 +107,7 @@ function ProjectOpen(name)
         return
     endif
 
-    let s:remote = get(s:info, 'remote', '')
-    if('' != s:remote)
-        let g:remote_name = s:remote
-    endif
+    let g:remote_name = get(s:info, 'remote', '')
 
     let g:project_name = a:name
     silent! execute(":cd ".s:projectpath)

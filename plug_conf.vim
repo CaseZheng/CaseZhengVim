@@ -64,6 +64,12 @@ else
     Plug 'ycm-core/YouCompleteMe', { 'for': [ 'cpp', 'python', 'go' ] }
 endif
 
+" go 主要插件
+Plug 'fatih/vim-go', { 'tag': '*', 'do': ':GoInstallBinaries' }
+
+" go 中的代码追踪，输入 gd 就可以自动跳转
+Plug 'dgryski/vim-godef'
+
 " 同时支持Git 和 Svn ，高亮当前修改
 Plug 'mhinz/vim-signify', { 'for': [ 'cpp', 'vim', 'sh', 'python', 'go' ] }
 
@@ -416,17 +422,19 @@ call plug#end()
   let g:ycm_auto_hover = 'CursorHold'
 
   "跳转
-  nmap <leader>et :YcmCompleter GoTo<CR>
+  autocmd FileType c,cpp,go,python nnoremap <leader>et :YcmCompleter GoTo<CR>
   "符号查找
-  nmap <leader>es :YcmCompleter GoToSymbol
+  autocmd FileType c,cpp,python nnoremap <leader>es :YcmCompleter GoToSymbol
   "跳转到引用
-  nmap <leader>er :YcmCompleter GoToReferences<CR>
+  autocmd FileType c,cpp,python nnoremap <leader>er :YcmCompleter GoToReferences<CR>
   "重命名标识符
-  nmap <leader>en :YcmCompleter RefactorRename
+  autocmd FileType c,cpp,python nnoremap <leader>en :YcmCompleter RefactorRename
+  "文档大纲
+  autocmd FileType c,cpp,go nnoremap <leader>el :YcmCompleter GoToDocumentOutline<CR>
   "格式化
-  autocmd FileType cpp nnoremap <leader>ef  :YcmComplete Format<CR>
-  autocmd FileType go nnoremap <leader>ef  :YcmComplete Format<CR>
-  nmap <leader>D <plug>(YCMHover)
+  autocmd FileType c,cpp,go nnoremap <leader>ef :YcmComplete Format<CR>
+  "文档
+  autocmd FileType c,cpp,go nnoremap <leader>eh <plug>(YCMHover)
 
   "文件类型黑名单，vim打开这些类型文件时会关闭YCM
   let g:ycm_filetype_blacklist = {
@@ -485,6 +493,29 @@ call plug#end()
   let g:ycm_server_log_level = 'debug'
   "指定OmniSharp server的监视端口，0表示使用os自动提供的未使用的端口
   let g:ycm_csharp_server_port = 0
+" }}}
+
+
+"vim-go =================================================================== {{{
+  let g:go_fmt_command = "goimports" " 格式化将默认的 gofmt 替换
+  let g:go_autodetect_gopath = 1
+  let g:go_list_type = "quickfix"
+
+  let g:go_version_warning = 1
+  let g:go_highlight_types = 1
+  let g:go_highlight_fields = 1
+  let g:go_highlight_functions = 1
+  let g:go_highlight_function_calls = 1
+  let g:go_highlight_operators = 1
+  let g:go_highlight_extra_types = 1
+  let g:go_highlight_methods = 1
+  let g:go_highlight_generate_tags = 1
+
+  let g:godef_split=0
+  let g:godef_same_file_in_same_window=1
+
+  "重命名标识符
+  autocmd FileType go nnoremap <leader>en :GoRename 
 " }}}
 
 "vim-signify =================================================================== {{{
