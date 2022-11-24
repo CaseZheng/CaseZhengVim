@@ -29,6 +29,9 @@ else
   pip3 install --user pynvim
 fi
 
+# vim ale插件依赖
+pip3 install -U pylint flake8 flake8-import-order autopep8 black isort yapf
+
 # vim 插件LeaderF依赖
 if type rg >/dev/null 2>&1; then 
   echo 'exists rg' 

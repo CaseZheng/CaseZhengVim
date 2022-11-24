@@ -62,10 +62,10 @@ else
 endif
 
 " go 主要插件
-Plug 'fatih/vim-go', { 'tag': '*', 'do': ':GoInstallBinaries' }
+Plug 'fatih/vim-go', { 'tag': '*', 'do': ':GoInstallBinaries', 'for': [ 'go' ] }
 
 " go 中的代码追踪，输入 gd 就可以自动跳转
-Plug 'dgryski/vim-godef'
+Plug 'dgryski/vim-godef', { 'for': [ 'go' ] }
 
 " 同时支持Git 和 Svn ，高亮当前修改
 Plug 'mhinz/vim-signify', { 'for': [ 'cpp', 'vim', 'sh', 'python', 'go' ] }
@@ -83,7 +83,7 @@ Plug 'godlygeek/tabular', { 'on': 'Tabularize' }
 Plug 'easymotion/vim-easymotion', { 'on': ['<Plug>(easymotion-linebackward)', '<Plug>(easymotion-j)', '<Plug>(easymotion-k)', '<Plug>(easymotion-lineforward)', '<Plug>(easymotion-w)', '<Plug>(easymotion-b)'] }
 
 " 语法格式提示
-Plug 'dense-analysis/ale'
+Plug 'dense-analysis/ale', { 'for': [ 'python' ] }
 
 " 查找文件插件
 Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension'}
@@ -172,7 +172,7 @@ call plug#end()
       \ })
 
   call defx#custom#option('_', {
-    \ 'ignored_files': '*.pyc,*.pyo,*.sln,*.vcxproj,*.filters,*.exe,*.docx,*.doc,*.xlsx,*.xls,*.pptx,*.ppt,*.pytest_cache,*.py1.stats,GPATH,__pycache__,cscope.*,GTAGS,GRTAGS',
+    \ 'ignored_files': '*.pyc,*.pyo,*.sln,*.vcxproj,*.filters,*.exe,*.docx,*.doc,*.xlsx,*.xls,*.pptx,*.ppt,*.pytest_cache,*.py1.stats,GPATH,__pycache__,cscope.*,GTAGS,GRTAGS,.__*,.polaris_cache,polaris.log',
     \ 'ignored_recursive_files': '',
     \ 'auto_cd': 1,
     \ 'winwidth': 50,
@@ -511,6 +511,7 @@ call plug#end()
   let g:godef_split=0
   let g:godef_same_file_in_same_window=1
 
+  "跳转
   autocmd FileType go nnoremap <leader>et :call GodefUnderCursor()<cr>
   "重命名标识符
   autocmd FileType go nnoremap <leader>en :GoRename 
@@ -593,12 +594,13 @@ call plug#end()
   let g:ale_linters = {
   \   'python': ['flake8', 'pylint'],
   \}
-  let g:ale_python_flake8_options = '--max-line-length=120 --ignore=E121,E123,E126,E226,E24,E704,W503'
+  let g:ale_python_flake8_options = '--max-line-length=120 --ignore=E121,E123,E126,E226,E24,E704,W503,E203'
   let g:ale_python_pylint_options = '--max-line-length=120 --disable=C0114,C0115,C0116,W0201,R0902'
   let g:ale_python_autopep8_options = '--max-line-length=120'
+  let g:ale_python_black_options = '--line-length=120'
   " 修复工具设置
   let g:ale_fixers = {
-  \   'python': ['autopep8', 'yapf', 'isort'],
+  \   'python': ['isort', 'black'],
   \}
   "代码补全开关
   let g:ale_completion_enabled = 0
