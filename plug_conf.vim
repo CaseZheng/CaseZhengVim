@@ -419,7 +419,9 @@ call plug#end()
   let g:ycm_auto_hover = 'CursorHold'
 
   "跳转
-  autocmd FileType c,cpp,python nnoremap <leader>et :YcmCompleter GoTo<CR>
+  autocmd FileType c,cpp,python,go nnoremap <leader>et :YcmCompleter GoTo<CR>
+  "跳转到实现
+  autocmd FileType go nnoremap <leader>ei :YcmCompleter GoToImplementation<CR>
   "符号查找
   autocmd FileType c,cpp,python nnoremap <leader>es :YcmCompleter GoToSymbol
   "跳转到引用
@@ -512,7 +514,7 @@ call plug#end()
   let g:godef_same_file_in_same_window=1
 
   "跳转
-  autocmd FileType go nnoremap <leader>et :call GodefUnderCursor()<cr>
+  "autocmd FileType go nnoremap <leader>et :call GodefUnderCursor()<cr>
   "重命名标识符
   autocmd FileType go nnoremap <leader>en :GoRename 
 " }}}
