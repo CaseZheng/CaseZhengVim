@@ -58,7 +58,7 @@ Plug 'SirVer/ultisnips', { 'for': [ 'cpp' ] }
 if(g:iswindows)
     Plug 'CaseZheng/YouCompleteMe', { 'for': [ 'cpp', 'python', 'go' ] }
 else
-    Plug 'ycm-core/YouCompleteMe', { 'for': [ 'cpp', 'python', 'go' ] }
+    Plug 'ycm-core/YouCompleteMe', { 'commit': 'eb3f3bebf4e554aa772fee34f600881747b4e6e8', 'for': [ 'cpp', 'python', 'go' ] }
 endif
 
 " go 主要插件
@@ -423,7 +423,9 @@ call plug#end()
   "跳转到实现
   autocmd FileType go nnoremap <leader>ei :YcmCompleter GoToImplementation<CR>
   "符号查找
-  autocmd FileType c,cpp,python nnoremap <leader>es :YcmCompleter GoToSymbol
+  autocmd FileType c,cpp,python,go nnoremap <leader>es :YcmCompleter GoToSymbol
+  autocmd FileType c,cpp,python,go nnoremap <leader>fsd <Plug>(YCMFindSymbolInDocument)
+  autocmd FileType c,cpp,python,go nnoremap <leader>fsw <Plug>(YCMFindSymbolInWorkspace)
   "跳转到引用
   autocmd FileType c,cpp,python nnoremap <leader>er :YcmCompleter GoToReferences<CR>
   "重命名标识符
@@ -625,7 +627,7 @@ call plug#end()
   let g:Lf_ReverseOrder=1
   let g:Lf_WindowHeight = 0.30
   let g:Lf_DefaultExternalTool='rg'
-  let g:Lf_PreviewInPopup = 1
+  let g:Lf_PreviewInPopup = 0
   let g:Lf_HideHelp = 1
   let g:Lf_ShowDevIcons = 0
   let g:Lf_GtagsAutoGenerate = 0
